@@ -27,12 +27,21 @@
   Term 1 is the expected monthly pay of individuals with a college degree, while Term 2 is the expected monthly pay of those without a college degree. Generally we would expect those with a college degree to, on average, have a higher monthly pay, so Term 1 would be larger than Term 2. As a result, we would expect (1) - (2) to be positive.
   
   \item Describe what does term (3) capture. Be specific.
+
+  Term 3 describes the expected difference in monthly pay between going and not going to college given a person did go to college. $y_{i1}$ - $y_{i0}$ calculates the difference in monthly wage, while $d_{i} = 1$ is the condition that they did go to college. This is a casual parameter that we defined as the Average Treatment Effect for the Treated (ATT).
   
-  \item Explain how the sample can be used to provide information for term (1) – (2) but not (3) or (4).
+  \item Consider we are given a sample of n pairs of observations (yi, di) (observational data). Explain how the sample can be used to provide information for term (1) - (2) but not for term (3) nor (4). Justify.
+
+  Term 3 and Term 4 both focus on counterfactuals that we cannot observe. We cannot observe ${y_{i0}}$ for those given ${d_{i} = 1}$, or ${y_{i1}}$ for those given ${d_{i} = 0}$. We know that Term 3 requires the wages given attended college ($y_{i0}$) and not attended college ($y_{i1}$) for the treatment group ({$d_{i} = 1$}), and Term 4 requires $y_{i0}$ for both those given thehy did ($d_{i} = 1$) and did not ($d_{i} = 0$) attend college. In short, we cannot observe the counterfactual, what the wage would have been if those who attended college did not as well as if those who did not attend college actually did.
   
   \item What would it mean for term (4) to be positive?
+
+  Term 4 is the difference in the counterfactual wage (no college) between those that did and did not attend college. If it was positive, that would mean $E(y_{i0} \mid d_i = 1)$ is greater than $E(y_{i0} \mid d_i = 1)$, so the expected monthly wage without college is greater for those that did attend college compared to those that did not. It would mean that those that did attend college would have had a higher wage even without college compared to those that did not attend college. This captures systemic differences between the two populations that would impact monthly wage, such as ability.
   
   \item What are the implications of term (4) being positive for measuring the effect of a degree on earnings?
+
+ If Term (4) is positive, it means that individuals who attended college would still earn more, on average, than those who did not, even in the absence of a degree. As a result, the observed wage gap between graduates and non-graduates would reflect not only the effect of college itself, but also pre-existing differences between the two groups, making the observed effect larger than the true causal effect of a degree.
+ 
 \end{enumerate}
 
 \section*{Question 2}
