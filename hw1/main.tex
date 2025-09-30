@@ -199,9 +199,45 @@ Plugging in the given moments (with $x_2\equiv x$):
 E(x_2)=\tfrac{15}{11},\quad 
 \operatorname{var}(x_2)=\tfrac{151}{605},\quad 
 E(y)=\tfrac{6}{11},\quad 
-\operatorname{cov}(x_2,y)=-\tfrac{2}{121},
+\operatorname{cov}(x_2,y)=-\tfrac{2}{121}.
 \]
-we obtain
+
+For the slope:
+\[
+\beta_2=\frac{\operatorname{cov}(x_2,y)}{\operatorname{var}(x_2)}
+=\frac{-\tfrac{2}{121}}{\tfrac{151}{605}}
+=\frac{-2}{121}\cdot \frac{605}{151}
+=\frac{-1210}{18271}
+=-\tfrac{10}{151}.
+\]
+
+For the intercept:
+\[
+\beta_1=E(y)-\beta_2E(x_2)
+=\tfrac{6}{11}-\Big(-\tfrac{10}{151}\Big)\tfrac{15}{11}.
+\]
+Compute the second term:
+\[
+-\beta_2E(x_2)
+=\frac{10}{151}\cdot\frac{15}{11}
+=\frac{150}{1661}.
+\]
+So,
+\[
+\beta_1=\frac{6}{11}+\frac{150}{1661}.
+\]
+Writing with common denominator $1661$:
+\[
+\frac{6}{11}=\frac{906}{1661},
+\]
+hence
+\[
+\beta_1=\frac{906}{1661}+\frac{150}{1661}
+=\frac{1056}{1661}
+=\tfrac{96}{151}.
+\]
+
+Therefore,
 \[
 \beta_2=-\tfrac{10}{151},\qquad
 \beta_1=\tfrac{96}{151}.
