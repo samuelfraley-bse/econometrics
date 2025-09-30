@@ -57,12 +57,161 @@ Variable $X \sim N(0,1)$ and $Y = X^2 - 1$. Show how this example illustrates th
 \textbf{Answer:} \ldots
 
 \section*{Question 4}
-Joint pdf: $f(x, y) = \frac{3(x^2 + y)}{11}$ for $0 \leq x \leq 2$, $0 \leq y \leq 1$.
 
-\begin{enumerate}[label=(\alph*)]
-  \item Find the best linear approximation to the CEF.  
-  \item Plot the CEF and linear fit (include code + figure).
-\end{enumerate}
+\section*{Question 4}
+
+Joint pdf: $f(x,y)=\dfrac{3(x^2+y)}{11}$ for $0\leq x\leq 2$, $0\leq y\leq 1$.
+(For consistency with Appendix 2 notation, set $x_2 \equiv x$.)
+
+We want the best linear approximation to the conditional expectation function (CEF),
+\[
+\ell(x)=\beta_1+\beta_2 x.
+\]
+The population least squares problem
+\[
+\min_{\beta}\;E\big[(y-x'\beta)^2\big],
+\]
+where
+\[
+x=
+\begin{bmatrix}
+1\\ x_2
+\end{bmatrix},
+\qquad
+\beta=
+\begin{bmatrix}
+\beta_1\\ \beta_2
+\end{bmatrix}.
+\]
+
+Normal equations:
+\[
+E(xx')\,\beta=E(xy).
+\]
+Rewrite:
+\[
+\beta \equiv [E(xx')]^{-1}E(xy).
+\]
+
+Working the algebra:
+\[
+\begin{bmatrix}
+\beta_1\\ \beta_2
+\end{bmatrix}
+= [E(xx')]^{-1}E(xy)
+=
+\Bigg(
+E
+\Big(
+\begin{bmatrix}
+1\\ x_2
+\end{bmatrix}
+\begin{bmatrix}
+1 & x_2
+\end{bmatrix}
+\Big)
+\Bigg)^{-1}
+E
+\begin{bmatrix}
+1\\ x_2
+\end{bmatrix}
+y
+=
+\begin{bmatrix}
+1 & E(x_2)\\
+E(x_2) & E(x_2^2)
+\end{bmatrix}^{-1}
+\begin{bmatrix}
+E(y)\\
+E(x_2y)
+\end{bmatrix}.
+\]
+
+Using the $2\times2$ inverse formula,
+\[
+\begin{bmatrix}
+1 & E(x_2)\\
+E(x_2) & E(x_2^2)
+\end{bmatrix}^{-1}
+=
+\frac{1}{E(x_2^2)-[E(x_2)]^2}
+\begin{bmatrix}
+E(x_2^2) & -E(x_2)\\
+- E(x_2) & 1
+\end{bmatrix}
+=
+\frac{1}{\operatorname{var}(x_2)}
+\begin{bmatrix}
+E(x_2^2) & -E(x_2)\\
+- E(x_2) & 1
+\end{bmatrix}.
+\]
+
+Hence,
+\[
+\begin{bmatrix}
+\beta_1\\ \beta_2
+\end{bmatrix}
+=
+\frac{1}{\operatorname{var}(x_2)}
+\begin{bmatrix}
+E(x_2^2) & -E(x_2)\\
+- E(x_2) & 1
+\end{bmatrix}
+\begin{bmatrix}
+E(y)\\
+E(x_2y)
+\end{bmatrix}
+=
+\begin{bmatrix}
+\dfrac{E(x_2^2)E(y)-E(x_2)E(x_2y)}{\operatorname{var}(x_2)}\\[10pt]
+\dfrac{E(x_2y)-E(x_2)E(y)}{\operatorname{var}(x_2)}
+\end{bmatrix}.
+\]
+
+Identify the slope:
+\[
+\beta_2=\frac{E(x_2y)-E(x_2)E(y)}{\operatorname{var}(x_2)}
+=\frac{\operatorname{cov}(x_2,y)}{\operatorname{var}(x_2)}.
+\]
+
+Regarding the intercept (first element), notice
+\[
+\frac{E(x_2^2)E(y)-E(x_2)E(x_2y)}{E(x_2^2)-[E(x_2)]^2}
+=
+E(y)-\frac{E(x_2y)-E(x_2)E(y)}{E(x_2^2)-[E(x_2)]^2}\,E(x_2)
+=E(y)-\beta_2E(x_2).
+\]
+Therefore,
+\[
+\begin{bmatrix}
+\beta_1\\ \beta_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+E(y)-\beta_2E(x_2)\\[4pt]
+\dfrac{\operatorname{cov}(x_2,y)}{\operatorname{var}(x_2)}
+\end{bmatrix}.
+\]
+
+Plugging in the given moments (with $x_2\equiv x$):
+\[
+E(x_2)=\tfrac{15}{11},\quad 
+\operatorname{var}(x_2)=\tfrac{151}{605},\quad 
+E(y)=\tfrac{6}{11},\quad 
+\operatorname{cov}(x_2,y)=-\tfrac{2}{121},
+\]
+we obtain
+\[
+\beta_2=-\tfrac{10}{151},\qquad
+\beta_1=\tfrac{96}{151}.
+\]
+
+Final answer:
+\[
+\ell(x)=\beta_1+\beta_2 x
+=\frac{96}{151}-\frac{10}{151}\,x.
+\]
 
 \section*{Question 5}
 Simple regression model: $y = \beta_1 + \beta_2 x^2 + \epsilon$.
