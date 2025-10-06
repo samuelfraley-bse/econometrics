@@ -1,0 +1,90 @@
+---
+title: "Question4"
+output: html_document
+date: "2025-10-06"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Read in the data:
+```{r cars}
+library(tidyverse)
+
+df <- read.csv("hw2/data/corruption.csv")
+
+head(df)
+```
+Construct the x and y matrices:
+```{r OLS up}
+
+## ---- Q4a_OLS-by-formula.R ---------------------------------------------
+options(scipen = 9)
+
+
+# construct x and y
+y <- as.matrix(df$corruption)
+X <- cbind(1, df$lngdp, df$smedia)
+
+head(y)
+head(X)
+```
+Find beta hat:
+
+```{r find beta hat}
+# 3) Closed-form OLS: beta_hat = (X'X)^{-1} X'y
+XtX <- t(X) %*% X
+Xty <- t(X) %*% y
+beta_hat <- solve(XtX, Xty)
+
+head(beta_hat)
+```
+Find the fitted values, compute residuals and SSE
+```{r fitted, residuals, SSE}
+# 4) Fitted values, residuals, SSE
+y_hat <- X %*% beta_hat
+res   <- y - y_hat
+SSE   <- as.numeric(t(res) %*% res)
+
+head(y_hat)
+head(res)
+head(SSE)
+
+```
+Use annihilator matrix and SSE using matrices (M_X y)
+```{r M_x and y' M_X y}
+
+MX  <- diag(nrow(X)) - X %*% solve(XtX, t(X))
+yMXy <- as.numeric(t(y) %*% MX %*% y)
+
+head(MX)
+head(yMXy)
+
+```
+Compute Total Sum Squares, R squared, 
+```{r rsquared}
+TSS <- sum((y - mean(y))^2)
+R2  <- 1 - SSE/TSS
+
+print(paste("TSS:", round(TSS,2)))
+print(paste("R2:", round(R2, 2)))
+
+```
+
+```{r display results}
+cat("\nbeta_hat (Intercept, ln(gdp), smedia):\n")
+print(drop(beta_hat))
+cat(sprintf("\nSSE(β̂) = %.6f", SSE))
+cat(sprintf("\ny' M_X y = %.6f", yMXy))
+cat(sprintf("\nR^2      = %.6f\n", R2))
+```
+```{r check:  SSE(β̂) == y' M_X y (up to fp error)}
+chk <- all.equal(SSE, yMXy, tolerance = 1e-10)
+cat("\nCheck SSE(β̂) == y' M_X y ?  ", chk, "\n")
+
+
+
+```
+
+
