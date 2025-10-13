@@ -1,0 +1,175 @@
+\documentclass[12pt,a4paper]{article}
+
+\input{Latex/packages.tex}
+
+\title{Assignment 3}
+\author{
+  Samuel Fraley \\ 
+  Daniel Campos \\ 
+  Elvis Casco
+}
+\date{October 18, 2025}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% ============================================================
+\section*{Question 1: Assumptions for Random Samples}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Rewrite assumptions [A1]–[A4] from class for i.i.d. random samples $\{(x_i, y_i)\}$.
+
+  \textit{Hint:} Express each assumption mathematically and briefly justify its meaning under i.i.d. sampling.
+
+  \vspace{1em}
+  \textbf{Example structure:}
+  \begin{align*}
+  \text{[A1]: } & E[\varepsilon_i \mid X_i] = 0 \\
+  \text{[A2]: } & Var(\varepsilon_i \mid X_i) = \sigma^2 < \infty \\
+  & \vdots
+  \end{align*}
+
+  \textit{Insert explanations and intuition below.}
+\end{enumerate}
+
+\newpage
+% ============================================================
+\section*{Question 2: Conditional vs. Unconditional Properties of OLS}
+
+\begin{enumerate}[label=(\alph*)]
+  \item 
+  (i) Prove that OLS is unconditionally unbiased given $E(\hat{\beta}_k \mid X) = \beta_k$.  
+  (ii) Explain in one sentence the interpretation of unconditional unbiasedness.
+
+  \textit{Hint:} Use the law of iterated expectations.  
+  \textbf{Insert derivation:}
+  \[
+  E(\hat{\beta}_k) = E[E(\hat{\beta}_k \mid X)] = \dots
+  \]
+
+  \vspace{1em}
+  \item 
+  Starting from $\text{Var}(\hat{\beta}_k \mid X) \le \text{Var}(\tilde{\beta}_k \mid X)$,  
+  show that $\text{Var}(\hat{\beta}_k) \le \text{Var}(\tilde{\beta}_k)$.
+
+  \textit{Hint:} Use the law of total variance:  
+  $\text{Var}(Z) = \text{Var}(E[Z \mid W]) + E[\text{Var}(Z \mid W)]$.
+
+  \textbf{Insert derivation here.}
+\end{enumerate}
+
+\newpage
+% ============================================================
+\section*{Question 3: One-Sided Hypothesis Test}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Draw the acceptance and rejection regions for $H_0: \beta_2 = 0$ vs. $H_1: \beta_2 < 0$ at $\alpha=5\%$.
+
+  \textit{Include a clear plot below (hand-drawn or generated in R/Python):}
+  \begin{center}
+  \includegraphics[width=0.7\textwidth]{Q3a_test_region.png}
+  \end{center}
+
+  \item Explain the intuition behind the location of the critical region.
+
+  \textit{Write short reasoning below.}
+\end{enumerate}
+
+\newpage
+% ============================================================
+\section*{Question 4: Monte Carlo Simulation (Assig3Q4.R / Assig3Q4.py)}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Provide the expression of the DGP (data generating process) used to simulate samples.
+
+  \textit{Hint:} Derive from line 8 in the code, e.g.}
+  \[
+  y_i = 10 + 5x_{2i} + \varepsilon_i, \quad \varepsilon_i \sim N(0,6^2)
+  \]
+
+  \item (i) How many samples does the code generate?  
+  (ii) What do all samples have in common?  
+  (iii) Describe lines 1–16 (R) or 6–30 (Python) of the code.
+
+  \textit{Insert concise explanation below.}
+
+  \item Describe the function of lines 18–23 (R) or 32–39 (Python).  
+  \item Describe the function of lines 25–40 (R) or 41–56 (Python).  
+  \item Run the code and report the value of \texttt{ratiog} and include the plot below.
+  \begin{center}
+  \includegraphics[width=0.8\textwidth]{Q4e_plot.png}
+  \end{center}
+
+  \textit{Comment on whether you are surprised by the value of \texttt{ratiog}.}
+
+  \item Explain what the plot illustrates and provide a rigorous interpretation.
+
+  \item Discuss how increasing $M$ from 100 to 10,000 would affect \texttt{ratiog}.  
+  \item Explain how changing confidence level (from 0.025/0.975 to 0.005/0.995) affects \texttt{Ratio} and the plot.
+
+  \item What is the purpose of this simulation exercise?  
+  \textit{Summarize the econometric concept it illustrates.}
+\end{enumerate}
+
+\newpage
+% ============================================================
+\section*{Question 5: Fair’s Model of U.S. Presidential Elections}
+
+\begin{enumerate}[label=(\alph*)]
+  \item For each of Fair’s four conditions, identify the relevant parameter(s) and expected sign.
+
+  \textbf{Example Table:}
+  \begin{table}[h!]\centering
+  \begin{tabular}{lcc}
+  \hline
+  Condition & Parameter & Expected Sign \\
+  \hline
+  Incumbent running again & $\beta_3$ (DPER) & $+$ \\
+  Duration in power & $\beta_4$ (DUR) & $-$ \\
+  Republican bias & $\beta_2$ (I) & $-$ \\
+  State of economy & $\beta_6$, $\beta_7$, $\beta_8$ & $+$ \\
+  \hline
+  \end{tabular}
+  \caption{Expected signs of parameters in Fair’s model.}
+  \end{table}
+
+  \item Estimate the model using Stata with data \texttt{USelections.csv}. Include Stata output below.  
+  \textit{Example:}
+  \begin{center}
+  \includegraphics[width=0.8\textwidth]{Q5b_stata_output.png}
+  \end{center}
+
+  \item Define and compute:
+  \begin{enumerate}[label=(\roman*)]
+    \item $se(\hat{\beta}_6)$  
+    \item $t$–value and $p$–value for regressor $I$
+  \end{enumerate}
+  \textit{Include Python/R calculations and verify against Stata.}
+
+  \item Test $H_0:\beta_7=0$ vs. $H_1:\beta_7\neq 0$ at 5\% significance.  
+  Draw acceptance and rejection regions.
+  \begin{center}
+  \includegraphics[width=0.7\textwidth]{Q5d_ttest_plot.png}
+  \end{center}
+
+  \item Draw the p–value region and indicate the minimum significance level that makes $\beta_7$ significant.  
+  \item Test joint significance of $(G\cdot I)$, $(P\cdot I)$, and $(Z\cdot I)$ (``It’s the economy, stupid!’’).  
+  Include Stata output and steps.
+
+  \item Compute prediction error for 2024 using given $V\!P=49.25$, $G=1.7$, $P=4.54$, $Z=4$.  
+  Interpret and comment on Fair’s predictive method.
+\end{enumerate}
+
+\newpage
+% ============================================================
+\section*{References}
+\begin{itemize}
+  \item Angrist, J.D. \& Pischke, J.S. (2009). \textit{Mostly Harmless Econometrics: An Empiricist’s Companion}.
+  \item Fair, R. (2024). \textit{U.S. Presidential Vote Equation}. Yale University, \url{https://fairmodel.econ.yale.edu/}.
+  \item Enikolopov, R., Makarin, A., Petrova, M. (2018). “Social Media and Corruption.” \textit{American Economic Journal: Applied Economics}.
+\end{itemize}
+
+\end{document}
