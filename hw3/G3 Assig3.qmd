@@ -7,6 +7,12 @@ Authors:
 format: pdf
 ---
 
+Authors:
+
+- Samuel Fraley
+- Daniel Campos
+- Elvis Casco
+
 1. Consider assumptions [A1]-[A4] presented in class slide 1(3). If we wanted to present these same assumptions for random samples, that is, when $\{(xi, yi)\}$ are i.i.d (independently and identically distributed across observations), how would you write these 4 assumptions? Provide the expressions and briefly justify.
 
 $[A1]: y_i=\beta_1+\beta_2 x_{i2}+\dots+\beta_Kx_{iK}+\epsilon_i=x_i'\beta+\epsilon_i$
