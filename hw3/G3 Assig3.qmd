@@ -26,7 +26,7 @@ $$[A3]: \quad \text{Var}(\epsilon_i | X) = \sigma^2$$
 
 $$[A4]: \quad \text{Cov}(\epsilon_i, \epsilon_j | X) = 0 \quad \forall i \neq j$$
 
-## Answer
+**Answer**
 
 To adapt assumptions [A1]–[A4] for the case where observations $\{(x_i, y_i)\}$ are independently and identically distributed (\textit{i.i.d.}), we shift from conditioning on the full design matrix $X$ to conditioning on the individual regressor vector $x_i$. Here's how each assumption would be rewritten:
 
@@ -88,9 +88,9 @@ $$(B): \quad \text{Var}(\widehat\beta_k \mid X) \leq \text{Var}(\widetilde\beta_
 
 where $\widetilde\beta_k$ is any other linear unbiased estimator of regression parameter $\beta_k$.
 
-## Part (a)
+**Part (a)**
 
-### (i) Departing from result (A), prove that OLS is also unconditionally unbiased.
+**(i) Departing from result (A), prove that OLS is also unconditionally unbiased.**
 
 To prove that the OLS estimator $\widehat\beta_k$ is unconditionally unbiased, we start from the conditional unbiasedness result (A):
 
@@ -122,13 +122,13 @@ which establishes that the OLS estimator is unconditionally unbiased.
 
 \vspace{0.3cm}
 
-### (ii) In a sentence describe what this property is telling us.
+**(ii) In a sentence describe what this property is telling us.***
 
 This property tells us that, on average across all possible samples, the OLS estimator correctly targets the true value of the parameter—it does not systematically overestimate or underestimate $\beta_k$.
 
 \vspace{0.3cm}
 
-## Part (b)
+**Part (b)**
 
 Departing from result (B), prove that this inequality also holds for the unconditional version. That is, prove:
 
@@ -183,6 +183,7 @@ Combining the results from Steps 1 and 2:
 $$\text{Var}(\widehat\beta_k) \leq \text{Var}(\widetilde\beta_k) \quad \forall k$$
 
 This establishes that OLS has the smallest unconditional variance among all linear unbiased estimators, completing the proof.
+
 # Question 3
 
 Consider performing the following test:
@@ -191,7 +192,7 @@ $$H_0 : \beta_2 = 0\quad \text{versus} H_1 : \beta_2 < 0,$$
 
 using the t-test statistic. This test is called one-sided test since its rejection region is all in one of the tails of the distribution.
 
-## 3 (a) 
+**3 (a)** 
 
 Draw the acceptance and rejection regions for this test using $\alpha = 5%$.
 
@@ -234,7 +235,7 @@ plt.grid(True)
 plt.show()
 ```
 
-## 3 (b) 
+**3 (b)**
 
 Explain the intuition behind the location of the critical region.
 
@@ -264,7 +265,7 @@ The alternative hypothesis $H_1: \beta_2 < 0$ suggests we're testing whether the
 
 Consider the code included in file Assig3Q4.R or file Assig3Q4.py. Both codes are reproduced at the end of the assignment, after the instructions.
 
-## 4 (a) 
+**4 (a)**
 
 Provide the expression of the dgp behind any generated sample. Be careful with the notation.
 
@@ -298,9 +299,7 @@ In the end we are simulating dgp under Gauss-Markow assumptions plus normality:
 
 $y_i = 10 + 5x_{i2} + \epsilon_i, \quad \epsilon_i|X \sim ii\mathcal{N}(0, \sigma^2=36)$
 
-## 4 (b) 
-
-### 4 (b) (i) 
+ **4 (b) (i)**
 
 How many samples does the code file generate? 
 
@@ -356,7 +355,7 @@ print('\nSample size: ')
 print(len(x2))
 ```
 
-### 4 (b) (ii) 
+**4 (b) (ii)**
 
 What do all the samples have in common? 
 
@@ -380,7 +379,7 @@ $y_i=\beta_1+\beta_2x_{i2}+\epsilon_i$
 
 $\epsilon_i|X\sim i.i.N(0,\sigma^2)$
 
-### 4 (b) (iii) 
+**4 (b) (iii)**
 
 Describe what the R code from line 1 to line 16 (or from line 6 to 30 in Python) does. Be specific.
 
@@ -421,7 +420,7 @@ A confidence interval for $\beta_k$ at $100(1-\alpha)\%$ is given by all values 
 
 $r\in\big[\widehat\beta_k-t_{\frac{\alpha}{2}}(n-K)\cdot se(\widehat\beta_k),\widehat\beta_k+t_{\frac{\alpha}{2}}(n-K)\cdot se(\widehat\beta_k)\big]$
 
-## 4 (c) 
+**4 (c)** 
 
 Describe what does R code from line 18 to line 23 (or from line 32 to 39 in Python) do? Be specific.
 
@@ -451,7 +450,7 @@ $5\in\big[\widehat\beta_k-t_{0.025}(48)\cdot se(\widehat\beta_k),\widehat\beta_k
 
 $5\in\big[\widehat\beta_k-2.0106\cdot se(\widehat\beta_k),\widehat\beta_k+2.0106\cdot se(\widehat\beta_k)\big]$
 
-## 4 (d) 
+**4 (d)**
 
 Describe what does R code from line 25 to line 40 (or from line 41 to 56 in Python) do? Be specific.
 
@@ -483,7 +482,7 @@ This plot provides a visual summary of:
 - Which intervals failed (lines in red)
 - The coverage performance of the confidence interval procedure
 
-## 4 (e) 
+**4 (e)**
 
 Run the entire code file (your choice, ideally try both). Include the value of the variable 'ratiog' and the plot. Surprised by the value of 'ratiog'? Rigorously comment.
 
@@ -550,7 +549,7 @@ This code is useful to observe:
 - Random Variation: The slight deviation from 95% is due to sampling variability.
 - Model Assumptions: The linear model assumes homoscedasticity and normal errors. The simulation uses `rnorm` with `sd = 6`, which is reasonable and supports valid inference.
 
-## 4 (f) 
+**4 (f)**
 
 What does the plot illustrate? Rigorously comment.
 
@@ -584,7 +583,7 @@ The reliability of the intervals -and the accuracy of the coverage rate—depend
 
 With 100 simulations, you get a rough estimate of the true coverage probability. Due to random variation, you might see values like 94%, 97%, or even 92% — all within the expected range for a 95% CI.
 
-## 4 (g) 
+**4 (g)**
 
 If you increased the value of M at the tope of the code file, say from 100 to 10,000, how would you expect the value of 'ratiog' to change? Rigorously argue.
 
@@ -703,7 +702,7 @@ print("\nIntervals missing the true value: ",length_IDb)
 print("\nRatio", ratiog)
 ```
 
-## 4 (h)
+**4 (h)**
 
 Finally, for M = 10, 000, if we replaced value 0.025 in R code line 13 and 14 by 0.005 (or replace value 0.975 by 0.995 in line 26 in Python code file), what would you expect the value of 'Ratio' to be? Rigorously argue. And the plot to change?
 
@@ -810,7 +809,7 @@ With 99% Confidence:
 
 So visually, the plot will look more "forgiving" - more intervals will span the true value, and the red lines will nearly disappear.
 
-## 4 (i) 
+**4 (i)**
 
 Finally, what do you think the purpose of this simulation exercise is? That is, what is it trying to illustrate? Be specific.
 
@@ -847,7 +846,7 @@ By simulating and visualizing the process, the exercise:
 - Builds trust in statistical inference methods
 - Reveals the role of randomness in estimation
 
-# 5. 
+# Question 5. 
 
 Ray Fair (https://fairmodel.econ.yale.edu/) work on US presidential elections, includes the following regression model for the Democratic share of the two party presidential vote:
 
