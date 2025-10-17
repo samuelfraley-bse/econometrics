@@ -902,3 +902,80 @@ Provide the specific expression defining each of these three statistics, and the
 (i) Given that the latest estimate of the democratic share of the two-party vote for November 2024 elections is 49.25, what is the prediction error we would get if we used R. Fair values as for $G = 1.7, P = 4.54$ and $Z = 4$ before the election? Justify. 
 
 (ii) What can you say about the method used by Fair, and reproduced in this exercise, to predict $VP$? Briefly justify.
+
+# Exercise 5 {.unnumbered}
+
+## 5(a) {.unnumbered}
+
+### i. {.unnumbered}
+
+$\beta_3$, and its sign should be positive. Therefore, if $DPER_t = 1$, meaning that the current Democratic president runs for reelection, the average association between $VP_t$ and $DPER_t$ controlling for every other variable in the model is positive, correctly reflecting that voters tend to favor presidents running again. Clearly, if it is the Republican president the one that is running for reelection ($DPER_t = -1$), said relationship is negative.
+
+### ii. {.unnumbered}
+
+$\beta_4$, and in this case, its sign should also be positive. According to Fair, when a party has been in power for two or more consecutive terms, a negative effect on votes for that party's candidate appears. Thus, and given that $DUR_t$ takes negative values if the Republican Party has been in the White House for at least $2$ consecutive terms and that we are estimating the Democratic share of the vote, the sign of the parameter has to be negative so as to obtain a positive $VP_t$ estimation when holding every other variable in the model constant.
+
+### iii. {.unnumbered}
+
+$\beta_2$, and we should expect its sign to be negative. Suppose that we control for every variable in the model except for $I_t$. When $I_t = 1$, that is, when a Democrat is in power, its relationship with $VP_t$ is negative, which can be interpreted as a systematic bias in favor of the Republicans. Expressed in other words, the Democratic vote share is lower when it is the Democratic Party itself in the White House. However, if $I_t$ is not in the model or presents issues (multicollinearity or statistical insignificance, for instance), the intercept term $\beta_1$ can represent said bias by taking a negative value.
+
+### iv. {.unnumbered}
+
+$\beta_6$ and $\beta_8$, and its sign should be positive. This case is particularly interesting, as we are looking into the parameters associated with two interactions of variables, $G_t·I_t$ and $Z_t·I_t$. In the favorable economic scenario portrayed by Fair, both $G_t$ and $Z_t$ take positive values, and $I_t = 1$ means that the Democrats are in office. Thus, if both estimators are positive and we hold every other in the model constant, the relationship between a healthy economy and the Democratic share of the vote given that the president is a Democrat is positive, which is in line with Fair's condition.
+
+## 5(b) {.unnumbered}
+
+![](989.23852.png){width=90%}
+
+The OLS estimates $\hat{\beta_3}$, $\hat{\beta_4}$, $\hat{\beta_6}$ and $\hat{\beta_8}$ present the expected signs. $\hat{\beta_2}$, however, is positive. This could be explained by the sample size being too small to back up a statement as bold as the one associated with our intuition, considering that there are only 27 observations in this dataset. There might also be multicollinearity problems between different variables, such as $I_t$ and $DPER_t$, since both take the value $1$ or $-1$, depending on the party, if the current president is running for reelection. It is also important to note that neither $\hat{\beta_1}$ nor its true value $\beta_1$ are negative, which could have been the case given the potential multicollinearity problems or the low statistical significance of $I_t$.
+
+## 5(c) (missing R output) {.unnumbered}
+
+$$
+se(\hat{\beta}_6) \equiv \sqrt{\widehat{var}(\hat{\beta}_6 / X)} = \sqrt{\hat{\sigma}^2 (X'X)^{-1}_{66}}
+$$
+
+$$
+\mathbf{t} \equiv \frac{\hat{\beta}_2}{se(\hat{\beta}_2)} 
+\overset{\text{under } H_0}{\sim} t(n - K) \Longrightarrow t\text{-value} \equiv \mathbf{t}(\textit{data})
+$$
+
+$$
+p\text{-value} \equiv \mathbb{P}\left( \left| \textbf{t} \right| \geqslant \left| t\text{-value} \right| \,\middle|\, \text{under } H_0 \right)
+$$
+
+## 5(d) {.unnumbered}
+
+The observed $t\text{-value} \approx -0.4076$ does not fall inside the rejection region, since $|t\text{-value}| < |\text{critical value}|$. Hence, we do not reject $H_0$, implying that the true value of the parameter $\beta_7$ is equal to $0$.
+
+![The rejection region could have also been drawn as an interval of values of $t\text{-statistic}$.](graph_5d.png){width=90%}
+
+## 5(e) {.unnumbered}
+
+The $p\text{-value}$ must be lower than the significance level for us to reject $H_0$ and thus conclude that the true value of $\beta_7$ is not equal to $0$, deeming it statistically significant. Hence, in this case, the regressor $P_tI_t$ would be significant if $\alpha$ was equal to or above $0.248 = 24.8\%$.
+
+![The rejection region could have also been drawn as an interval of values of $t\text{-statistic}$.](graph_5e.png){width=90%}
+
+## 5(f) {.unnumbered}
+
+First, the null and alternative hypotheses must be stated:
+
+$$
+H_0: \beta_6 = \beta_7 = \beta_8 = 0 \quad \text{vs} \quad H_1: \text{not } H_0
+$$
+
+The full model needs to be estimated so as to obtain $SSE_{unrestricted}$, but since such estimation was already computed in a previous section, we can directly conclude that $SSE_{unrestricted} = 153.785735$
+
+Let us now build the restricted model, that is, the full model without including the interactions $G_tI_t$, $P_tI_t$ and $Z_tI_t$:
+
+$$
+VP_t = \beta_1 + \beta_2I_t + \beta_3DPER_t + \beta_4DUR_t + \beta_5WAR_t + \epsilon_t
+$$
+
+Once the model has been estimated, we obtain that $SSE_{restricted} = 432.789743$.
+
+At this point, we are set to compute the $F\text{-value}$:
+
+$$
+F = \frac{(SSE_{restricted} - SSE_{unrestricted})/q}{SSE_{unrestricted} / (n - K)} = \frac{432.789743 - 153.785735)/3}{153.785735 / (26 - 8)} =
+$$
