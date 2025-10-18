@@ -848,9 +848,10 @@ By simulating and visualizing the process, the exercise:
 
 # Question 5. 
 
-**5(a)**
+## 5(a) {.unnumbered}
 
-**i**
+### i. {.unnumbered}
+
 $\beta_3$, and its sign should be positive. Therefore, if $DPER_t = 1$, meaning that the current Democratic president runs for reelection, the average association between $VP_t$ and $DPER_t$ controlling for every other variable in the model is positive, correctly reflecting that voters tend to favor presidents running again. Clearly, if it is the Republican president the one that is running for reelection ($DPER_t = -1$), said relationship is negative.
 
 ### ii. {.unnumbered}
@@ -886,6 +887,44 @@ $$
 p\text{-value} \equiv \mathbb{P}\left( \left| \textbf{t} \right| \geqslant \left| t\text{-value} \right| \,\middle|\, \text{under } H_0 \right)
 $$
 
+```r
+# read Data
+df <- read.csv("C:/Users/sffra/Downloads/USelections.csv")
+
+# build X in the order so B7 is GI and B2 is I
+X <- with(df, cbind(
+  const = 1,
+  I     = I,
+  DPER  = DPER,
+  DUR   = DUR,
+  WAR   = WAR,
+  GI    = G * I,
+  PI    = P * I,
+  ZI    = Z * I
+))
+y <- as.matrix(df$VP)
+
+XtX   <- t(X) %*% X
+XtX_i <- solve(XtX)
+beta  <- XtX_i %*% t(X) %*% y
+u     <- y - X %*% beta
+
+n <- nrow(X); k <- ncol(X)
+sigma2_hat <- as.numeric(t(u) %*% u) / (n - k)
+Vbeta_hat  <- sigma2_hat * XtX_i
+se         <- sqrt(diag(Vbeta_hat))
+
+se_beta6 <- se[6]
+t_I <- as.numeric(beta[2] / se[2])
+p_I <- 2 * (1 - pt(abs(t_I), df = n - k))
+```
+
+**Output**
+se(beta6 [GI]) = 0.128698
+t-value for I   = -0.375055
+p-value for I   = 0.711773
+
+This matches the Stata output when rounded
 ## 5(d) {.unnumbered}
 
 The observed $t\text{-value} \approx -1.87$ does not fall inside the rejection region, since $|t\text{-value}| < |\text{critical value}|$. Hence, we do not reject $H_0$, implying that the true value of the parameter $\beta_7$ is equal to $0$.
