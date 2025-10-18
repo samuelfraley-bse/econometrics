@@ -4,7 +4,7 @@ author:
   - Samuel Fraley
   - Daniel Campos
   - Elvis Casco
-date: "17/10/2025"
+date: "October 18, 2025"
 format: 
   pdf:
     number-sections: true
@@ -872,7 +872,7 @@ $\beta_6$ and $\beta_8$, and its sign should be positive. This case is particula
 
 The OLS estimates $\hat{\beta_2}$, $\hat{\beta_3}$, $\hat{\beta_4}$, $\hat{\beta_6}$ and $\hat{\beta_8}$ present the expected signs. We also find relevant to note that neither $\hat{\beta_1}$ nor its true value $\beta_1$ are negative, which could have been the case given the potential multicollinearity problems that we will discuss further in the exercise or the low statistical significance of $I_t$.
 
-## 5(c) (missing R output) {.unnumbered}
+## 5(c)  {.unnumbered}
 
 $$
 se(\hat{\beta}_6) \equiv \sqrt{\widehat{var}(\hat{\beta}_6 / X)} = \sqrt{\hat{\sigma}^2 (X'X)^{-1}_{66}}
@@ -925,6 +925,7 @@ t-value for I   = -0.375055
 p-value for I   = 0.711773
 
 This matches the Stata output when rounded
+
 ## 5(d) {.unnumbered}
 
 The observed $t\text{-value} \approx -1.87$ does not fall inside the rejection region, since $|t\text{-value}| < |\text{critical value}|$. Hence, we do not reject $H_0$, implying that the true value of the parameter $\beta_7$ is equal to $0$.
