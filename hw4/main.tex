@@ -2,260 +2,130 @@
 
 \input{Latex/packages.tex}
 
-\title{Assignment 1}
-\author{
-  Samuel Fraley \\
-  Dmitrii Kuptsov \\
-  Felipe Manzi
-}
-\date{\today}
-
 \begin{document}
 
-\maketitle
-\tableofcontents
+% Title page
+\begin{titlepage}
+\centering
+\includegraphics[width=0.75\textwidth]{Latex/imgs/bse_logo.pdf}
+\par\vspace{0.75cm}
+	{\huge\bfseries Assignment 4 \par}
+    {\large\bfseries Foundations of Econometrics \\
+                        Group 7\par}
+	\vspace{0.25cm}
+    \noindent\rule{\textwidth}{1pt}
+    {\Large 
+        \par}
+    \noindent\rule{\textwidth}{1pt}
+	\vfill
+	{\large \today\par}
+\end{titlepage}
 \newpage
 
 \section*{Question 1}
-\begin{enumerate}[label=(\alph*)]
-  \item Describe, in one precise sentence, what term (1) captures.
+Class slide 3(33) (Unit 3) illustrated, via simulation, the effects of collinearity. The script used to generate the sample is included in file \texttt{data33.R}.
 
-  Term 1, $E(y_{i} \mid d_i = 1)$, captures the expected value of of $y_{i}$ given $d_{i} = 1$, specifically the expected monthly pay of a person given they have a college degree ($d_{i} = 1$)
-
-  \item What sign would you expect for (1) – (2)? Briefly justify.
-
-  Term 1 is the expected monthly pay of individuals with a college degree, while Term 2 is the expected monthly pay of those without a college degree. Generally we would expect those with a college degree to, on average, have a higher monthly pay, so Term 1 would be larger than Term 2. As a result, we would expect (1) - (2) to be positive.
+\subsection*{Part (a)}
+\begin{enumerate}[label=(\roman*)]
+  \item Estimate the regression model included in the slide, presenting OLS estimates and the 95\% confidence intervals for each parameter; Include the output in your answer.
   
-  \item Describe what does term (3) capture. Be specific.
-
-  Term 3 describes the expected difference in monthly pay between going and not going to college given a person did go to college. $y_{i1}$ - $y_{i0}$ calculates the difference in monthly wage, while $d_{i} = 1$ is the condition that they did go to college. This is a casual parameter that we defined as the Average Treatment Effect for the Treated (ATT).
+  \textbf{Answer:} 
   
-  \item Consider we are given a sample of n pairs of observations (yi, di) (observational data). Explain how the sample can be used to provide information for term (1) - (2) but not for term (3) nor (4). Justify.
-
-  Term 3 and Term 4 both focus on counterfactuals that we cannot observe. We cannot observe ${y_{i0}}$ for those given ${d_{i} = 1}$, or ${y_{i1}}$ for those given ${d_{i} = 0}$. We know that Term 3 requires the wages given attended college ($y_{i0}$) and not attended college ($y_{i1}$) for the treatment group ({$d_{i} = 1$}), and Term 4 requires $y_{i0}$ for both those given thehy did ($d_{i} = 1$) and did not ($d_{i} = 0$) attend college. In short, we cannot observe the counterfactual, what the wage would have been if those who attended college did not as well as if those who did not attend college actually did.
+  \item Using \texttt{confidenceEllipse()} function, or equivalent, draw the 95\% confidence region for parameters $\beta_3$, $\beta_4$. Include also in the drawing the confidence intervals for each parameter.
   
-  \item What would it mean for term (4) to be positive?
-
-  Term 4 is the difference in the counterfactual wage (no college) between those that did and did not attend college. If it was positive, that would mean $E(y_{i0} \mid d_i = 1)$ is greater than $E(y_{i0} \mid d_i = 1)$, so the expected monthly wage without college is greater for those that did attend college compared to those that did not. It would mean that those that did attend college would have had a higher wage even without college compared to those that did not attend college. This captures systemic differences between the two populations that would impact monthly wage, such as ability.
+  \textbf{Answer:} 
   
-  \item What are the implications of term (4) being positive for measuring the effect of a degree on earnings?
-
- If Term (4) is positive, it means that individuals who attended college would still earn more, on average, than those who did not, even in the absence of a degree. As a result, the observed wage gap between graduates and non-graduates would reflect not only the effect of college itself, but also pre-existing differences between the two groups, making the observed effect larger than the true causal effect of a degree.
- 
+  \item Describe what the confidence region you just drew provides.
+  
+  \textbf{Answer:} 
+  
+  \item Use the figure of confidence intervals and confidence region to show the difference between testing statistical significance of regressors separately or jointly, and explain why this is so relevant under the presence of collinear regressors.
+  
+  \textbf{Answer:} 
 \end{enumerate}
 
+\subsection*{Part (b)}
+Modify the script used to estimate now the same regression with data generated from the same dgp but now using a sample of 3500 observations.
+
+\begin{enumerate}[label=(\roman*)]
+  \item Surprised with how the estimates have changed? Rigorously justify.
+  
+  \textbf{Answer:} 
+  
+  \item Surprised of the change of the 95\% confidence intervals? Rigorously justify.
+  
+  \textbf{Answer:} 
+  
+  \item Surprised of the change of the 95\% confidence region for parameters $\beta_3$, $\beta_4$? Rigorously justify.
+  
+  \textbf{Answer:} 
+  
+  \item Using the variance decomposition expression for $\text{var}(\hat{\beta}_3 \mid X)$, or $\text{var}(\hat{\beta}_4 \mid X)$, discuss why increasing $n$ can explain the changes observed. Be specific.
+  
+  \textbf{Answer:} 
+\end{enumerate}
+
+\subsection*{Part (c)}
+Now, go back to the original script generating 35 observations, and modify the script so that now $x_{i3} + 2x_{i4} = 0$.
+
+\begin{enumerate}[label=(\roman*)]
+  \item Run the script again. Include the output in your answer.
+  
+  \textbf{Answer:} 
+  
+  \item How many estimates did you get an estimate for $\beta_3$? And for $\beta_4$? You should be able to show, using the proper derivation, that in fact you got an infinite number of estimates for $\beta_3$ and $\beta_4$.
+  
+  \textbf{Answer:} 
+\end{enumerate}
+
+\newpage
+
 \section*{Question 2}
-Discrete random variables $X$ and $Y$ can take 10 equally likely pairs:
+Data file \texttt{microsoft.csv} includes monthly data from May 1986 to April 2013 on $RP_{msft}$ (excess return of Microsoft stock), $RP_{s\&p}$ (excess return on the S\&P500 portfolio), $Dprod$ (variation of Industrial production), $Dinflation$ (change in inflation rate), $Dterm$ (change in interest rate) and $m1$ (an indicator variable that takes value 1 if $t$ is the month of January and 0 otherwise). The following regression is set to measure the reaction of the excess return of Microsoft stocks to changes in macroeconomic variables:
 \[
-(1, 2), (1, 4), (1, 6), (2, 1), (2, 3), (2, 5), (3, 2), (3, 4), (3, 6), (3, 8).
+RP_{msft,t} = \beta_1 + \beta_2 RP_{s\&p,t} + \beta_3 Dprod_t + \beta_4 Dinflation_t + \beta_5 Dterm_t + \beta_6 m1_t + \epsilon_t
 \]
-Verify the Law of Total Expectations: $E[E(Y|X)] = E(Y)$.  
-\textbf{Answer:} \ldots
-
-\section*{Question 3}
-Variable $X \sim N(0,1)$ and $Y = X^2 - 1$. Show how this example illustrates that uncorrelated $\not\Rightarrow$ independent.  
-\textbf{Answer:} \ldots
-
-\section*{Question 4}
-
-\section*{Question 4}
-
-Joint pdf: $f(x,y)=\dfrac{3(x^2+y)}{11}$ for $0\leq x\leq 2$, $0\leq y\leq 1$.
-(For consistency with Appendix 2 notation, set $x_2 \equiv x$.)
-
-We want the best linear approximation to the conditional expectation function (CEF),
-\[
-\ell(x)=\beta_1+\beta_2 x.
-\]
-The population least squares problem
-\[
-\min_{\beta}\;E\big[(y-x'\beta)^2\big],
-\]
-where
-\[
-x=
-\begin{bmatrix}
-1\\ x_2
-\end{bmatrix},
-\qquad
-\beta=
-\begin{bmatrix}
-\beta_1\\ \beta_2
-\end{bmatrix}.
-\]
-
-Normal equations:
-\[
-E(xx')\,\beta=E(xy).
-\]
-Rewrite:
-\[
-\beta \equiv [E(xx')]^{-1}E(xy).
-\]
-
-Working the algebra:
-\[
-\begin{bmatrix}
-\beta_1\\ \beta_2
-\end{bmatrix}
-= [E(xx')]^{-1}E(xy)
-=
-\Bigg(
-E
-\Big(
-\begin{bmatrix}
-1\\ x_2
-\end{bmatrix}
-\begin{bmatrix}
-1 & x_2
-\end{bmatrix}
-\Big)
-\Bigg)^{-1}
-E
-\begin{bmatrix}
-1\\ x_2
-\end{bmatrix}
-y
-=
-\begin{bmatrix}
-1 & E(x_2)\\
-E(x_2) & E(x_2^2)
-\end{bmatrix}^{-1}
-\begin{bmatrix}
-E(y)\\
-E(x_2y)
-\end{bmatrix}.
-\]
-
-Using the $2\times2$ inverse formula,
-\[
-\begin{bmatrix}
-1 & E(x_2)\\
-E(x_2) & E(x_2^2)
-\end{bmatrix}^{-1}
-=
-\frac{1}{E(x_2^2)-[E(x_2)]^2}
-\begin{bmatrix}
-E(x_2^2) & -E(x_2)\\
-- E(x_2) & 1
-\end{bmatrix}
-=
-\frac{1}{\operatorname{var}(x_2)}
-\begin{bmatrix}
-E(x_2^2) & -E(x_2)\\
-- E(x_2) & 1
-\end{bmatrix}.
-\]
-
-Hence,
-\[
-\begin{bmatrix}
-\beta_1\\ \beta_2
-\end{bmatrix}
-=
-\frac{1}{\operatorname{var}(x_2)}
-\begin{bmatrix}
-E(x_2^2) & -E(x_2)\\
-- E(x_2) & 1
-\end{bmatrix}
-\begin{bmatrix}
-E(y)\\
-E(x_2y)
-\end{bmatrix}
-=
-\begin{bmatrix}
-\dfrac{E(x_2^2)E(y)-E(x_2)E(x_2y)}{\operatorname{var}(x_2)}\\[10pt]
-\dfrac{E(x_2y)-E(x_2)E(y)}{\operatorname{var}(x_2)}
-\end{bmatrix}.
-\]
-
-Identify the slope:
-\[
-\beta_2=\frac{E(x_2y)-E(x_2)E(y)}{\operatorname{var}(x_2)}
-=\frac{\operatorname{cov}(x_2,y)}{\operatorname{var}(x_2)}.
-\]
-
-Regarding the intercept (first element), notice
-\[
-\frac{E(x_2^2)E(y)-E(x_2)E(x_2y)}{E(x_2^2)-[E(x_2)]^2}
-=
-E(y)-\frac{E(x_2y)-E(x_2)E(y)}{E(x_2^2)-[E(x_2)]^2}\,E(x_2)
-=E(y)-\beta_2E(x_2).
-\]
-Therefore,
-\[
-\begin{bmatrix}
-\beta_1\\ \beta_2
-\end{bmatrix}
-=
-\begin{bmatrix}
-E(y)-\beta_2E(x_2)\\[4pt]
-\dfrac{\operatorname{cov}(x_2,y)}{\operatorname{var}(x_2)}
-\end{bmatrix}.
-\]
-
-Plugging in the given moments (with $x_2\equiv x$):
-\[
-E(x_2)=\tfrac{15}{11},\quad 
-\operatorname{var}(x_2)=\tfrac{151}{605},\quad 
-E(y)=\tfrac{6}{11},\quad 
-\operatorname{cov}(x_2,y)=-\tfrac{2}{121}.
-\]
-
-For the slope:
-\[
-\beta_2=\frac{\operatorname{cov}(x_2,y)}{\operatorname{var}(x_2)}
-=\frac{-\tfrac{2}{121}}{\tfrac{151}{605}}
-=\frac{-2}{121}\cdot \frac{605}{151}
-=\frac{-1210}{18271}
-=-\tfrac{10}{151}.
-\]
-
-For the intercept:
-\[
-\beta_1=E(y)-\beta_2E(x_2)
-=\tfrac{6}{11}-\Big(-\tfrac{10}{151}\Big)\tfrac{15}{11}.
-\]
-Compute the second term:
-\[
--\beta_2E(x_2)
-=\frac{10}{151}\cdot\frac{15}{11}
-=\frac{150}{1661}.
-\]
-So,
-\[
-\beta_1=\frac{6}{11}+\frac{150}{1661}.
-\]
-Writing with common denominator $1661$:
-\[
-\frac{6}{11}=\frac{906}{1661},
-\]
-hence
-\[
-\beta_1=\frac{906}{1661}+\frac{150}{1661}
-=\frac{1056}{1661}
-=\tfrac{96}{151}.
-\]
-
-Therefore,
-\[
-\beta_2=-\tfrac{10}{151},\qquad
-\beta_1=\tfrac{96}{151}.
-\]
-
-Final answer:
-\[
-\ell(x)=\beta_1+\beta_2 x
-=\frac{96}{151}-\frac{10}{151}\,x.
-\]
-
-\section*{Question 5}
-Simple regression model: $y = \beta_1 + \beta_2 x^2 + \epsilon$.
 
 \begin{enumerate}[label=(\alph*)]
-  \item Prove $\beta_1,\beta_2$ solve the least squares problem.  
-  \item Reverse regression $x^2 = \alpha_1 + \alpha_2 y + v$: write expressions for $\alpha_1,\alpha_2$.  
-  \item When does $\alpha_2 = 1/\beta_2$? Justify.
+  \item Estimate the model above by OLS. Present the complete output (estimates, standard errors, p-values) as your answer.
+  
+  \textbf{Answer:} 
+  
+  \item The January effect states that on average, every else equal, the returns (or excess returns) are larger in the month of January than the rest of the months. Test, at $\alpha = 1\%$, the presence of the January effect using the exact $t$-test statistic. Would you say the data supports the presence of this effect?
+  
+  \textbf{Answer:} 
+  
+  \item Aside from normality, list the assumptions needed to justify the use of the $t$ test statistic. Justify your answer.
+  
+  \textbf{Answer:} 
+  
+  \item For the test you performed in questions (2b), you were asked to use the $t$ test statistic. Using this test requires, among others, for disturbances to be normally distributed. One of the available tests of normality of the distribution of a given random variable is the Jarque-Bera test. Under the null hypothesis of normality, the Jarque-Bera (JB) test statistic is:
+  \[
+  JB \equiv \frac{n}{6}\left[sk^2 + \frac{(kur - 3)^2}{4}\right] \stackrel{a}{\sim} \chi^2(2),
+  \]
+  where $sk$ is the sample coefficient of skewness of the variable and $kur$ is its sample coefficient of kurtosis. Using a significance level of 1\%, draw (by hand absolutely fine) the distribution of JB under $H_0$ and the corresponding acceptance and rejection regions. Provide an intuition for the location of the acceptance region.
+  
+  \textbf{Answer:} 
+  
+  \item Now, we want to test for the presence of normality in our disturbances using the JB test. Ideally, to test normality of disturbances, JB test should be applied to a sample of disturbances, but, given that they are unobservable, the JB test is usually applied to our OLS residuals. Explain how, if all the assumptions regarding the dgp for consistency of OLS estimator are met, it would be justified for $\hat{\epsilon}_t$'s to take the place of $\epsilon_t$'s to perform the test.
+  
+  \textbf{Answer:} 
+  
+  \item Perform the JB test on the OLS residuals. What do you conclude? Comment.
+  
+  \textbf{Answer:} 
+  
+  \item Repeat the test performed in (2b) using the asymptotic $T$-test statistic. Use a 1\% significance level.
+  
+  \textbf{Answer:} 
+  
+  \item Is the use of asymptotic tests justified in this case? Rigorously argue.
+  
+  \textbf{Answer:} 
+  
+  \item Consider the following statement: ``Using the exact $t$ test statistic leads to slightly more conservative inference, because we get larger acceptance regions and larger $p$-values than if we used the asymptotic version.'' Do you agree? Rigorously argue.
+  
+  \textbf{Answer:} 
 \end{enumerate}
 
 \end{document}
