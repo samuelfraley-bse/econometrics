@@ -1,0 +1,905 @@
+---
+title: "Homework 3 Fundamentals of Econometrics"
+author:
+  - Samuel Fraley
+  - Daniel Campos
+  - Elvis Casco
+date: "17/10/2025"
+format: 
+  pdf:
+    number-sections: true
+jupyter: econometrics-env
+---
+
+
+# Question 1
+
+Consider assumptions [A1]-[A4] presented in class slide 1(3). If we wanted to present these same assumptions for random samples, that is, when $\{(x_i, y_i)\}$ are i.i.d (independently and identically distributed across observations), how would you write these 4 assumptions? Provide the expressions and briefly justify.
+
+**Original Assumptions (fixed-$X$ sampling):**
+
+$$[A1]: \quad y_i = \beta_1 + \beta_2 x_{i2} + \dots + \beta_K x_{iK} + \epsilon_i = x_i'\beta + \epsilon_i$$
+
+$$[A2]: \quad E(\epsilon_i | X) = 0$$
+
+$$[A3]: \quad \text{Var}(\epsilon_i | X) = \sigma^2$$
+
+$$[A4]: \quad \text{Cov}(\epsilon_i, \epsilon_j | X) = 0 \quad \forall i \neq j$$
+
+## Answer
+
+To adapt assumptions [A1]–[A4] for the case where observations $\{(x_i, y_i)\}$ are independently and identically distributed (\textit{i.i.d.}), we shift from conditioning on the full design matrix $X$ to conditioning on the individual regressor vector $x_i$. Here's how each assumption would be rewritten:
+
+**Assumption [A1]: Linearity**
+
+**Original (fixed-$X$ sampling):**
+$$y_i = x_i'\beta + \epsilon_i$$
+
+**i.i.d. Version:**
+$$y_i = x_i'\beta + \epsilon_i$$
+
+**Justification:** This assumption remains unchanged. It states that the outcome $y_i$ is a linear function of the covariates $x_i$ plus an error term $\epsilon_i$. Linearity is a structural assumption and does not depend on whether the data are \textit{i.i.d.}
+
+\vspace{0.3cm}
+
+**Assumption [A2]: Zero Conditional Mean (Strict Exogeneity)**
+
+**Original (fixed-$X$ sampling):**
+$$E(\epsilon_i | X) = 0 \quad \forall i = 1, \ldots, n$$
+
+**i.i.d. Version:**
+$$E(\epsilon_i | x_i) = 0 \quad \forall i = 1, \ldots, n$$
+
+**Justification:** Under \textit{i.i.d.} sampling, each observation $(x_i, y_i)$ is independent of the others. Therefore, we condition only on the individual covariates $x_i$, not the entire matrix $X$. This assumption ensures that the regressors are exogenous and that the error term has no systematic relationship with the predictors.
+
+\vspace{0.3cm}
+
+**Assumption [A3]: Conditional Homoskedasticity**
+
+**Original (fixed-$X$ sampling):**
+$$\text{Var}(\epsilon_i | X) = \sigma^2 \quad \forall i = 1, \ldots, n$$
+
+**i.i.d. Version:**
+$$\text{Var}(\epsilon_i | x_i) = \sigma^2 \quad \forall i = 1, \ldots, n$$
+
+**Justification:** Again, we condition on $x_i$ rather than the full matrix $X$. This assumption implies that the variance of the error term is constant across observations, regardless of the values of the covariates.
+
+\vspace{0.3cm}
+
+**Assumption [A4]: No Autocorrelation**
+
+**Original (fixed-$X$ sampling):**
+$$\text{Cov}(\epsilon_i, \epsilon_j | X) = 0 \quad \forall i \neq j$$
+
+**i.i.d. Version:**
+$$\text{Cov}(\epsilon_i, \epsilon_j) = 0 \quad \forall i \neq j$$
+
+**Justification:** Under \textit{i.i.d.} sampling, the errors are automatically uncorrelated across observations. Since the observations are independent, we do not need to condition on $X$ to assert that the errors are uncorrelated. In fact, under \textit{i.i.d.} sampling, the errors are independent (a stronger condition than uncorrelated), which implies $\text{Cov}(\epsilon_i, \epsilon_j) = 0$ for all $i \neq j$.
+
+# Question 2
+
+Under linearity and strict exogeneity assumptions we saw that OLS estimator of the parameters of a linear regression model, $\widehat\beta$, is conditionally unbiased:
+
+$$(A): \quad E\left(\widehat\beta_k \mid X\right) = \beta_k \quad \forall k = 1, \dots, K$$
+
+Additionally, under Gauss-Markov assumptions, we saw that the OLS estimator is the one with the smallest conditional variance among the class of all linear unbiased estimators:
+
+$$(B): \quad \text{Var}(\widehat\beta_k \mid X) \leq \text{Var}(\widetilde\beta_k \mid X) \quad \forall k = 1, \dots, K$$
+
+where $\widetilde\beta_k$ is any other linear unbiased estimator of regression parameter $\beta_k$.
+
+## Part (a)
+
+### (i) Departing from result (A), prove that OLS is also unconditionally unbiased.
+
+To prove that the OLS estimator $\widehat\beta_k$ is unconditionally unbiased, we start from the conditional unbiasedness result (A):
+
+$$E(\widehat\beta_k \mid X) = \beta_k \quad \forall k = 1, \dots, K$$
+
+We want to show that:
+
+$$E(\widehat\beta_k) = \beta_k$$
+
+**Proof:**
+
+By the law of iterated expectations:
+
+$$E(\widehat\beta_k) = E\left[ E(\widehat\beta_k \mid X) \right]$$
+
+Substituting the conditional expectation from result (A):
+
+$$E(\widehat\beta_k) = E[\beta_k]$$
+
+Since $\beta_k$ is a fixed parameter (not a random variable), we have:
+
+$$E[\beta_k] = \beta_k$$
+
+Therefore:
+
+$$E(\widehat\beta_k) = \beta_k$$
+
+which establishes that the OLS estimator is unconditionally unbiased.
+
+\vspace{0.3cm}
+
+### (ii) In a sentence describe what this property is telling us.
+
+This property tells us that, on average across all possible samples, the OLS estimator correctly targets the true value of the parameter—it does not systematically overestimate or underestimate $\beta_k$.
+
+\vspace{0.3cm}
+
+## Part (b)
+
+Departing from result (B), prove that this inequality also holds for the unconditional version. That is, prove:
+
+$$\text{Var}(\widehat\beta_k) \leq \text{Var}(\widetilde\beta_k) \quad \forall k$$
+
+**Proof:**
+
+We use the law of total variance, which states that for any random variables $Z$ and $W$:
+
+$$\text{Var}(Z) = \text{Var}\left[E(Z \mid W)\right] + E\left[\text{Var}(Z \mid W)\right]$$
+
+**Step 1:** Apply the law of total variance to $\widehat\beta_k$, conditioning on $X$:
+
+$$\text{Var}(\widehat\beta_k) = \text{Var}\left[E(\widehat\beta_k \mid X)\right] + E\left[\text{Var}(\widehat\beta_k \mid X)\right]$$
+
+From result (A), we know that $E(\widehat\beta_k \mid X) = \beta_k$, which is a constant. Therefore:
+
+$$\text{Var}\left[E(\widehat\beta_k \mid X)\right] = \text{Var}(\beta_k) = 0$$
+
+Thus:
+
+$$\text{Var}(\widehat\beta_k) = E\left[\text{Var}(\widehat\beta_k \mid X)\right]$$
+
+**Step 2:** Apply the law of total variance to any other linear unbiased estimator $\widetilde\beta_k$:
+
+$$\text{Var}(\widetilde\beta_k) = \text{Var}\left[E(\widetilde\beta_k \mid X)\right] + E\left[\text{Var}(\widetilde\beta_k \mid X)\right]$$
+
+Since $\widetilde\beta_k$ is also conditionally unbiased (by definition of a linear unbiased estimator):
+
+$$E(\widetilde\beta_k \mid X) = \beta_k$$
+
+Therefore:
+
+$$\text{Var}\left[E(\widetilde\beta_k \mid X)\right] = 0$$
+
+Thus:
+
+$$\text{Var}(\widetilde\beta_k) = E\left[\text{Var}(\widetilde\beta_k \mid X)\right]$$
+
+**Step 3:** Apply the Gauss-Markov result (B):
+
+From result (B), we know that:
+
+$$\text{Var}(\widehat\beta_k \mid X) \leq \text{Var}(\widetilde\beta_k \mid X) \quad \forall X$$
+
+Taking expectations on both sides:
+
+$$E\left[\text{Var}(\widehat\beta_k \mid X)\right] \leq E\left[\text{Var}(\widetilde\beta_k \mid X)\right]$$
+
+Combining the results from Steps 1 and 2:
+
+$$\text{Var}(\widehat\beta_k) \leq \text{Var}(\widetilde\beta_k) \quad \forall k$$
+
+This establishes that OLS has the smallest unconditional variance among all linear unbiased estimators, completing the proof.
+# Question 3
+
+Consider performing the following test:
+
+$$H_0 : \beta_2 = 0\quad \text{versus} H_1 : \beta_2 < 0,$$
+
+using the t-test statistic. This test is called one-sided test since its rejection region is all in one of the tails of the distribution.
+
+## 3 (a) 
+
+Draw the acceptance and rejection regions for this test using $\alpha = 5%$.
+
+```{python}
+#| echo: false
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import t
+
+# Parameters
+df = 30  # degrees of freedom
+alpha = 0.05
+
+# Critical value for one-sided test (left tail)
+t_critical = t.ppf(alpha, df)
+
+# x values for plotting
+x = np.linspace(-4, 4, 1000)
+y = t.pdf(x, df)
+
+# Plot the t-distribution
+plt.figure(figsize=(10, 6))
+plt.plot(x, y, label='t(n−K) distribution under Ho', color='blue')
+
+# Highlight part of x-axis in red (from min x to critical value)
+plt.plot(np.linspace(-4, t_critical, 500), np.zeros(500), color='red', linewidth=2, label='acceptance region')
+# Highlight part of x-axis in red (from min x to critical value)
+plt.plot(np.linspace(t_critical,4, 500), np.zeros(500), color='green', linewidth=2, label='rejection region')
+# Annotate critical value
+plt.axvline(t_critical, color='red', linestyle='--', label='Critical value')
+plt.text(t_critical + 0.07, 0.01, r'$-t_\alpha(n - K)$', color='red')
+
+# Labels and legend
+plt.title('One-Sided t-Test: Critical region at level α')
+plt.xlabel('t−statistic')
+plt.ylabel('Probability Density')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+
+## 3 (b) 
+
+Explain the intuition behind the location of the critical region.
+
+**Answer:**
+
+The t-test at significance level $\alpha$ (one-side version):
+
+- Test: $H_0:\beta_k=r$ vs $H_1:\beta_k\ne r$
+
+Test statistic: $t\equiv\displaystyle\frac{\widehat\beta_k-r}{se(\widehat\beta_k)}\mathop{\sim}\limits_{under H_0}t(n-K)$
+
+Critical value at significance level $\alpha$, from $t(n-K)$ distribution tables:
+
+$-t_\alpha(n-K)$
+
+We should use the one-sided critical values only when the parameter space is known to satisfy a one-sided restriction such as $\beta\leq 0$. See Hansen, pg. 225.
+
+The intuition behind the location of the critical region in a one-sided t-test like:
+
+$H_0: \beta_2 = 0 \quad \text{vs.} \quad H_1: \beta_2 < 0$
+
+must be in the direction of the alternative hypothesis.
+
+The alternative hypothesis $H_1: \beta_2 < 0$ suggests we're testing whether the parameter is significantly less than zero. The t-statistic measures how far the estimated coefficient $\widehat\beta_2$ is from zero, in standard error units. If $\widehat\beta_2$ is much smaller than zero, the t-statistic will be strongly negative.
+
+# Question 4
+
+Consider the code included in file Assig3Q4.R or file Assig3Q4.py. Both codes are reproduced at the end of the assignment, after the instructions.
+
+## 4 (a) 
+
+Provide the expression of the dgp behind any generated sample. Be careful with the notation.
+
+**Answer:**
+
+The data generating process (DGP) behind any simulated sample is given by the following linear model:
+
+$y_i = \beta_1 + \beta_2 x_{i2}+\dots+ \beta_k x_{iK}+\epsilon_i$
+
+For this particular case, we have that the functional relationship between $y_i$, $x_i$ and the disturbance $\epsilon_i$ is:
+
+$y_i = \beta_1 + \beta_2 x_{i2}+\epsilon_i$
+
+where:
+
+- $\beta_1 = 10$
+- $\beta_2 = 5$
+- $x_{i2} \sim \text{Uniform}(0, 20)$, 50 observations
+- $\epsilon_i \sim \mathcal{N}(0, 6^2)$, independently across $i = 1, \dots, 50$
+
+So the full expression becomes:
+
+$y_i = 10 + 5x_{i2} + \epsilon_i, \quad \epsilon_i \sim \mathcal{N}(0, \sigma^2=36)$
+
+This DGP is used to simulate 100 independent samples of size 50, each time generating new $y_i$ values based on the same $x_{i2}$ vector and fresh random noise $\epsilon_i$.
+
+
+In the end we are simulating dgp under Gauss-Markow assumptions plus normality:
+
+- for observation $i$: 
+
+$y_i = 10 + 5x_{i2} + \epsilon_i, \quad \epsilon_i|X \sim ii\mathcal{N}(0, \sigma^2=36)$
+
+## 4 (b) 
+
+### 4 (b) (i) 
+
+How many samples does the code file generate? 
+
+**Answer:**
+
+The code simulates a DGP for 100 samples. This is controlled by the line:
+
+```
+M = 100
+```
+
+Each iteration of the for loop simulates one sample of size 50, fits a linear regression model, and computes a confidence interval for $\beta_2$. So in total, it produces 100 confidence intervals -one for each simulated sample.
+
+```{python}
+#| echo: false
+
+#%pip install statsmodels
+import numpy as np
+import statsmodels.api as sm
+from scipy.stats import t
+import matplotlib.pyplot as plt
+
+np.random.seed(1010)
+
+M = 100
+lower = np.zeros(M)
+upper = np.zeros(M)
+x2 = np.random.uniform(0, 20, 50)  
+
+for i in range(M):
+    y = 10 + 5 * x2 + np.random.normal(0, 6, 50)
+    X = sm.add_constant(x2)
+    model = sm.OLS(y, X).fit()
+    b2 = model.params[1]
+    varb2 = model.cov_params()[1, 1]
+    se2 = np.sqrt(varb2)
+    t_val = t.ppf(0.975, 48)  
+    lower[i] = b2 - t_val * se2
+    upper[i] = b2 + t_val * se2
+
+CIs = np.column_stack((lower, upper))
+
+IDg = np.where((lower <= 5) & (upper >= 5))[0]
+length_IDg = len(IDg)
+
+IDb = np.where(~((lower <= 5) & (upper >= 5)))[0]
+length_IDb = len(IDb)
+
+ratiog = (length_IDg / M) * 100
+print('Number of simulations: ')
+print(M)
+print('\nSample size: ')
+print(len(x2))
+```
+
+### 4 (b) (ii) 
+
+What do all the samples have in common? 
+
+**Answer:**
+
+All the samples in the code share the same underlying data generating process (DGP) and same predictor values. Specifically:
+
+- They all use the same vector of covariates:
+$x_{i2} \sim \text{Uniform}(0, 20)$
+- This vector is generated once and reused across all 100 samples.
+- They all follow the same linear model:
+
+$y_i = 10 + 5x_{i2} + \epsilon_i$, where $\epsilon_i \sim \mathcal{N}(0, 36)$ is independently drawn for each sample.
+- Each sample has the same size: 50 observations.
+
+So while the noise term $\epsilon_i$ varies across samples (introducing randomness), the structure of the model and the covariates remain constant, allowing us to assess how often the confidence intervals correctly capture the true value $\beta_2 = 5$.
+
+Then all the samples are generated with a dgp under Gauss-Markow assumptions plus normality; that is, for observation i:
+
+$y_i=\beta_1+\beta_2x_{i2}+\epsilon_i$
+
+$\epsilon_i|X\sim i.i.N(0,\sigma^2)$
+
+### 4 (b) (iii) 
+
+Describe what the R code from line 1 to line 16 (or from line 6 to 30 in Python) does. Be specific.
+
+**Answer:**
+
+This code performs a simulation study to construct 100 confidence intervals for the slope coefficient (the intercept of the regression is a constant = 10) in a simple linear regression model. 
+
+- `np.random.seed(1010)`: Ensures reproducibility of random numbers.
+- `M = 100`: Sets the number of simulated samples to 100.
+- `lower` and `upper`: Initialize vectors to store the lower and upper bounds of confidence intervals for each sample.
+- `x2`: Generates a fixed vector of 50 random values from a uniform distribution between 0 and 20.
+- `for i in range(M):` begins the iteration. The loop runs 100 times, simulating 100 samples.
+
+In each  iteration:
+
+- `y = 10 + 5 * x2 + np.random.normal(0, 6, 50)`: Generates a new response vector $y$ using the DGP: $y_i = 10 + 5x_{i2} + \epsilon_i, \quad \epsilon_i \sim \mathcal{N}(0, 6^2)$
+- `X = sm.add_constant(x2)`: creates the matrix $X$
+- `model = sm.OLS(y, X).fit()`: Fits a linear regression model
+- `b2 = model.params[1]`: Extracts the estimated slope coefficient
+- `varb2 = model.cov_params()[1, 1]`: Computes the variance error of `b2`
+- `se2 = np.sqrt(varb2)`: Computes the standard error of `b2`
+- `t_val = t.ppf(0.975, 48)`: Computes the critical t-value for a 95% confidence interval with $n - 2 = 48$ degrees of freedom.
+- `lower[i] = b2 - t_val * se2` and `upper[i] = b2 + t_val * se2` Calculates and stores the lower and upper bounds of the confidence interval for $\beta_2$.
+- `CIs = np.column_stack((lower, upper))`: Combines the lower and upper bounds into a single array CIs of shape (100, 2), where each row is a confidence interval
+
+At the end of the process:
+
+- You have 100 confidence intervals stored in lower and upper.
+- These intervals reflect the uncertainty around the estimate of $\beta_2 = 5$ across repeated samples.
+
+To build the confidence interval we use the test statistic:
+
+$t\equiv\displaystyle\frac{\widehat\beta_k-r}{se(\widehat\beta_k)}\sim_{under H_0} t(n-K)$
+
+where $se(\widehat\beta_k)\equiv\sqrt{\widehat{var}(\widehat\beta_k|X)}$
+
+A confidence interval for $\beta_k$ at $100(1-\alpha)\%$ is given by all values $r$ such that:
+
+$r\in\big[\widehat\beta_k-t_{\frac{\alpha}{2}}(n-K)\cdot se(\widehat\beta_k),\widehat\beta_k+t_{\frac{\alpha}{2}}(n-K)\cdot se(\widehat\beta_k)\big]$
+
+## 4 (c) 
+
+Describe what does R code from line 18 to line 23 (or from line 32 to 39 in Python) do? Be specific.
+
+**Answer:**
+
+This code evaluates how many of the confidence intervals constructed in your simulation actually contain the true slope value of 5, and calculates the coverage rate — the percentage of intervals that successfully capture the true parameter.
+
+- `IDg = np.where((lower <= 5) & (upper >= 5))[0]`: Finds the indices of intervals where 5 (the true slope value) lies between the lower and upper bounds; `length_IDg = len(IDg)` Counts how many intervals contain the true value
+- `IDb = np.where(~((lower <= 5) & (upper >= 5)))[0]`: Finds the indices of intervals where the lower and upper bounds do not contain 5 (the true slope value); `length_IDb = len(IDb)` Counts how many intervals do not contain the true value
+- `ratiog = (length_IDg / M) * 100`: Computes the proportion of intervals that contain the true value; `print("Ratio", ratiog)` prints this ratio
+
+This block of code checks how often the simulated confidence intervals actually include the true parameter value $(\beta_2 = 5)$. It's a practical way to assess the reliability of the interval estimation procedure.
+
+From this case, we have 
+
+```{python}
+#| echo: false
+
+print("t_val: ",t_val)
+print("se2: ",se2)
+print("t_val * se2: ",t_val*se2)
+```
+
+$se(\widehat\beta_k)\equiv\sqrt{\widehat{var}(\widehat\beta_k|X)}$
+
+$5\in\big[\widehat\beta_k-t_{0.025}(48)\cdot se(\widehat\beta_k),\widehat\beta_k+t_{0.025}(48)\cdot se(\widehat\beta_k)\big]$
+
+$5\in\big[\widehat\beta_k-2.0106\cdot se(\widehat\beta_k),\widehat\beta_k+2.0106\cdot se(\widehat\beta_k)\big]$
+
+## 4 (d) 
+
+Describe what does R code from line 25 to line 40 (or from line 41 to 56 in Python) do? Be specific.
+
+**Answer:**
+
+This code creates a visualization of the 100 confidence intervals for $\beta_2$, highlighting which intervals contain the true value (5) and which do not. 
+
+- `plt.figure()`: Initializes an empty plot with: `plt.xlim([4, 6])` x-axis from 4 to 6 (range of confidence intervals); `plt.ylim([0, 100])` y-axis from 1 to 100 (one row per sample); `plt.xlabel(r'$\beta_2$')` and `plt.ylabel('Samples')` labels the x- and y- axes and adds a title.
+- `plt.axvline(x=5, color='black', linestyle='--')`: Draws a vertical dashed line at $\beta_2 = 5$, the true value, to visually assess which intervals include it.
+
+To create a vector of colors for each interval:
+
+- `colors = ['gray'] * 100` - Initializes all interval colors as gray and `colors = np.array(colors)` converts to NumPy array for indexing
+- `colors[IDb[IDb < 100]] = 'red'`: changes to color red for intervals that miss the true value (those in IDb).
+
+```
+for j in range(100):
+    plt.plot([CIs[j, 0], CIs[j, 1]], [j, j], color=colors[j], lw=2)
+```
+
+- Loops through all 100 intervals
+- Plots a horizontal line for each interval from its lower to upper bound
+- Each line is placed at a different vertical position (j) to separate them visually
+- The lines highlight missed intervals in red
+
+This plot provides a visual summary of:
+
+- How many intervals captured the true $\beta_2 = 5$ (gray lines)
+- Which intervals failed (lines in red)
+- The coverage performance of the confidence interval procedure
+
+## 4 (e) 
+
+Run the entire code file (your choice, ideally try both). Include the value of the variable 'ratiog' and the plot. Surprised by the value of 'ratiog'? Rigorously comment.
+
+**Answer:**
+
+```{python}
+#| echo: false
+
+import numpy as np
+import statsmodels.api as sm
+from scipy.stats import t
+import matplotlib.pyplot as plt
+
+np.random.seed(1010)
+
+M = 100
+lower = np.zeros(M)
+upper = np.zeros(M)
+x2 = np.random.uniform(0, 20, 50)  
+
+for i in range(M):
+    y = 10 + 5 * x2 + np.random.normal(0, 6, 50)
+    X = sm.add_constant(x2)
+    model = sm.OLS(y, X).fit()
+    b2 = model.params[1]
+    varb2 = model.cov_params()[1, 1]
+    se2 = np.sqrt(varb2)
+    t_val = t.ppf(0.975, 48)  
+    lower[i] = b2 - t_val * se2
+    upper[i] = b2 + t_val * se2
+
+CIs = np.column_stack((lower, upper))
+IDg = np.where((lower <= 5) & (upper >= 5))[0]
+length_IDg = len(IDg)
+IDb = np.where(~((lower <= 5) & (upper >= 5)))[0]
+length_IDb = len(IDb)
+
+ratiog = (length_IDg / M) * 100
+print("Ratio", ratiog)
+
+plt.figure()
+plt.xlim([4, 6])
+plt.ylim([0, 100])
+plt.xlabel(r'$\beta_2$')
+plt.ylabel('Samples')
+plt.axvline(x=5, color='black', linestyle='--')
+colors = ['gray'] * 100  
+colors = np.array(colors)
+colors[IDb[IDb < 100]] = 'red' 
+for j in range(100):
+    plt.plot([CIs[j, 0], CIs[j, 1]], [j, j], color=colors[j], lw=2)
+plt.show()
+```
+
+Surprised? Not really:
+
+- The confidence level is 95%, meaning we expect on average 95 out of 100 intervals to contain the true parameter.
+- The observed coverage of 92% is well within the expected statistical fluctuation due to random sampling.
+- This is a classic demonstration of the frequentist interpretation of confidence intervals: over many repetitions, about 95% of intervals should contain the true value.
+
+This code is useful to observe:
+
+- Statistical Validity: The simulation confirms that the confidence interval procedure is well-calibrated. A 92% coverage rate is consistent with the nominal 95% level.
+- Random Variation: The slight deviation from 95% is due to sampling variability.
+- Model Assumptions: The linear model assumes homoscedasticity and normal errors. The simulation uses `rnorm` with `sd = 6`, which is reasonable and supports valid inference.
+
+## 4 (f) 
+
+What does the plot illustrate? Rigorously comment.
+
+**Answer:**
+
+The plot illustrates the empirical coverage performance of 95% confidence intervals for the slope parameter $\beta_2$ in a simple linear regression model, based on repeated sampling; calculates 100 confidence intervals for $\beta_2$ using a simulated sample with 50 observations.
+
+- Each horizontal line represents a confidence interval for $\beta_2$ from one of 100 simulated samples.
+- The dashed vertical line at $\beta_2 = 5$ marks the true value used in the data generating process.
+- Gray lines indicate intervals that successfully contain the true value.
+- Red lines indicate intervals that fail to contain the true value.
+- The plot visually confirms that most intervals include the true value, consistent with the nominal 95% confidence level.
+
+```{python}
+#| echo: false
+
+print("Intervals containing the true value: ",length_IDg)
+print("\nIntervals missing the true value: ",length_IDb)
+```
+
+- The presence of 8 red intervals (out of 100) aligns with the theoretical expectation that, under correct model assumptions, approximately 5% of intervals will miss the true value purely due to sampling variability. This difference (8 vs 5) is due to the number of iterations, as will see in 4g. 
+- This validates the frequentist interpretation of confidence intervals: If we repeated the experiment many times, about 95% of the intervals would contain the true parameter.
+- If we increase the sample to higher values, the 
+
+The reliability of the intervals -and the accuracy of the coverage rate—depends on the following assumptions being satisfied in the simulation:
+
+- Linearity: The model $y_i = 10 + 5x_{i2} + \epsilon_i$ is correctly specified.
+- Independence: Observations are independent across samples.
+- Homoskedasticity: Constant variance of errors $(\epsilon_i \sim \mathcal{N}(0, 36))$.
+- Normality: Errors are normally distributed, justifying the use of the t-distribution for interval construction.
+
+With 100 simulations, you get a rough estimate of the true coverage probability. Due to random variation, you might see values like 94%, 97%, or even 92% — all within the expected range for a 95% CI.
+
+## 4 (g) 
+
+If you increased the value of M at the tope of the code file, say from 100 to 10,000, how would you expect the value of 'ratiog' to change? Rigorously argue.
+
+**Answer:**
+
+```{python}
+#| echo: false
+
+#%pip install statsmodels
+import numpy as np
+import statsmodels.api as sm
+from scipy.stats import t
+import matplotlib.pyplot as plt
+
+np.random.seed(1010)
+
+M = 10000
+lower = np.zeros(M)
+upper = np.zeros(M)
+x2 = np.random.uniform(0, 20, 50)  
+
+for i in range(M):
+    y = 10 + 5 * x2 + np.random.normal(0, 6, 50)
+    X = sm.add_constant(x2)
+    model = sm.OLS(y, X).fit()
+    b2 = model.params[1]
+    varb2 = model.cov_params()[1, 1]
+    se2_2 = np.sqrt(varb2)
+    t_val_2 = t.ppf(0.975, 48)  
+    lower[i] = b2 - t_val_2 * se2_2
+    upper[i] = b2 + t_val_2 * se2_2
+
+CIs = np.column_stack((lower, upper))
+
+IDg = np.where((lower <= 5) & (upper >= 5))[0]
+length_IDg = len(IDg)
+
+IDb = np.where(~((lower <= 5) & (upper >= 5)))[0]
+length_IDb = len(IDb)
+
+ratiog = (length_IDg / M) * 100
+print('Number of simulations: ')
+print(M)
+print('\nSample size: ')
+print(len(x2))
+```
+
+If you increase M from 100 to 10,000, you're dramatically increasing the number of simulated samples — and here's what that means for ratiog, both intuitively and rigorously:
+
+What Is ratiog?
+
+ratiog is the percentage of confidence intervals (CIs) that contain the true slope value $\beta_2 = 5$ across M simulations. Each simulation fits a linear model and computes a 95% CI for the slope.
+
+So:
+
+```
+ratiog = (number of intervals containing 5 / M) × 100
+```
+Now you're running 10,000 simulations, which means:
+
+- Law of Large Numbers kicks in: the empirical coverage (ratiog) will converge to the theoretical coverage of 95%.
+- Random fluctuations shrink: the standard error of the estimate decreases.
+
+The standard error (SE) of a proportion is:
+
+$SE = \sqrt{\frac{p(1-p)}{M}}$
+
+So with M = 10,000, you'd expect ratiog to fall within a very tight band around 95%, say between 94.5% and 95.5%.
+
+Rigorously Interpreted
+
+- Theoretical expectation: The confidence interval procedure is designed to capture the true parameter 95% of the time.
+- Empirical convergence: As M increases, the observed proportion (ratiog) converges to this theoretical value.
+- Statistical consistency: The simulation becomes more reliable and less sensitive to random noise.
+
+```{python}
+#| echo: false
+
+import numpy as np
+import statsmodels.api as sm
+from scipy.stats import t
+import matplotlib.pyplot as plt
+
+np.random.seed(1010)
+
+M = 10000
+lower = np.zeros(M)
+upper = np.zeros(M)
+x2 = np.random.uniform(0, 20, 50)  
+
+for i in range(M):
+    y = 10 + 5 * x2 + np.random.normal(0, 6, 50)
+    X = sm.add_constant(x2)
+    model = sm.OLS(y, X).fit()
+    b2 = model.params[1]
+    varb2 = model.cov_params()[1, 1]
+    se2 = np.sqrt(varb2)
+    t_val = t.ppf(0.975, 48)  
+    lower[i] = b2 - t_val * se2
+    upper[i] = b2 + t_val * se2
+
+CIs = np.column_stack((lower, upper))
+IDg = np.where((lower <= 5) & (upper >= 5))[0]
+length_IDg = len(IDg)
+IDb = np.where(~((lower <= 5) & (upper >= 5)))[0]
+length_IDb = len(IDb)
+
+ratiog = (length_IDg / M) * 100
+```
+
+```{python}
+#| echo: false
+
+print("Intervals containing the true value: ",length_IDg)
+print("\nIntervals missing the true value: ",length_IDb)
+print("\nRatio", ratiog)
+```
+
+## 4 (h)
+
+Finally, for M = 10, 000, if we replaced value 0.025 in R code line 13 and 14 by 0.005 (or replace value 0.975 by 0.995 in line 26 in Python code file), what would you expect the value of 'Ratio' to be? Rigorously argue. And the plot to change?
+
+**Answer:**
+
+In the first code, the confidence interval is constructed as:
+
+```{python}
+#| echo: false
+
+#%pip install statsmodels
+import numpy as np
+import statsmodels.api as sm
+from scipy.stats import t
+import matplotlib.pyplot as plt
+
+np.random.seed(1010)
+
+M = 10000
+lower = np.zeros(M)
+upper = np.zeros(M)
+x2 = np.random.uniform(0, 20, 50)  
+
+for i in range(M):
+    y = 10 + 5 * x2 + np.random.normal(0, 6, 50)
+    X = sm.add_constant(x2)
+    model = sm.OLS(y, X).fit()
+    b2 = model.params[1]
+    varb2 = model.cov_params()[1, 1]
+    se2_2 = np.sqrt(varb2)
+    t_val_2 = t.ppf(0.995, 48)  
+    lower[i] = b2 - t_val_2 * se2_2
+    upper[i] = b2 + t_val_2 * se2_2
+
+CIs = np.column_stack((lower, upper))
+
+IDg = np.where((lower <= 5) & (upper >= 5))[0]
+length_IDg = len(IDg)
+
+IDb = np.where(~((lower <= 5) & (upper >= 5)))[0]
+length_IDb = len(IDb)
+
+ratiog = (length_IDg / M) * 100
+print('Number of simulations: ')
+print(M)
+print('\nSample size: ')
+print(len(x2))
+```
+
+$b2 \pm qt(0.025, df = 48, lower.tail = FALSE) × se2$
+
+That is:
+
+```{python}
+#| echo: false
+
+print("t_val: ",t_val)
+```
+
+$5\in\big[\widehat\beta_k-2.0106\cdot se(\widehat\beta_k),\widehat\beta_k+2.0106\cdot se(\widehat\beta_k)\big]$
+
+This uses the 97.5th percentile of the t-distribution to create a 95% confidence interval (since 2.5% is in each tail).
+
+If you replace  with 0.995, you're now using the 99.5th percentile, which gives you a 99% confidence interval. That is:
+
+```{python}
+#| echo: false
+
+print("t_val: ",t_val_2)
+```
+
+$5\in\big[\widehat\beta_k-2.6822\cdot se(\widehat\beta_k),\widehat\beta_k+2.6822\cdot se(\widehat\beta_k)\big]$
+
+Let's define:
+
+- "ratiog = 95" = proportion of intervals that contain the true value when using 95% confidence intervals
+- "ratiog = 99"= same, but for 99% confidence intervals
+
+Theoretical Expectation
+
+- By definition, a 99% confidence interval is wider than a 95% interval.
+- Therefore, it is more likely to contain the true parameter.
+
+So with M = 10,000
+
+- At 95% confidence, you expect ~9,500 intervals to contain the true value.
+- At 99% confidence, you expect ~9,900 intervals to contain the true value.
+- So  should increase from ~95% to ~99%.
+
+This is a direct consequence of the confidence level: higher confidence → wider intervals → higher coverage.
+
+How Will the Plot Change?
+
+The plot shows horizontal confidence intervals for each simulation, with:
+
+- Gray lines: intervals that contain the true value $(\beta_2 = 5)$
+- Red lines: intervals that miss the true value
+
+With 99% Confidence:
+
+- The intervals will be visibly wider.
+- Fewer red lines: because more intervals will now include 5.
+- The vertical dashed line at 5 will intersect more intervals.
+
+So visually, the plot will look more "forgiving" - more intervals will span the true value, and the red lines will nearly disappear.
+
+## 4 (i) 
+
+Finally, what do you think the purpose of this simulation exercise is? That is, what is it trying to illustrate? Be specific.
+
+**Answer:**
+
+This simulation exercise is designed to visually and empirically demonstrate the frequentist interpretation of confidence intervals — specifically, how often a confidence interval constructed at a given confidence level (e.g. 95%) actually contains the true parameter value when the experiment is repeated many times.
+
+The simulation illustrates the following key statistical concepts:
+
+1. Frequentist Coverage Probability
+
+- A 95% confidence interval does not mean there's a 95% chance the true parameter lies within a single interval.
+- Instead, it means that if we repeated the experiment many times, about 95% of the constructed intervals would contain the true parameter.
+- The simulation makes this abstract idea concrete by repeating the experiment M times and calculating the proportion of intervals that actually include the true slope $(\beta_2 = 5).$
+
+2. Sampling Variability
+
+- Even with a fixed model and known true parameter, the estimated slope and its confidence interval vary from sample to sample due to random noise.
+- This variability is visualized in the plot, where some intervals miss the true value (red lines), and most include it (gray lines).
+
+3. Effect of Confidence Level
+
+- By adjusting the quantile (e.g., from 0.025 to 0.005), you can see how increasing the confidence level (from 95% to 99%) leads to: Wider intervals, Higher coverage, Fewer misses (red lines)
+- This helps students understand the trade-off between precision and confidence.
+
+4. Law of Large Numbers in Simulation
+
+- As M increases (e.g., from 100 to 10,000), the empirical coverage (ratiog) converges to the theoretical confidence level.
+- This reinforces the idea that confidence intervals are long-run properties, not guarantees for individual samples.
+
+By simulating and visualizing the process, the exercise:
+
+- Clarifies the correct interpretation
+- Builds trust in statistical inference methods
+- Reveals the role of randomness in estimation
+
+# 5. 
+
+Ray Fair (https://fairmodel.econ.yale.edu/) work on US presidential elections, includes the following regression model for the Democratic share of the two party presidential vote:
+
+$$VP_t=\beta_1+\beta_2 I_t+\beta_3 DPER_t+\beta_4 DUR_t+\beta_5 WAR_t+\beta_6 (G_t\cdot I_t)+\beta_7 (P_t\cdot I_t)+\beta_8(Z_t\cdot I_t)+\epsilon_t$$ 
+
+where:
+
+$VP \equiv$ Democratic share of the two party presidential vote in election year t,
+
+$I \equiv 1$ if party in White House in election year is Democrat and $-1$ if its Republican;
+
+$DPER \equiv 1$ if Democratic president in office is running for reelection; $-1$ is a Republican president is running again, 0 otherwise;
+
+$DUR \equiv 0$ if party in White House has been in office for only one term, $1 [-1]$ if the Democratic [Republican] party has been in the White house for 2 consecutive terms, $1.25 [-1.25]$ if the Democratic [Republican] party has been in the White house for 3 consecutive terms, $1.5 [-1.5]$ if the Democratic [Republican] party has been in the White house for 4 consecutive terms and so on;
+
+$WAR \equiv 1$ for election years 1918, 1920, 1942, 1944, 1946, 1948, 0 otherwise; 
+
+$G \equiv$ growth rate of real GDP in the first 3 quarters of the on-term election year (annual rate);
+
+$P \equiv$ absolute value of growth rate of GDP deflator in the first 15 quarters of the administration (annual rate) except for 1920, 1944, and 1948, where values set to 0;
+
+$Z \equiv$ number of quarters in the first 15 quarters of the administration in which the growth rate of real per capita GDP exceeds 3.2 % at an annual rate except for 1920, 1944, and 1948, where the values are zero.
+
+Fair argues that there are 4 conditions that affect voting patterns in US presidential elections:
+
+(i) Incumbent presidents running again for reelection: Voters tend to favor presidents running again.
+
+(ii) How long a party has controlled the White House. Voters like change. When a party has been in power for two or more consecutive terms, this has a negative effect on votes for that party’s candidate.
+
+(iii) There is a slight, but persistent, bias in favor of the Republican Party.
+
+(iv) The state of the economy. A good economy at the time of the election has a positive effect on votes for the incumbent party candidate.
+
+(a) Each of the four Fair's conditions translate in terms of the sign of the parameters of the regression above. Taking the conditions one by one, identify the relevant parameter that captures that condition and briefly argue what the expected sign for the parameter is according to Fair.
+
+(b) With the help of Stata, estimate the model above using data on US elections from 1916 to 2020 included in file USelections.csv (Fair's data). Include the Stata output in your answer. Are the signs of the OLS estimates of the parameters as expected given Fair’s 4 conditions? Briefly argue.
+
+(c) Stata output includes, among others, the default calculations of the following statistics:
+
+i. $se(\widehat\beta_6)$
+ii. t−value and p−value associated with the significance test of regressor I.
+
+Provide the specific expression defining each of these three statistics, and then using R/Python calculate each these statistics by using the expression that defines them, and verify you get the same values as the ones reproduced in the Stata output.
+
+(d) Test $H_0 : \beta_7 = 0$ versus $H_0 : \beta_7\neq 0$ using exact t − test statistic and 5% significance level, basing your decision rule on the comparison of t − value with the criticalvalue. Draw the associated acceptance and rejection regions properly labelling both axes. What did you conclude?
+
+(e) Draw the p-value associated to the test performed in question 5d. Properly label the axes. What is the minimum significance level that would make this regressor be significant?
+
+(f) We want to test whether the famous phrase "it's the economy, stupid!"" has empirical evidence. With the help of Stata, test whether the economic variables $G \cdot I, P \cdot I$ and $Z \cdot I$ are jointly significant. Show all the steps. Include the Stata output as the answer.
+
+(g) 
+
+(i) Given that the latest estimate of the democratic share of the two-party vote for November 2024 elections is 49.25, what is the prediction error we would get if we used R. Fair values as for $G = 1.7, P = 4.54$ and $Z = 4$ before the election? Justify. 
+
+(ii) What can you say about the method used by Fair, and reproduced in this exercise, to predict $VP$? Briefly justify.
