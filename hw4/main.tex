@@ -56,20 +56,57 @@ Class slide 3(33) (Unit 3) illustrated, via simulation, the effects of collinear
   
   \textbf{Answer:} 
 
-\begin{figure}[H]  % Capital H forces it exactly here
-\centering
-\includegraphics[width=0.5\textwidth]{Files/q1ii_plot.png}
-\caption{95\% Confidence Region for $\beta_3$ and $\beta_4$}
-\label{fig:ellipse}
-\end{figure}
+    \begin{figure}[H]  % Capital H forces it exactly here
+      \centering
+      \includegraphics[width=0.5\textwidth]{Files/q1ii_plot.png}
+      \caption{95\% Confidence Region for $\beta_3$ and $\beta_4$}
+      \label{fig:ellipse}
+    \end{figure}
 
   \item Describe what the confidence region you just drew provides.
   
   \textbf{Answer:} 
+
+  The confidence region we drew illustrates the joint confiendence region, while the red lines show the individual confidence intervals.
+  It represents every combination of the two parameters that falls in the 95\% confidence region. It also illsutrates the
+  correlation between the two parameters, as the confidence region is elongated along a diagonal line. The negative slope provides 
+  insight into the negative correlation between the two parameters.
   
   \item Use the figure of confidence intervals and confidence region to show the difference between testing statistical significance of regressors separately or jointly, and explain why this is so relevant under the presence of collinear regressors.
   
   \textbf{Answer:} 
+
+The figure illustrates that joint testing can show us when collinear variables are jointly significant,
+even if they are not individually significant.
+
+\textbf{Individual tests:} Testing $H_0: \beta_3=0$ and 
+$H_0: \beta_4=0$ separately uses the rectangular region formed by the 
+individual 95\% confidence intervals (red dashed lines). From the regression output,
+both intervals include zero: $x_3$ CI 
+$= [-0.7740, 1.3733]$ and $x_4$ CI $= [-0.2945, 1.8582]$. Since the 
+rectangle contains the origin $(0,0)$, we fail to reject both null 
+hypotheses individually---neither $x_3$ nor $x_4$ appears statistically 
+significant.
+
+\textbf{Joint test:} Testing $H_0: \beta_3=\beta_4=0$ jointly uses the 
+95\% confidence ellipse. The ellipse is much smaller than the rectangle 
+due to the negative correlation between $\hat{\beta}_3$ and 
+$\hat{\beta}_4$. If the origin $(0,0)$ falls outside the ellipse, we 
+reject the joint null hypothesis, meaning $x_3$ and $x_4$ are jointly 
+significant even though neither is individually significant.
+
+\textbf{Collinearity:} When regressors are collinear, their 
+coefficients are negatively correlated because if one increases, the other
+must decrease to fit the same 
+data. This creates the tilted ellipse. The individual tests ignore this 
+correlation and use the wider rectangular region, making them overly 
+conservative. The joint test correctly accounts for correlation, 
+revealing that while we cannot precisely determine which variable drives 
+the effect, we can confidently say that together they have a significant 
+impact on $y$. This demonstrates why collinearity makes individual 
+$t$-tests unreliable while joint $F$-tests remain valid.
+
+
 \end{enumerate}
 
 \subsection*{Part (b)}
