@@ -2,6 +2,10 @@
 
 \input{LaTex/packages.tex}
 
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}  % Increase header height
+\addtolength{\topmargin}{-3pt}  % Adjust top margin to compensate
+
 \begin{document}
 
 % Title page
@@ -30,6 +34,23 @@ Class slide 3(33) (Unit 3) illustrated, via simulation, the effects of collinear
   \item Estimate the regression model included in the slide, presenting OLS estimates and the 95\% confidence intervals for each parameter; Include the output in your answer.
   
   \textbf{Answer:} 
+ 
+\begin{table}[ht]
+    \centering
+    \caption{Regression Results with 95\% CI} 
+    \label{tab:regression}
+  \begin{tabular}{rrrrr}
+    \hline
+    & Estimate & Std..Error & Lower & Upper \\ 
+    \hline
+    (Intercept) & 7.9365 & 1.6426 & 4.5863 & 11.2867 \\ 
+    x2 & 0.5953 & 0.0747 & 0.4429 & 0.7476 \\ 
+    x3 & 0.2996 & 0.5264 & -0.7740 & 1.3733 \\ 
+    x4 & 0.7818 & 0.5277 & -0.2945 & 1.8582 \\ 
+    \hline
+  \end{tabular}
+\end{table}
+
   
   \item Using \texttt{confidenceEllipse()} function, or equivalent, draw the 95\% confidence region for parameters $\beta_3$, $\beta_4$. Include also in the drawing the confidence intervals for each parameter.
   
