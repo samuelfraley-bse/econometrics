@@ -114,8 +114,33 @@ Modify the script used to estimate now the same regression with data generated f
 
 \begin{enumerate}[label=(\roman*)]
   \item Surprised with how the estimates have changed? Rigorously justify.
+
+  \textbf{Answer:} 
+
+latex\subsection*{Part (b)}
+Modify the script used to estimate now the same regression with data 
+generated from the same dgp but now using a sample of 3500 observations.
+
+\begin{enumerate}[label=(\roman*)]
+  \item Surprised with how the estimates have changed? Rigorously justify.
   
   \textbf{Answer:} 
+  
+  Not surprised. The estimates have converged closer to the true parameter 
+  values ($\beta_3=\beta_4=0.5$, shown by purple dotted lines in Figure 
+  \ref{fig:comparison}). For $n=35$, the estimates were $\hat{\beta}_3=0.2996$ 
+  and $\hat{\beta}_4=0.7818$, showing considerable sampling variability. 
+  With $n=3500$, the estimates are much closer to 0.5 for both parameters.
+  
+  By the Law of Large Numbers, as sample size increases, the OLS estimators 
+  converge in probability to their true values. This is consistency: 
+  $\text{plim}(\hat{\beta}_j) = \beta_j$ as $n \to \infty$. The larger 
+  sample provides more information about the true relationship, reducing 
+  the influence of random sampling variation. The collinearity between $x_3$ 
+  and $x_4$ still exists (since $x_4 = x_3 + \text{noise}$ in both samples), 
+  but with more observations, the estimator can better distinguish their 
+  individual effects on $y$.
+  
   
   \item Surprised of the change of the 95\% confidence intervals? Rigorously justify.
   
@@ -155,6 +180,8 @@ RP_{msft,t} = \beta_1 + \beta_2 RP_{s\&p,t} + \beta_3 Dprod_t + \beta_4 Dinflati
   \item Estimate the model above by OLS. Present the complete output (estimates, standard errors, p-values) as your answer.
   
   \textbf{Answer:} 
+
+  \input{q2a_table.tex}
   
   \item The January effect states that on average, every else equal, the returns (or excess returns) are larger in the month of January than the rest of the months. Test, at $\alpha = 1\%$, the presence of the January effect using the exact $t$-test statistic. Would you say the data supports the presence of this effect?
   
