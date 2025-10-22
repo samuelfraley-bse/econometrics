@@ -54,11 +54,12 @@ Class slide 3(33) (Unit 3) illustrated, via simulation, the effects of collinear
   
   \item Using \texttt{confidenceEllipse()} function, or equivalent, draw the 95\% confidence region for parameters $\beta_3$, $\beta_4$. Include also in the drawing the confidence intervals for each parameter.
   
-  \textbf{Answer:} 
+  \textbf{Answer:} \textcolor{red}{The area inside the ellipse should be with color?? And in the legend some numbers don't apear}
+
 
     \begin{figure}[H]  % Capital H forces it exactly here
       \centering
-      \includegraphics[width=0.5\textwidth]{Files/q1ii_plot.png}
+      \includegraphics[width=0.4\textwidth]{Files/q1ii_plot.png}
       \caption{95\% Confidence Region for $\beta_3$ and $\beta_4$}
       \label{fig:ellipse}
     \end{figure}
@@ -67,8 +68,9 @@ Class slide 3(33) (Unit 3) illustrated, via simulation, the effects of collinear
   
   \textbf{Answer:} 
 
-  The ellipse we drew illustrates the joint confiendence region, while the red lines show the individual confidence intervals.
-  It represents every combination of the two parameters that falls in the 95\% confidence region. It also illsutrates the
+  The confidence region we drew illustrates the joint confiendence region, while the red lines show the individual confidence intervals.
+  \textcolor{red}{It represent all the pair of values $\{x_i, y_i\}$ such that the joint test $H_0 : \beta_3 = x_i , \: \beta_4 = y_i;\:\: H_1 : $ No $H_0$, won't be rejected at a confidence level $95\%$.}
+\textcolor{blue}{It represents every combination of the two parameters that falls in the 95\% confidence region.} It also illsutrates the
   correlation between the two parameters, as the confidence region is elongated along a diagonal line. The negative slope provides 
   insight into the negative correlation between the two parameters.
   
@@ -109,7 +111,7 @@ $t$-tests unreliable while joint $F$-tests remain valid.
 
 \end{enumerate}
 
-latex\subsection*{Part (b)}
+\subsection*{Part (b)}
 Modify the script used to estimate now the same regression with data 
 generated from the same dgp but now using a sample of 3500 observations.
 
@@ -117,12 +119,29 @@ generated from the same dgp but now using a sample of 3500 observations.
   \item Surprised with how the estimates have changed? Rigorously justify.
   
   \textbf{Answer:} 
+
+  \begin{table}[ht]
+\centering
+\caption{Regression Results with 95\% CI and n= 3500} 
+\label{tab:regression2}
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std..Error & Lower & Upper \\ 
+  \hline
+(Intercept) & 10.2294 & 0.1811 & 9.8744 & 10.5845 \\ 
+  x2 & 0.4902  & 0.0078  & 0.4750 & 0.5054 \\ 
+  x3 &0.5512 &  0.0685 & 0.4169 & 0.6855 \\ 
+  x4 & 0.4475 & 0.0680 & 0.3143 & 0.5808 \\ 
+   \hline
+\end{tabular}
+\end{table}
   
   Not surprised. The estimates have converged closer to the true parameter 
-  values ($\beta_3=\beta_4=0.5$, shown by purple dotted lines in Figure 
-  \ref{fig:comparison}). For $n=35$, the estimates were $\hat{\beta}_3=0.2996$ 
+  values 
+\textcolor{blue}{($\beta_3=\beta_4=0.5$, shown by purple dotted lines in Figure 
+  \ref{fig:comparison}).} For $n=35$, the estimates were $\hat{\beta}_3=0.2996$ 
   and $\hat{\beta}_4=0.7818$, showing considerable sampling variability. 
-  With $n=3500$, the estimates are much closer to 0.5 for both parameters.
+  With $n=3500$, the estimates are much closer to 0.5 for both parameters, so now the estimates are more precise.
   
   By the Law of Large Numbers, as sample size increases, the OLS estimators 
   converge in probability to their true values. This is consistency: 
@@ -136,54 +155,60 @@ generated from the same dgp but now using a sample of 3500 observations.
   
   \item Surprised of the change of the 95\% confidence intervals? Rigorously justify.
   
-  \textbf{Answer:} 
+  \textbf{Answer:}
 
-  Not surprised. The confidence intervals have become much narrower with the larger sample. 
-  For $n=35$: $\beta_3$ CI = [-0.7740, 1.3733] with width = 2.15, and $\beta_4$ CI = [-0.2945, 1.8582] with width = 2.15.
-  With $n=3500$, the confidence intervals should be approximately $\sqrt{3500/35} = 10$ times narrower, giving widths around 0.215.
-  This follows from the asymptotic distribution of OLS estimators.
-
+  Not surprised. As in (i) having more information about the population let you make better prediction because there's less variance, so less $se(\hat{\beta_k})$. That's why the intervals in this case are smaller.
+  
+  
   \item Surprised of the change of the 95\% confidence region for parameters $\beta_3$, $\beta_4$? Rigorously justify.
   
   \textbf{Answer:} 
+
+  \begin{figure}[H]  % Capital H forces it exactly here
+      \centering
+      \includegraphics[width=0.4\textwidth]{Files/Ellipse2.png}
+      \caption{95\% Confidence Region for $\beta_3$ and $\beta_4$ with n=3500}
+      \label{fig:ellipse2}
+    \end{figure}
+
+  We see that the ellipse it has become shorter. That's not surprising, because this ellipse is based in the variance-covariance matrix of $x_3$ and $x_4$, and as the variance and covariance decrease when the size of the samples grow, the entire ellipse becomes smaller. 
   
-  Not surprised. The confidence ellipse has shrunk dramatically while maintaining its elongated shape oriented along the same diagonal.
-  The area of the confidence ellipse is proportional to $|\text{Var}(\hat{\beta}_3, \hat{\beta}_4)|$, which is proportional to $1/n$. Therefore, increasing sample size from 35 to 3500 (a factor of 100) reduces the ellipse area by a factor of 100.
-  The ellipse remains tilted because the negative correlation between $\hat{\beta}_3$ and $\hat{\beta}_4$ persists—it's determined by the correlation between $x_3$ and $x_4$ in the DGP, which doesn't change with sample size. However, the smaller ellipse means:
-
-  \begin{itemize}
-  \item Higher precision in joint estimation of $\beta_3$ and $\beta_4$
-  \item The point $(0.5, 0.5)$ (true values) is much more likely to be contained in the ellipse
-  \item If the origin $(0,0)$ was near the boundary for $n=35$, it may now fall outside the ellipse for $n=3500$, making the joint test reject $H_0: \beta_3 = \beta_4 = 0$ even though individual tests might still fail to reject
-  \end{itemize}
-
   \item Using the variance decomposition expression for $\text{var}(\hat{\beta}_3 \mid X)$, or $\text{var}(\hat{\beta}_4 \mid X)$, discuss why increasing $n$ can explain the changes observed. Be specific.
   
   \textbf{Answer:} 
 
-  The variance of $\hat{\beta}_3$ conditional on $X$ is:
-  $$\text{Var}(\hat{\beta}_3 | X) = \sigma^2 [(X'X)^{-1}]_{33} = \frac{\sigma^2}{\sum_{i=1}^{n}(x_{i3} - \bar{x}_3)^2 (1 - R_3^2)}$$
-  where $R_3^2$ is the R-squared from regressing $x_3$ on all other regressors (including $x_4$).
+The variance decomposition is:
+\begin{center}
+    
+$var(\hat{\beta_k}\mid X) = \sigma^2(X'X)^{-1}_{kk}= \sigma^2 \frac{1}{SST_k} \frac{1}{(1-R_k^2)}$.
+\end{center}
 
-  This can be decomposed as:
-  $$\text{Var}(\hat{\beta}_3 | X) = \sigma^2 \cdot \frac{1}{\sum_{i=1}^{n}(x_{i3} - \bar{x}_3)^2} \cdot \frac{1}{1 - R_3^2} = \sigma^2 \cdot \frac{1}{n \cdot \text{Var}(x_3)} \cdot \text{VIF}_3$$
+Where $SST_k = \sum^n_{i=0}(x_{ik}-\bar{x}_k)^2$. 
 
-  Three components:
-  \begin{enumerate}
-    \item $\sigma^2$: Error variance (constant across samples if same DGP)
-    \item $\frac{1}{n \cdot \text{Var}(x_3)}$: Decreases linearly with $n$
-    \item $\text{VIF}_3 = \frac{1}{1-R_3^2}$: Variance Inflation Factor due to collinearity (constant for same DGP)
-  \end{enumerate}
+If n increases then $SST_k$ also increases because it is the sum of the square of the errors of all the observations. The fact that $SST_k$ increases means that $\frac{1}{SST_k}$ decreases and so the $var(\hat{\beta_k}\mid X)$. 
 
-\textbf{Effect of increasing $n$ from 35 to 3500:}
-  \begin{itemize}
-    \item The term $\frac{1}{n}$ decreases by factor of 100
-    \item Therefore $\text{Var}(\hat{\beta}_3 | X)$ decreases by factor of 100
-    \item Standard errors decrease by factor of $\sqrt{100} = 10$
-    \item Confidence intervals become 10 times narrower
-    \item The confidence ellipse shrinks by factor of 100 in area
-\end{itemize}
+Because the $se(\hat{\beta_k}) = \sqrt{var(\hat{\beta_k}\mid X)}$, $se(\hat{\beta_k})$ will also decrease, so the intervalse, defined as:
 
+\begin{center}
+   $[\hat{\beta_k} - t_{2.5\%(n-K)} se(\hat{\beta_k}), \hat{\beta_k} + t_{2.5\%(n-K)} se(\hat{\beta_k})]$ 
+\end{center}
+
+Will become shorter.
+
+Also, as the ellipse is $z'Az $ with:
+
+\begin{center}
+    $A = [\sigma^2R(X'X)^{-1}R^{-1}]^{-1} =
+\begin{pmatrix}
+a_{11} & a_{12}\\
+a_{21} & a_{22}
+\end{pmatrix}
+$
+\end{center}
+
+Where $\sigma^2R(X'X)^{-1}R^{-1}]^{-1}$ is the variance-covariance matrix of $\beta_3$ and $\beta_4$. We know that as bigger $a_{11}$ the horizontal axis is shorter, and as bigger $a_{22}$ the vertical axis is shorter. Because $A$ is the inverse matrix of the variance-covariance matrix of $\beta_3$ and $\beta_4$, if $var(\hat{\beta_3}\mid X)$ decrease $a_{11}$ increase so x-axis become shorter. By the same reasoning if $var(\hat{\beta_4}\mid X)$ decrease $a_{22}$ increase so y-axis of the ellipse become shorter.
+
+  
 \end{enumerate}
 
 \subsection*{Part (c)}
@@ -194,48 +219,39 @@ Now, go back to the original script generating 35 observations, and modify the s
   
   \textbf{Answer:} 
 
- \input{regression_table_1ci.tex}
+  \begin{table}[ht]
+\centering
+\caption{Regression Results with 95\% CI } 
+\label{tab:regression2}
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std..Error & Lower & Upper \\ 
+  \hline
+(Intercept) & 10.1838  &  2.2007 & 5.7012 & 14.6665 \\ 
+  x2 & 0.4697  &  0.0999  & 0.2661 & 0.6733 \\ 
+  x3 & 0.1985  &  0.1015 & -0.0083 & 0.4052 \\ 
+  x4 & NA & NA & NA & NA \\ 
+   \hline
+\end{tabular}
+\end{table}
+  
   
   \item How many estimates did you get an estimate for $\beta_3$? And for $\beta_4$? You should be able to show, using the proper derivation, that in fact you got an infinite number of estimates for $\beta_3$ and $\beta_4$.
   
   \textbf{Answer:} 
 
-  From the regression output, we obtained \textbf{one estimate} for $\beta_3$ (the one R reported) and \textbf{zero estimates} for $\beta_4$ (R returned NA). 
-  However, mathematically, there are \textbf{infinitely many} valid estimates for both $\beta_3$ and $\beta_4$.
+  What happens here is that there are 2 regressors with perfect collinearity, and so $det(X'X)=0$ and $(X'X)^{-1}$ doesn't exist. That makes that we can't compute $\hat{\beta_k}$, and thats why $R$ put a NA in $x_4$ so we can compute the others.
 
-  \textbf{Derivation:}
+  $R$ gives us one estimate for $\hat{\beta_3}$ and none for $\hat{\beta_4}$, but really, as $x_{i3} = -2x_{i4}$ we have the regression:
 
-      The OLS estimator solves the normal equations:
-      $$(X'X)\hat{\beta} = X'y$$
+  \begin{center}
+      $y_i = \beta_1 + \beta_2 x_{i2} + \beta_3 x_{i3} - \beta_4 0.5x_{i3} + \varepsilon_i$
 
-    When $x_3 + 2x_4 = 0$ (perfect collinearity), the matrix $X'X$ is singular (non-invertible) because 
-    its columns are linearly dependent. This means the normal equations have either no solution or infinitely many solutions. 
-    Since the least squares problem always has a solution (we can always minimize SSR), it must have infinitely many solutions.
+      $= \beta_1 + \beta_2 x_{i2} + (\beta_3 -0.5\beta_4) x_{i3}+ \varepsilon_i$
+  \end{center}
 
-  \textbf{To show infinite solutions:}
-
-  Suppose $(\hat{\beta}_1, \hat{\beta}_2, \hat{\beta}_3, \hat{\beta}_4)$ is a solution. 
-  The fitted values are:
-  $$\hat{y}_i = \hat{\beta}_1 + \hat{\beta}_2 x_{i2} + \hat{\beta}_3 x_{i3} + \hat{\beta}_4 x_{i4}$$
-
-  Now consider an alternative set of coefficients:
-  $$\beta_3^* = \hat{\beta}_3 + t, \quad \beta_4^* = \hat{\beta}_4 + 2t$$
-
-  for any constant $t \in \mathbb{R}$. The fitted values become:
-  \begin{align*}
-    \hat{y}_i^* &= \hat{\beta}_1 + \hat{\beta}_2 x_{i2} + (\hat{\beta}_3 + t) x_{i3} + (\hat{\beta}_4 + 2t) x_{i4} \\
-    &= \hat{\beta}_1 + \hat{\beta}_2 x_{i2} + \hat{\beta}_3 x_{i3} + \hat{\beta}_4 x_{i4} + t x_{i3} + 2t x_{i4} \\
-    &= \hat{\beta}_1 + \hat{\beta}_2 x_{i2} + \hat{\beta}_3 x_{i3} + \hat{\beta}_4 x_{i4} + t(x_{i3} + 2x_{i4}) \\
-    &= \hat{\beta}_1 + \hat{\beta}_2 x_{i2} + \hat{\beta}_3 x_{i3} + \hat{\beta}_4 x_{i4} + t \cdot 0 \\
-    &= \hat{y}_i
-  \end{align*}
-
-Since $x_{i3} + 2x_{i4} = 0$ for all $i$, the fitted values (and thus the SSR) are identical for any value of $t$. 
-Therefore, $(\hat{\beta}_1, \hat{\beta}_2, \hat{\beta}_3 + t, \hat{\beta}_4 + 2t)$ is also a valid OLS solution for \textbf{any} $t \in \mathbb{R}$.
-
-\textbf{Conclusion:} There are infinitely many combinations of $(\beta_3, \beta_4)$ that minimize the sum of squared residuals. 
-We cannot uniquely identify $\beta_3$ and $\beta_4$ separately—only their weighted combination $\beta_3 x_3 + \beta_4 x_4$ is identified. 
-This is why R drops one variable and returns NA: it's R's way of acknowledging that the parameters cannot be uniquely estimated.
+  So we have a regression with three independent regressors, and so we can find a unique estimate $\hat{\beta'}$ of $\beta' =\beta_3 -0.5\beta_4 $, thus $\hat{\beta'} =\hat{\beta_3} -0.5\hat{\beta_4} $ so there are infinite values of $\hat{\beta_3}$, $\hat{\beta_4}$ such that the equallity holds.
+\end{enumerate}
 
 \newpage
 
@@ -274,7 +290,7 @@ RP_{msft,t} = \beta_1 + \beta_2 RP_{s\&p,t} + \beta_3 Dprod_t + \beta_4 Dinflati
   With 318 degrees of freedom, the critical values are $\pm 2.59$. So, reject $H_0$ if $|t| > 2.59$ or equivalently if $p < 0.01$.
   The $t$-statistic is 1.89 with a $p$-value of 0.059. Since $|1.89| < 2.59$ and $p = 0.059 > 0.01$, we fail to reject the null hypothesis.
   Therefore, we do not have sufficient evidence at the 1\% significance level to conclude that there is a January effect in Microsoft stock returns.
-
+  
   \item Aside from normality, list the assumptions needed to justify the use of the $t$ test statistic. Justify your answer.
   
   \textbf{Answer:} 
@@ -286,33 +302,7 @@ RP_{msft,t} = \beta_1 + \beta_2 RP_{s\&p,t} + \beta_3 Dprod_t + \beta_4 Dinflati
   where $sk$ is the sample coefficient of skewness of the variable and $kur$ is its sample coefficient of kurtosis. Using a significance level of 1\%, draw (by hand absolutely fine) the distribution of JB under $H_0$ and the corresponding acceptance and rejection regions. Provide an intuition for the location of the acceptance region.
   
   \textbf{Answer:} 
-
-  \textbf{Hypotheses:}
-  \begin{align*}
-    H_0&: \text{Residuals are normally distributed} \\
-    H_1&: \text{Residuals are not normally distributed}
-  \end{align*}
-
-  \textbf{Test Statistic:}
-    Under $H_0$, the Jarque-Bera statistic follows a $\chi^2(2)$ distribution:
-    \[
-      JB = \frac{n}{6}\left[sk^2 + \frac{(kur-3)^2}{4}\right] \sim \chi^2(2)
-    \]
-    where $sk$ is the sample skewness and $kur$ is the sample kurtosis.
-
-  \textbf{Results:}
-    \begin{itemize}
-    \item Sample size: $n = 324$
-    \item Skewness: $sk = -2.54$
-    \item Kurtosis: $kur = 13.40$
-    \item $JB = 1809.21$
-    \item Critical value: $\chi^2_{0.01}(2) = 9.21$
-    \item $p$-value: $< 0.0001$
-  \end{itemize}
   
-  \textbf{Decision:} Since $JB = 1809.21 > 9.21$, we strongly reject the null hypothesis at the 1\% significance level.
-
-
   \item Now, we want to test for the presence of normality in our disturbances using the JB test. Ideally, to test normality of disturbances, JB test should be applied to a sample of disturbances, but, given that they are unobservable, the JB test is usually applied to our OLS residuals. Explain how, if all the assumptions regarding the dgp for consistency of OLS estimator are met, it would be justified for $\hat{\epsilon}_t$'s to take the place of $\epsilon_t$'s to perform the test.
   
   \textbf{Answer:} 
