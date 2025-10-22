@@ -186,6 +186,25 @@ RP_{msft,t} = \beta_1 + \beta_2 RP_{s\&p,t} + \beta_3 Dprod_t + \beta_4 Dinflati
   \item The January effect states that on average, every else equal, the returns (or excess returns) are larger in the month of January than the rest of the months. Test, at $\alpha = 1\%$, the presence of the January effect using the exact $t$-test statistic. Would you say the data supports the presence of this effect?
   
   \textbf{Answer:} 
+
+  We test for the presence of the January effect by examining whether the coefficient on the January dummy variable ($m_1$) is statistically significant.
+
+  \textbf{Hypotheses:}
+  \begin{align*}
+      H_0: \beta_6 &= 0 \quad \text{(No January effect)} \\
+      H_1: \beta_6 &\neq 0 \quad \text{(January effect exists)}
+  \end{align*}
+
+  We use a two-tailed $t$-test at significance level $\alpha = 0.01$.
+
+    \textbf{Test Statistic:}
+      \[
+          t = \frac{\hat{\beta}_6}{\text{SE}(\hat{\beta}_6)} = \frac{5.44}{2.87} = 1.89
+      \]
+
+  With 318 degrees of freedom, the critical values are $\pm 2.59$. So, reject $H_0$ if $|t| > 2.59$ or equivalently if $p < 0.01$.
+  The $t$-statistic is 1.89 with a $p$-value of 0.059. Since $|1.89| < 2.59$ and $p = 0.059 > 0.01$, we fail to reject the null hypothesis.
+  Therefore, we do not have sufficient evidence at the 1\% significance level to conclude that there is a January effect in Microsoft stock returns.
   
   \item Aside from normality, list the assumptions needed to justify the use of the $t$ test statistic. Justify your answer.
   
