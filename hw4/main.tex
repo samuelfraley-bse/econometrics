@@ -57,9 +57,9 @@ Class slide 3(33) (Unit 3) illustrated, via simulation, the effects of collinear
   \textbf{Answer:} \textcolor{red}{The area inside the ellipse should be with color?? And in the legend some numbers don't apear}
 
 
-    \begin{figure}[H]  % Capital H forces it exactly here
+    \begin{figure}[H]  
       \centering
-      \includegraphics[width=0.4\textwidth]{Files/q1ii_plot.png}
+      \includegraphics[width=0.5\textwidth]{Files/q1ii_plot.png}
       \caption{95\% Confidence Region for $\beta_3$ and $\beta_4$}
       \label{fig:ellipse}
     \end{figure}
@@ -137,8 +137,7 @@ generated from the same dgp but now using a sample of 3500 observations.
   
   Not surprised. The estimates have converged closer to the true parameter 
   values 
-\textcolor{blue}{($\beta_3=\beta_4=0.5$, shown by purple dotted lines in Figure 
-  \ref{fig:comparison}).} For $n=35$, the estimates were $\hat{\beta}_3=0.2996$ 
+\textcolor{blue}{($\beta_3=\beta_4=0.5$, shown by purple dotted lines in Figure 2} For $n=35$, the estimates were $\hat{\beta}_3=0.2996$ 
   and $\hat{\beta}_4=0.7818$, showing considerable sampling variability. 
   With $n=3500$, the estimates are much closer to 0.5 for both parameters, so now the estimates are more precise.
   
@@ -163,11 +162,11 @@ generated from the same dgp but now using a sample of 3500 observations.
   
   \textbf{Answer:} 
 
-  \begin{figure}[H]  % Capital H forces it exactly here
+    \begin{figure}[H]  
       \centering
-      \includegraphics[width=0.4\textwidth]{Files/Ellipse2.png}
-      \caption{95\% Confidence Region for $\beta_3$ and $\beta_4$ with n=3500}
-      \label{fig:ellipse2}
+      \includegraphics[width=1\textwidth]{Files/elipse_comparison.png}
+      \caption{Original and Modified Script Results}
+      \label{fig:ellipse}
     \end{figure}
 
   We see that the ellipse it has become shorter. That's not surprising, because this ellipse is based in the variance-covariance matrix of $x_3$ and $x_4$, and as the variance and covariance decrease when the size of the samples grow, the entire ellipse becomes smaller. 
@@ -293,34 +292,185 @@ RP_{msft,t} = \beta_1 + \beta_2 RP_{s\&p,t} + \beta_3 Dprod_t + \beta_4 Dinflati
   \item Aside from normality, list the assumptions needed to justify the use of the $t$ test statistic. Justify your answer.
   
   \textbf{Answer:} 
-  
-  \item For the test you performed in questions (2b), you were asked to use the $t$ test statistic. Using this test requires, among others, for disturbances to be normally distributed. One of the available tests of normality of the distribution of a given random variable is the Jarque-Bera test. Under the null hypothesis of normality, the Jarque-Bera (JB) test statistic is:
-  \[
-  JB \equiv \frac{n}{6}\left[sk^2 + \frac{(kur - 3)^2}{4}\right] \stackrel{a}{\sim} \chi^2(2),
-  \]
-  where $sk$ is the sample coefficient of skewness of the variable and $kur$ is its sample coefficient of kurtosis. Using a significance level of 1\%, draw (by hand absolutely fine) the distribution of JB under $H_0$ and the corresponding acceptance and rejection regions. Provide an intuition for the location of the acceptance region.
+
+    To justify the use of the exact $t$-test statistic (aside from normality), the following assumptions from the Classical Linear Regression Model are required:
+
+      \begin{enumerate}
+      \item \textbf{Linearity:} The model is correctly specified as linear in parameters:
+      $$y = X\beta + \epsilon$$
+
+      \item \textbf{Strict Exogeneity:} $\mathbb{E}[\epsilon | X] = 0$. The error terms have zero conditional mean given all regressors.
+
+      \item \textbf{No Perfect Multicollinearity:} The matrix $X$ has full column rank, so $(X'X)$ is invertible and $\hat{\beta} = (X'X)^{-1}X'y$ exists.
+
+      \item \textbf{Homoskedasticity:} $\text{Var}(\epsilon_i | X) = \sigma^2$ for all $i$. The variance of errors is constant across observations.
+
+      \item \textbf{No Autocorrelation:} $\text{Cov}(\epsilon_i, \epsilon_j | X) = 0$ for all $i \neq j$. Error terms are uncorrelated.
+      \end{enumerate}
+
+    \textbf{Justification: ????} 
   
   \textbf{Answer:} 
   
   \item Now, we want to test for the presence of normality in our disturbances using the JB test. Ideally, to test normality of disturbances, JB test should be applied to a sample of disturbances, but, given that they are unobservable, the JB test is usually applied to our OLS residuals. Explain how, if all the assumptions regarding the dgp for consistency of OLS estimator are met, it would be justified for $\hat{\epsilon}_t$'s to take the place of $\epsilon_t$'s to perform the test.
   
-  \textbf{Answer:} 
+  \textbf{Answer:}
+
+The JB test should ideally be applied to the true disturbances $\epsilon_t$, but since these are unobservable, we use the OLS residuals $\hat{\epsilon}_t$ instead. This substitution is justified under the consistency assumptions for OLS.
+
+\textbf{Justification:}
+
+If all assumptions for consistency of the OLS estimator are met, then:
+
+\begin{enumerate}
+\item \textbf{Consistency of $\hat{\beta}$:} As $n \to \infty$, $\hat{\beta} \xrightarrow{p} \beta$ (converges in probability to the true parameter)
+
+\item \textbf{Residuals approximate errors:} The OLS residuals are:
+$$\hat{\epsilon}_t = y_t - X_t'\hat{\beta} = (X_t'\beta + \epsilon_t) - X_t'\hat{\beta} = \epsilon_t - X_t'(\hat{\beta} - \beta)$$
+
+\item \textbf{Vanishing difference:} Since $(\hat{\beta} - \beta) \xrightarrow{p} 0$ as $n \to \infty$, the difference between $\hat{\epsilon}_t$ and $\epsilon_t$ becomes negligible in large samples.
+
+\item \textbf{Convergence of moments:} The sample skewness and kurtosis computed from $\{\hat{\epsilon}_t\}$ converge to the population skewness and kurtosis of the true errors $\{\epsilon_t\}$ as $n \to \infty$.
+\end{enumerate}
+
+\textbf{Conclusion:} With $n = 324$ observations, the residuals provide a reliable approximation to the true errors. The JB test on $\{\hat{\epsilon}_t\}$ is asymptotically equivalent to the (infeasible) test on $\{\epsilon_t\}$, making it valid for testing normality of the disturbances.
   
   \item Perform the JB test on the OLS residuals. What do you conclude? Comment.
-  
-  \textbf{Answer:} 
+
+  \textbf{Answer:}
+
+From the regression output in part (a), we calculate the JB test statistic on the OLS residuals:
+
+\textbf{Test Results:}
+\begin{itemize}
+\item Sample size: $n = 324$
+\item Skewness: $sk = -2.541$
+\item Kurtosis: $kur = 13.401$
+\item JB statistic: $JB = \frac{324}{6}\left[(-2.541)^2 + \frac{(13.401-3)^2}{4}\right] = 1809.21$
+\item Critical value: $\chi^2_{0.01}(2) = 9.21$
+\item $p$-value: $< 0.0001$
+\end{itemize}
+
+\textbf{Decision:} Since $JB = 1809.21 \gg 9.21$, we strongly reject the null hypothesis at the 1\% significance level.
+
+\textbf{Conclusion:} The residuals are not normally distributed. The distribution exhibits severe negative skewness ($sk = -2.54$) and extreme excess kurtosis ($kur = 13.40$ vs. normal $= 3$), indicating heavy tails and asymmetry.
+
+\textbf{Comment:} This result is typical for financial returns data. Stock returns commonly exhibit:
+\begin{itemize}
+\item Negative skewness: Market crashes are more sudden and severe than rallies
+\item Excess kurtosis (fat tails): Extreme events occur more frequently than predicted by normal distribution
+\end{itemize}
+
+This violation of the normality assumption suggests caution when interpreting the exact $t$-test from part (b). However, with $n=324$, the Central Limit Theorem provides robustness, and asymptotic tests may be more appropriate.
   
   \item Repeat the test performed in (2b) using the asymptotic $T$-test statistic. Use a 1\% significance level.
   
   \textbf{Answer:} 
+
+We repeat the test from part (2b) using the asymptotic test, 
+which relies on the standard normal distribution instead of 
+the $t$-distribution.
+
+\textbf{Hypotheses:}
+\begin{align*}
+H_0&: \beta_6 = 0 \quad \text{(No January effect)} \\
+H_1&: \beta_6 \neq 0 \quad \text{(January effect exists)}
+\end{align*}
+
+\textbf{Test Statistic:}
+
+Under $H_0$ and as $n \to \infty$, the asymptotic distribution is:
+$$T = \frac{\hat{\beta}_6}{\text{SE}(\hat{\beta}_6)} 
+\xrightarrow{d} N(0,1)$$
+
+From the regression output in part (a):
+$$T = \frac{5.4352}{2.869} = 1.894$$
+
+\textbf{Critical Value:}
+
+For a two-tailed test at $\alpha = 0.01$ using the standard 
+normal distribution:
+$$z_{0.005} = \Phi^{-1}(0.995) = 2.576$$
+
+where $\Phi^{-1}$ is the inverse of the standard normal CDF.
+
+\textbf{Decision Rule:} Reject $H_0$ if $|T| > 2.576$
+
+\textbf{P-value:} 
+$$p = 2 \times P(Z > 1.894) = 2 \times (1 - \Phi(1.894)) 
+= 2 \times 0.0291 = 0.0582$$
+
+\textbf{Result:} Since $|1.894| < 2.576$ and 
+$p = 0.0582 > 0.01$, we fail to reject $H_0$ at the 1\% 
   
   \item Is the use of asymptotic tests justified in this case? Rigorously argue.
   
   \textbf{Answer:} 
+
+  Yes, the use of asymptotic tests is justified in this case.
+
+\textbf{Arguments in favor:}
+
+\begin{enumerate}
+\item \textbf{Large sample size:} With $n = 324$ observations, 
+we have a sufficiently large sample for asymptotic approximations 
+to be accurate. The large sample ensures that the limiting 
+distributions provide good approximations to the finite-sample 
+distributions.
+
+\item \textbf{Violation of normality:} The JB test in part (e) 
+strongly rejected normality of the residuals (JB = 1809.21). 
+The exact $t$-test requires $\epsilon | X \sim N(0, \sigma^2 I)$ 
+for its finite-sample validity. Since this assumption is violated, 
+the exact $t$-distribution may not actually be the correct 
+distribution of our test statistic under $H_0$.
+
+\item \textbf{Central Limit Theorem:} Under mild regularity 
+conditions (finite variance, independence), the CLT ensures that:
+$$\sqrt{n}(\hat{\beta}_6 - \beta_6) \xrightarrow{d} N(0, V)$$
+regardless of the distribution of $\epsilon_t$. This means:
+$$\frac{\hat{\beta}_6 - \beta_6}{\text{SE}(\hat{\beta}_6)} 
+\xrightarrow{d} N(0,1)$$
+even without normality of errors.
+
+\item \textbf{Consistency of variance estimator:} With $n = 324$, 
+the estimator $\hat{\sigma}^2 = \frac{\hat{\epsilon}'\hat{\epsilon}}{n-k}$ 
+consistently estimates $\sigma^2$, so:
+$$\text{SE}(\hat{\beta}_6) = 
+\sqrt{\hat{\sigma}^2[(X'X)^{-1}]_{66}} 
+\xrightarrow{p} \sigma\sqrt{[(X'X)^{-1}]_{66}}$$
+
+\item \textbf{Negligible difference between distributions:} 
+For $n = 324$, the $t$-distribution with 318 degrees of freedom 
+is virtually indistinguishable from the standard normal:
+\begin{itemize}
+\item $t_{0.005}(318) = 2.588$ vs. $z_{0.005} = 2.576$
+\item Difference in critical values: only 0.012
+\end{itemize}
+
+\end{enumerate}
+
+\textbf{Conclusion:} Given the large sample size, the violation 
+of normality, and the reliance of the CLT only on weak conditions, 
+asymptotic tests are not only justified but actually more 
+appropriate than exact tests in this context. The asymptotic 
+approximation provides valid inference without requiring the 
+normality assumption that is clearly violated in our data.
   
   \item Consider the following statement: ``Using the exact $t$ test statistic leads to slightly more conservative inference, because we get larger acceptance regions and larger $p$-values than if we used the asymptotic version.'' Do you agree? Rigorously argue.
   
   \textbf{Answer:} 
+
+  Yes, we agree, since these larger values make it harder to reject the null hypothesis, leading to more conservative inference. 
+  We also know that the t-distribution has heavier tails than the normal distribution, especially for smaller sample sizes. This means that for a given significance level, the critical values from the t-distribution are larger than those from the normal distribution.
+  
+  Example: Exact t-test needs |t| > 2.588 to reject, Asymptotic test needs |t| > 2.576 to reject, Since 2.588 > 2.576, the t-test requires a bigger test statistic to reject.
+
+  For p values of our test statistic of 1.894:
+  Exact t-test gives p-value = 0.0591
+  Asymptotic test gives p-value = 0.0582
+  Higher p-value = harder to reject
+  
 \end{enumerate}
 
 \end{document}
