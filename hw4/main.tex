@@ -15,10 +15,8 @@
 \par\vspace{0.75cm}
 	{\huge\bfseries Assignment 4 \par}
     {\large\bfseries Foundations of Econometrics \\
-                      Gal.la Gelpi
-                      Majo Argote
-                      Samuel Fraley \par
                         Group 7\par}
+    {\author Gal·la Gelpi, Mariajosé Argote, Samuel Fraley}
 	\vspace{0.25cm}
     \noindent\rule{\textwidth}{1pt}
     {\Large 
@@ -57,7 +55,7 @@ Class slide 3(33) (Unit 3) illustrated, via simulation, the effects of collinear
   
   \item Using \texttt{confidenceEllipse()} function, or equivalent, draw the 95\% confidence region for parameters $\beta_3$, $\beta_4$. Include also in the drawing the confidence intervals for each parameter.
   
-  \textbf{Answer:} \textcolor{red}{The area inside the ellipse should be with color?? And in the legend some numbers don't apear}
+  \textbf{Answer:}
 
 
     \begin{figure}[H]  
@@ -138,9 +136,7 @@ generated from the same dgp but now using a sample of 3500 observations.
 \end{tabular}
 \end{table}
   
-  Not surprised. The estimates have converged closer to the true parameter 
-  values 
-\textcolor{blue}{($\beta_3=\beta_4=0.5$, shown by purple dotted lines in Figure 2} For $n=35$, the estimates were $\hat{\beta}_3=0.2996$ 
+  Not surprised. The estimates have converged closer to the true parameter values. For $n=35$, the estimates were $\hat{\beta}_3=0.2996$ 
   and $\hat{\beta}_4=0.7818$, showing considerable sampling variability. 
   With $n=3500$, the estimates are much closer to 0.5 for both parameters, so now the estimates are more precise.
   
@@ -167,7 +163,7 @@ generated from the same dgp but now using a sample of 3500 observations.
 
     \begin{figure}[H]  
       \centering
-      \includegraphics[width=1\textwidth]{Files/elipse_comparison.png}
+      \includegraphics[width=0.8\textwidth]{Files/elipse_comparison.png}
       \caption{Original and Modified Script Results}
       \label{fig:ellipse}
     \end{figure}
@@ -311,7 +307,37 @@ RP_{msft,t} = \beta_1 + \beta_2 RP_{s\&p,t} + \beta_3 Dprod_t + \beta_4 Dinflati
       \item \textbf{No Autocorrelation:} $\text{Cov}(\epsilon_i, \epsilon_j | X) = 0$ for all $i \neq j$. Error terms are uncorrelated.
       \end{enumerate}
 
-    \textbf{Justification: ????}  
+    \textbf{Justification:} 
+
+    To see that the t-statistic is a good statistic we need to define it's distribution under the null, and be able to observe a value of this statistic given a sample. The first part is in which we will need the assumptions:
+    
+    \begin{enumerate}
+      \item \textbf{Linearity:} Because this way we see that $\hat{\beta}= \beta + A\varepsilon$ where $A = (X'X)^{-1}$.
+
+      \item \textbf{Strict Exogeneity:} Because assiming that $\mathbb{E}[\epsilon | X] = 0$, we can see that $\mathbb{E}[\hat{\beta} | X] = \beta$
+
+      \item \textbf{No Perfect Multicollinearity and Homoskedasticity:} These two let us see that the $\text{Var}(\hat{\beta }| X) = \sigma^2(X'X)^{-1}$.
+      \end{enumerate}
+
+      These assumptions plus the normality let us demonstrate that $\hat{\beta_k} \underset{H_0}{\sim}
+ N(\beta_k, \sigma^2(X'X)^{-1}_{kk})$.
+
+    \item For the test you performed in questions (2b), you were asked to use the $t$ test statistic. Using this test requires, among others, for disturbances to be normally distributed. One of the available tests of normality of the distribution of a given random variable is the Jarque-Bera test. Under the null hypothesis of normality, the Jarque-Bera (JB) test statistic is:
+  \[
+  JB \equiv \frac{n}{6}\left[sk^2 + \frac{(kur - 3)^2}{4}\right] \stackrel{a}{\sim} \chi^2(2),
+  \]
+  where $sk$ is the sample coefficient of skewness of the variable and $kur$ is its sample coefficient of kurtosis. Using a significance level of 1\%, draw (by hand absolutely fine) the distribution of JB under $H_0$ and the corresponding acceptance and rejection regions. Provide an intuition for the location of the acceptance region.
+
+    \textbf{Answer:}
+
+The acceptance region is the closest region to 0 because as Jarque-Berta test is a test of normality of the distribution, we will accept the test if $sk \approx 0 $ and $kur \approx 3$ (a normal distribution has a teoretical skewness of 0 and a teoretical kurtosis of 3). We see that if $sk \approx 0 $ and $kur \approx 3$ then $JB-value \approx 0$.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{hw4/JB_drawing.jpeg}
+\end{figure}
+
+
   
   \item Now, we want to test for the presence of normality in our disturbances using the JB test. Ideally, to test normality of disturbances, JB test should be applied to a sample of disturbances, but, given that they are unobservable, the JB test is usually applied to our OLS residuals. Explain how, if all the assumptions regarding the dgp for consistency of OLS estimator are met, it would be justified for $\hat{\epsilon}_t$'s to take the place of $\epsilon_t$'s to perform the test.
   
@@ -471,7 +497,7 @@ normality assumption that is clearly violated in our data.
   Exact t-test gives p-value = 0.0591
   Asymptotic test gives p-value = 0.0582
   Higher p-value = harder to reject
-
+  
 \end{enumerate}
 
 \end{document}
