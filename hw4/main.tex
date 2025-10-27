@@ -16,7 +16,7 @@
 	{\huge\bfseries Assignment 4 \par}
     {\large\bfseries Foundations of Econometrics \\
                         Group 7\par}
-    {\author Gal·la Gelpi, Mariajosé Argote, Samuel Fraley}
+    {\author\hspace Gal·la Gelpi, Mariajosé Argote, Samuel Fraley}
 	\vspace{0.25cm}
     \noindent\rule{\textwidth}{1pt}
     {\Large 
@@ -69,17 +69,16 @@ Class slide 3(33) (Unit 3) illustrated, via simulation, the effects of collinear
   
   \textbf{Answer:} 
 
-  The confidence region we drew illustrates the joint confiendence region, while the red lines show the individual confidence intervals.
-  Its represent all the pair of values $\{x_i, y_i\}$ such that the joint test $H_0 : \beta_3 = x_i , \: \beta_4 = y_i;\:\: H_1 : $ No $H_0$, won't be rejected at a confidence level $95\%$.
-  It also illsutrates the correlation between the two parameters, as the confidence region is elongated along a diagonal line. The negative slope provides 
+  The confidence region we drew illustrates the joint confidence region, while the red lines show the individual confidence intervals.
+  Its represents all the pair of values $\{x_i, y_i\}$ such that the joint test $H_0 : \beta_3 = x_i , \: \beta_4 = y_i;\:\: H_1 : $ No $H_0$, will not be rejected at a confidence level $95\%$.
+  It also illustrates the correlation between the two parameters, as the confidence region is elongated along a diagonal line. The negative slope provides 
   insight into the negative correlation between the two parameters.
   
   \item Use the figure of confidence intervals and confidence region to show the difference between testing statistical significance of regressors separately or jointly, and explain why this is so relevant under the presence of collinear regressors.
   
   \textbf{Answer:} 
 
-The figure illustrates that joint testing can show us when collinear variables are jointly significant,
-even if they are not individually significant.
+The figure illustrates that joint testing can show us when collinear variables are jointly significant, even if they are not individually significant.
 
 \textbf{Individual tests:} Testing $H_0: \beta_3=0$ and 
 $H_0: \beta_4=0$ separately uses the rectangular region formed by the 
@@ -94,7 +93,7 @@ significant.
 95\% confidence ellipse. The ellipse is much smaller than the rectangle 
 due to the negative correlation between $\hat{\beta}_3$ and 
 $\hat{\beta}_4$. If the origin $(0,0)$ falls outside the ellipse, we 
-reject the joint null hypothesis, meaning $x_3$ and $x_4$ are jointly 
+reject the joint null hypothesis, meaning that $x_3$ and $x_4$ are jointly 
 significant even though neither is individually significant.
 
 \textbf{Collinearity:} When regressors are collinear, their 
@@ -140,7 +139,7 @@ generated from the same dgp but now using a sample of 3500 observations.
   and $\hat{\beta}_4=0.7818$, showing considerable sampling variability. 
   With $n=3500$, the estimates are much closer to 0.5 for both parameters, so now the estimates are more precise.
   
-  By the Law of Large Numbers, as sample size increases, the OLS estimators 
+   By the Law of Large Numbers, as the sample size increases, the OLS estimators 
   converge in probability to their true values. This is consistency: 
   $\text{plim}(\hat{\beta}_j) = \beta_j$ as $n \to \infty$. The larger 
   sample provides more information about the true relationship, reducing 
@@ -154,7 +153,7 @@ generated from the same dgp but now using a sample of 3500 observations.
   
   \textbf{Answer:}
 
-  Not surprised. As in (i) having more information about the population let you make better prediction because there's less variance, so less $se(\hat{\beta_k})$. That's why the intervals in this case are smaller.
+  Not surprised. As in (i) having more information about the population lets you make better prediction because variance decreases as sample size increases, so less $SE(\hat{\beta_k})$. That's why the confidence intervals are smaller with a larger sample size.
   
   
   \item Surprised of the change of the 95\% confidence region for parameters $\beta_3$, $\beta_4$? Rigorously justify.
@@ -168,7 +167,7 @@ generated from the same dgp but now using a sample of 3500 observations.
       \label{fig:ellipse}
     \end{figure}
 
-  We see that the ellipse it has become shorter. That's not surprising, because this ellipse is based in the variance-covariance matrix of $x_3$ and $x_4$, and as the variance and covariance decrease when the size of the samples grow, the entire ellipse becomes smaller. 
+  We see that the ellipse has become shorter. That's not surprising, because this ellipse is based in the variance-covariance matrix of $x_3$ and $x_4$, and as the variance and covariance decrease when the size of the samples grow, the entire ellipse becomes smaller. 
   
   \item Using the variance decomposition expression for $\text{var}(\hat{\beta}_3 \mid X)$, or $\text{var}(\hat{\beta}_4 \mid X)$, discuss why increasing $n$ can explain the changes observed. Be specific.
   
@@ -184,10 +183,10 @@ Where $SST_k = \sum^n_{i=0}(x_{ik}-\bar{x}_k)^2$.
 
 If n increases then $SST_k$ also increases because it is the sum of the square of the errors of all the observations. The fact that $SST_k$ increases means that $\frac{1}{SST_k}$ decreases and so the $var(\hat{\beta_k}\mid X)$. 
 
-Because the $se(\hat{\beta_k}) = \sqrt{var(\hat{\beta_k}\mid X)}$, $se(\hat{\beta_k})$ will also decrease, so the intervalse, defined as:
+Because the $SE(\hat{\beta_k}) = \sqrt{var(\hat{\beta_k}\mid X)}$, $SE(\hat{\beta_k})$ will also decrease, so the intervals, defined as:
 
 \begin{center}
-   $[\hat{\beta_k} - t_{2.5\%(n-K)} se(\hat{\beta_k}), \hat{\beta_k} + t_{2.5\%(n-K)} se(\hat{\beta_k})]$ 
+   $[\hat{\beta_k} - t_{2.5\%(n-K)} SE(\hat{\beta_k}), \hat{\beta_k} + t_{2.5\%(n-K)} SE(\hat{\beta_k})]$ 
 \end{center}
 
 Will become shorter.
@@ -247,7 +246,7 @@ Now, go back to the original script generating 35 observations, and modify the s
       $= \beta_1 + \beta_2 x_{i2} + (\beta_3 -0.5\beta_4) x_{i3}+ \varepsilon_i$
   \end{center}
 
-  So we have a regression with three independent regressors, and so we can find a unique estimate $\hat{\beta'}$ of $\beta' =\beta_3 -0.5\beta_4 $, thus $\hat{\beta'} =\hat{\beta_3} -0.5\hat{\beta_4} $ so there are infinite values of $\hat{\beta_3}$, $\hat{\beta_4}$ such that the equallity holds.
+  So we have a regression with three independent regressors, and so we can find a unique estimate $\hat{\beta'}$ of $\beta' =\beta_3 -0.5\beta_4 $, thus $\hat{\beta'} =\hat{\beta_3} -0.5\hat{\beta_4} $ so there are infinite values of $\hat{\beta_3}$, $\hat{\beta_4}$ such that the equality holds.
 \end{enumerate}
 
 \newpage
@@ -281,7 +280,7 @@ RP_{msft,t} = \beta_1 + \beta_2 RP_{s\&p,t} + \beta_3 Dprod_t + \beta_4 Dinflati
 
     \textbf{Test Statistic:}
       \[
-          t = \frac{\hat{\beta}_6}{\text{SE}(\hat{\beta}_6)} = \frac{5.44}{2.87} = 1.89
+          t = \frac{\hat{\beta}_6}{\text{se}(\hat{\beta}_6)} = \frac{5.44}{2.87} = 1.89
       \]
 
   With 318 degrees of freedom, the critical values are $\pm 2.59$. So, reject $H_0$ if $|t| > 2.59$ or equivalently if $p < 0.01$.
@@ -292,7 +291,7 @@ RP_{msft,t} = \beta_1 + \beta_2 RP_{s\&p,t} + \beta_3 Dprod_t + \beta_4 Dinflati
   
   \textbf{Answer:} 
 
-    To justify the use of the exact $t$-test statistic (aside from normality), the following assumptions from the Classical Linear Regression Model are required:
+    The Classical assumptions are:
 
       \begin{enumerate}
       \item \textbf{Linearity:} The model is correctly specified as linear in parameters:
@@ -307,20 +306,18 @@ RP_{msft,t} = \beta_1 + \beta_2 RP_{s\&p,t} + \beta_3 Dprod_t + \beta_4 Dinflati
       \item \textbf{No Autocorrelation:} $\text{Cov}(\epsilon_i, \epsilon_j | X) = 0$ for all $i \neq j$. Error terms are uncorrelated.
       \end{enumerate}
 
-    \textbf{Justification:} 
-
-    To see that the t-statistic is a good statistic we need to define it's distribution under the null, and be able to observe a value of this statistic given a sample. The first part is in which we will need the assumptions:
+    To see that the t-statistic is a good statistic wee need to define it's distribution under the null, and be able to observe a value of this statistic given a sample. The first part is in which we will need the assumptions:
     
-    \begin{enumerate}
+    \begin{enumerate}[label=\arabic*.]
       \item \textbf{Linearity:} Because this way we see that $\hat{\beta}= \beta + A\varepsilon$ where $A = (X'X)^{-1}$.
 
-      \item \textbf{Strict Exogeneity:} Because assiming that $\mathbb{E}[\epsilon | X] = 0$, we can see that $\mathbb{E}[\hat{\beta} | X] = \beta$
+      \item \textbf{Strict Exogeneity:} Because assuming that $\mathbb{E}[\epsilon | X] = 0$, we can see that $\mathbb{E}[\hat{\beta} | X] = \beta$
 
       \item \textbf{No Perfect Multicollinearity and Homoskedasticity:} These two let us see that the $\text{Var}(\hat{\beta }| X) = \sigma^2(X'X)^{-1}$.
       \end{enumerate}
 
       These assumptions plus the normality let us demonstrate that $\hat{\beta_k} \underset{H_0}{\sim}
- N(\beta_k, \sigma^2(X'X)^{-1}_{kk})$.
+ N(r, \sigma^2(X'X)^{-1}_{kk})$.
 
     \item For the test you performed in questions (2b), you were asked to use the $t$ test statistic. Using this test requires, among others, for disturbances to be normally distributed. One of the available tests of normality of the distribution of a given random variable is the Jarque-Bera test. Under the null hypothesis of normality, the Jarque-Bera (JB) test statistic is:
   \[
@@ -330,11 +327,12 @@ RP_{msft,t} = \beta_1 + \beta_2 RP_{s\&p,t} + \beta_3 Dprod_t + \beta_4 Dinflati
 
     \textbf{Answer:}
 
-The acceptance region is the closest region to 0 because as Jarque-Berta test is a test of normality of the distribution, we will accept the test if $sk \approx 0 $ and $kur \approx 3$ (a normal distribution has a teoretical skewness of 0 and a teoretical kurtosis of 3). We see that if $sk \approx 0 $ and $kur \approx 3$ then $JB-value \approx 0$.
+The acceptance region is the closest region to 0 because as Jarque-Berta test is a test of normality of the distribution, we will accept the test if $sk \approx 0 $ and $kur \approx 3$ (a normal distribution has a theoretical skewness of 0 and a theoretical kurtosis of 3). We see that if $sk \approx 0 $ and $kur \approx 3$ then $JB-value \approx 0$.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{hw4/JB_drawing.jpeg}
+  \includegraphics[width=0.7\textwidth]{JB_handdrawn.jpeg}
+  \caption{Jarque-Berta Test - Intuitive Acceptance and Rejection Regions}
 \end{figure}
 
 
@@ -408,28 +406,18 @@ H_1&: \beta_6 \neq 0 \quad \text{(January effect exists)}
 
 Under $H_0$ and as $n \to \infty$, the asymptotic distribution is:
 $$T = \frac{\hat{\beta}_6}{\text{SE}(\hat{\beta}_6)} 
-\xrightarrow{d} N(0,1)$$
+\underset{H_0}{\sim} N(0,1)$$
 
-From the regression output in part (a):
+From the regression output in part (a) we obtain that the   T-value is:
 $$T = \frac{5.4352}{2.869} = 1.894$$
 
 \textbf{Critical Value:}
 
 For a two-tailed test at $\alpha = 0.01$ using the standard 
-normal distribution:
-$$z_{0.005} = \Phi^{-1}(0.995) = 2.576$$
+normal distribution, the critical value is $2.576$.
 
-where $\Phi^{-1}$ is the inverse of the standard normal CDF.
+\textbf{Decision Rule:} Reject $H_0$ if $|T| > $critical value. As $|T|= 1.894 < 2.576 = $ critical value, we fail to reject the test.
 
-\textbf{Decision Rule:} Reject $H_0$ if $|T| > 2.576$
-
-\textbf{P-value:} 
-$$p = 2 \times P(Z > 1.894) = 2 \times (1 - \Phi(1.894)) 
-= 2 \times 0.0291 = 0.0582$$
-
-\textbf{Result:} Since $|1.894| < 2.576$ and 
-$p = 0.0582 > 0.01$, we fail to reject $H_0$ at the 1\% 
-  
   \item Is the use of asymptotic tests justified in this case? Rigorously argue.
   
   \textbf{Answer:} 

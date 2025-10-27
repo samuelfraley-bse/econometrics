@@ -8,5 +8,9 @@ dependencies = []
 
 [tool.uv.workspace]
 members = [
+<<<<<<< HEAD
+=======
+    "hw3",
+>>>>>>> 75a32c2 (sf update)
     "hw4",
 ]

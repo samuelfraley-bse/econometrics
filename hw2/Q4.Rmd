@@ -8,11 +8,13 @@ date: "2025-10-06"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Read in the data:
+Question 4 Code
+
+Q4 Part A
 ```{r cars}
 library(tidyverse)
 
-df <- read.csv("hw2/data/corruption.csv")
+df <- read.csv("C:\\Users\\sffra\\Downloads\\BSE 2025-2026\\econometrics\\hw2\\data\\corruption.csv")
 
 head(df)
 ```
@@ -86,5 +88,148 @@ cat("\nCheck SSE(β̂) == y' M_X y ?  ", chk, "\n")
 
 
 ```
+```{r results for HW}
+# Tidy print for your report:
+b <- drop(beta_hat)  # (Intercept, lnGDP, smedia)
+
+cat("\n--- VALUES TO REPORT ---\n")
+cat(sprintf("β̂1 (Intercept): % .6f\n", b[1]))
+cat(sprintf("β̂2 (ln(gdp)) : % .6f\n", b[2]))
+cat(sprintf("β̂3 (smedia)  : % .6f\n", b[3]))
+cat(sprintf("SSE(β̂)       : % .6f\n", SSE))
+cat(sprintf("y' M_X y      : % .6f\n", yMXy))
+cat(sprintf("R^2           : % .6f\n", R2))
 
 
+```
+
+
+Q4 Part B
+```{r set up}
+
+rm(list = ls())
+
+df <- read.csv("C:\\Users\\sffra\\Downloads\\BSE 2025-2026\\econometrics\\hw2\\data\\corruption.csv")
+
+head(df)
+
+y <- df$corruption
+x1 <- df$lngdp      # ln(gdp)
+x2 <- df$smedia        # social media indicator
+
+```
+
+
+Estimate each model
+```{r models}
+# Model with ln(gdp) only
+model_x1 <- lm(y ~ x1)
+R2_x1 <- summary(model_x1)$r.squared
+
+# Model with smedia only
+model_x2 <- lm(y ~ x2)
+R2_x2 <- summary(model_x2)$r.squared
+
+# Full model with both regressors
+model_full <- lm(y ~ x1 + x2)
+R2_full <- summary(model_full)$r.squared
+```
+
+Compute the shapley values
+```{r shapley}
+shapley_x1 <- 0.5 * (R2_x1 + (R2_full - R2_x2))
+shapley_x2 <- 0.5 * (R2_x2 + (R2_full - R2_x1))
+
+shapley_values <- data.frame(
+  Variable = c("ln(gdp)", "smedia"),
+  Shapley = c(shapley_x1, shapley_x2)
+)
+
+head(shapley_values)
+
+```
+
+Verify
+```{R}
+rel <- calc.relimp(model_full, type = "lmg")
+print("Verification using calc.relimp():")
+print(rel)
+
+```
+
+plot
+```{r shapley_plot, fig.width=7, fig.height=5, echo=FALSE}
+library(ggplot2)
+
+#Shapley values from relaimpo
+shap_df <- as.data.frame(rel$lmg)
+shap_df$Variable <- rownames(shap_df)
+colnames(shap_df)[1] <- "Shapley"
+
+#rename
+shap_df$Variable <- ifelse(shap_df$Variable == "x1", "ln(gdp)",
+                     ifelse(shap_df$Variable == "x2", "smedia", shap_df$Variable))
+
+#arrange
+shap_df <- shap_df[order(shap_df$Shapley, decreasing = TRUE), ]
+
+#add % label
+shap_df$Percent <- paste0(round(100 * shap_df$Shapley / sum(shap_df$Shapley), 1), "%")
+
+#plot
+ggplot(shap_df, aes(x = reorder(Variable, Shapley), y = Shapley, fill = Shapley)) +
+  geom_bar(stat = "identity", width = 0.6) +
+  geom_text(aes(label = Percent), hjust = -0.2, size = 4.2, fontface = "bold") +  # add percentage labels
+  coord_flip() +
+  labs(
+    title = "Shapley Value Decomposition",
+    x = "Regressor",
+    y = "Contribution to R²"
+  ) +
+  ylim(0, max(shap_df$Shapley) * 1.2)
+
+
+
+```
+
+Q4 Part C
+```{r set up c}
+
+rm(list = ls())
+
+df <- read.csv("C:\\Users\\sffra\\Downloads\\BSE 2025-2026\\econometrics\\hw2\\data\\corruption.csv")
+      
+```
+
+Run the full regression model, print results and extra beta3 to compare to later
+```{r full reg c}
+R1 <- lm(corruption ~ lngdp + smedia, data = df)
+summary(R1)
+
+beta3_full <- coef(R1)["smedia"]
+cat("β3 from full model (R1):", beta3_full, "\n")
+
+```
+Now set up and run FWL regression
+```{r fWL c}
+#regress corruption on lngdp
+y_resid <- resid(lm(corruption ~ lngdp, data = df))
+
+#regress smedia on lngdp
+x_resid <- resid(lm(smedia ~ lngdp, data = df))
+
+#Regress residuals on each other
+R2 <- lm(y_resid ~ x_resid - 1)
+summary(R2)
+
+# Extract beta3 from FWL regression
+beta3_fwl <- coef(R2)["x_resid"]
+cat("β3 from FWL regression (R2):", beta3_fwl, "\n")
+
+```
+
+To compare the beta3 from each side by side
+```{r beta3 comp c}
+cat("Difference between β3 estimates:", round(beta3_full - beta3_fwl, 4), "\n")
+
+```

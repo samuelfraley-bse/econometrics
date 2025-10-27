@@ -1,18 +1,26 @@
 version = 1
 revision = 3
 requires-python = ">=3.11"
+<<<<<<< HEAD
 resolution-markers = [
     "python_full_version >= '3.12'",
     "python_full_version < '3.12'",
 ]
+=======
+>>>>>>> 75a32c2 (sf update)
 
 [manifest]
 members = [
     "econometrics",
+<<<<<<< HEAD
+=======
+    "hw3",
+>>>>>>> 75a32c2 (sf update)
     "hw4",
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "contourpy"
 version = "1.3.3"
 source = { registry = "https://pypi.org/simple" }
@@ -104,11 +112,14 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> 75a32c2 (sf update)
 name = "econometrics"
 version = "0.1.0"
 source = { virtual = "." }
 
 [[package]]
+<<<<<<< HEAD
 name = "fonttools"
 version = "4.60.1"
 source = { registry = "https://pypi.org/simple" }
@@ -156,11 +167,17 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/8a/cb/fa7b4d148e11d5a72761a22e595344133e83a9507a4c231df972e657579b/fonttools-4.60.1-cp314-cp314t-win_amd64.whl", hash = "sha256:022beaea4b73a70295b688f817ddc24ed3e3418b5036ffcd5658141184ef0d0c", size = 2345760, upload-time = "2025-09-29T21:13:00.375Z" },
     { url = "https://files.pythonhosted.org/packages/c7/93/0dd45cd283c32dea1545151d8c3637b4b8c53cdb3a625aeb2885b184d74d/fonttools-4.60.1-py3-none-any.whl", hash = "sha256:906306ac7afe2156fcf0042173d6ebbb05416af70f6b370967b47f8f00103bbb", size = 1143175, upload-time = "2025-09-29T21:13:24.134Z" },
 ]
+=======
+name = "hw3"
+version = "0.1.0"
+source = { virtual = "hw3" }
+>>>>>>> 75a32c2 (sf update)
 
 [[package]]
 name = "hw4"
 version = "0.1.0"
 source = { virtual = "hw4" }
+<<<<<<< HEAD
 dependencies = [
     { name = "matplotlib" },
     { name = "numpy" },
@@ -726,3 +743,5 @@ sdist = { url = "https://files.pythonhosted.org/packages/95/32/1a225d6164441be76
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5c/23/c7abc0ca0a1526a0774eca151daeb8de62ec457e77262b66b359c3c7679e/tzdata-2025.2-py2.py3-none-any.whl", hash = "sha256:1a403fada01ff9221ca8044d701868fa132215d84beb92242d9acd2147f667a8", size = 347839, upload-time = "2025-03-23T13:54:41.845Z" },
 ]
+=======
+>>>>>>> 75a32c2 (sf update)

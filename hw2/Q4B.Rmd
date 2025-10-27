@@ -1,0 +1,68 @@
+---
+title: "Q4 Part B Markdown"
+output: html_document
+date: "2025-10-07"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(relaimpo)
+```
+
+## R Markdown
+
+
+```{r cars}
+df <- read.csv("hw2/data/corruption.csv")
+
+head(df)
+
+y <- df$corruption
+x1 <- df$lngdp      # ln(gdp)
+x2 <- df$smedia        # social media indicator
+
+```
+
+
+Estimate each model
+```{r models}
+# Model with ln(gdp) only
+model_x1 <- lm(y ~ x1)
+R2_x1 <- summary(model_x1)$r.squared
+
+# Model with smedia only
+model_x2 <- lm(y ~ x2)
+R2_x2 <- summary(model_x2)$r.squared
+
+# Full model with both regressors
+model_full <- lm(y ~ x1 + x2)
+R2_full <- summary(model_full)$r.squared
+```
+
+Compute the shapley values
+```{r shapley}
+shapley_x1 <- 0.5 * (R2_x1 + (R2_full - R2_x2))
+shapley_x2 <- 0.5 * (R2_x2 + (R2_full - R2_x1))
+
+shapley_values <- data.frame(
+  Variable = c("ln(gdp)", "smedia"),
+  Shapley = c(shapley_x1, shapley_x2)
+)
+
+head(shapley_values)
+
+```
+
+Verify
+```{R}
+rel <- calc.relimp(model_full, type = "lmg")
+print("Verification using calc.relimp():")
+print(rel)
+
+```
+
+plot
+```{r plot shap}
+plot(rel)
+
+```
