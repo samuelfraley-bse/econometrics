@@ -1,0 +1,256 @@
+\documentclass[12pt,a4paper]{article}
+
+\input{Latex/packages.tex}
+
+\title{Assignment 6}
+\author{
+  Samuel Fraley \\
+  Eric Gutierrez \\
+  Corneel Moons
+}
+\date{November 17, 2025}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section*{Question 1: Randomized Control Trials}
+
+This question is based on Duflo, Hanna, and Ryan (2012), who evaluate whether teacher
+monitoring combined with financial incentives can reduce teacher absenteeism and improve
+learning in primary schools.
+
+The NGO Seva Mandir operates non-formal primary schools in rural villages of Rajasthan (India).
+Before the program, teacher absenteeism was high (around 35\%). In 2003, Seva Mandir
+introduced a teacher incentive program in 57 randomly selected schools. A camera system
+was installed to monitor teacher attendance, and teachers were paid according to a nonlinear
+function of valid teaching days (at least 5 hours of teaching with at least 8 students).
+
+The program generated an immediate and persistent improvement in attendance in treated schools.
+
+\subsection*{Data}
+
+The dataset \texttt{ps1\_q1.csv} is a simplified version of the original data collected for this RCT.
+Each observation corresponds to a visit to one of the study schools (identified by \texttt{schid}).
+The variable \texttt{time} equals 1 in the month before the program starts (baseline) and is
+greater than 1 in months after the program begins. Schools are randomly assigned to a treatment
+group (\texttt{treat}=1) or control group (\texttt{treat}=0). The main outcome variables are
+the number of students (\texttt{students}) and teacher attendance (\texttt{teacher\_attendance}).
+
+\subsection*{1.1 Baseline and Experiment Integrity}
+
+Under proper randomization, potential outcomes are independent of treatment status:
+\[
+Y_{1i}, Y_{0i} \perp\!\!\!\perp D_i,
+\]
+which implies that the average treatment effect on the treated (ATT) and the average treatment
+effect (ATE) coincide: \(\alpha_{ATT} = \alpha_{ATE} = \beta\).
+
+Before analyzing post-treatment outcomes, we should verify that treated and control schools are
+similar at baseline.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Using only the observations from the month before the program starts (\texttt{time} = 1),
+  compute the average teacher attendance and the average number of students per classroom
+  separately for the treatment and control groups.
+
+  Replicate the information in Panels A and B of Table 1 in Duflo et al. (2012): produce baseline
+  means by treatment status, report appropriate standard errors, and comment on whether the
+  randomization appears to have produced comparable groups.
+
+  \item Briefly discuss whether any observed baseline differences are economically and/or statistically
+  significant. Explain why this check is important for interpreting the causal effect estimates later.
+\end{enumerate}
+
+\subsection*{1.2 Results}
+
+When randomization is valid, the treatment effect can be estimated via the simple regression:
+\[
+Y_i = \alpha + \beta D_i,
+\]
+where \(Y_i\) is the outcome of interest (e.g.\ teacher attendance) and \(D_i\) is the treatment
+indicator.
+
+\begin{enumerate}[label=(\alph*), resume]
+  \item Using post-program data (\texttt{time} > 1), compute and compare average teacher attendance
+  in treated and control schools. Replicate the first three columns of Panel A of Table 2 in Duflo
+  et al. (2012), reporting the relevant means and differences.
+
+  \item Based on your estimates, discuss whether the incentive program achieved its main goal of
+  reducing teacher absenteeism. Comment on the magnitude and statistical significance of the
+  estimated treatment effect.
+\end{enumerate}
+
+\newpage
+
+\section*{Question 2: Matching}
+
+Jacobson, LaLonde, and Sullivan (1993, JLS) study earnings losses following job displacement.
+Using administrative data from Pennsylvania, they document that workers involved in mass
+employment reductions suffer long-term earnings losses of roughly 25\% per year. They distinguish
+between separations due to mass layoffs and other separations, and use stayers as a control group.
+
+Their model can be written as:
+\[
+w^A_{it} = \mu_i
++ \sum_{k \ge -4}^{6} \phi_k L_{it}^k
++ \sum_{l \ge -4}^{6} \psi_l M_{it}^l
++ \beta' X_{it}
++ \rho_t + \varepsilon_{it},
+\]
+where \(w^A_{it}\) is log annual earnings of worker \(i\), \(L_{it}^k\) and \(M_{it}^l\) are sets of
+dummies indicating years relative to layoff and mass layoff, \(X_{it}\) is a vector of covariates,
+and \(\rho_t\) are time effects.
+
+Couch and Placzek (2010, CP) revisit this question using matching estimators, arguing that
+displaced workers are systematically selected, so estimates based only on JLS-type comparisons
+may be biased upward.
+
+Let \(D_i=1\) if worker \(i\) is displaced (due to a mass layoff or other separation) and
+\(D_i=0\) otherwise, and let \(p(X_i)\) denote the propensity score. The average treatment
+effect on the treated (ATT) is:
+\[
+\alpha_{TT} = \mathbb{E}\Big[
+\mathbb{E}[w^A_{1i} \mid D_i = 1, p(X_i)]
+- \mathbb{E}[w^A_{0i} \mid D_i = 0, p(X_i)]
+\;\Big|\; D_i = 1
+\Big].
+\]
+
+To compare outcomes relative to a reference year \(t_0\), CP consider a differenced ATT:
+\[
+\alpha^{D}_{ATT} = \mathbb{E}\Big[
+\big(\mathbb{E}[w^A_{1it} \mid D_i = 1, p(X_i)]
+      - \mathbb{E}[w^A_{1it_0} \mid D_i = 1, p(X_i)]\big)
+-
+\big(\mathbb{E}[w^A_{0it} \mid D_i = 0, p(X_i)]
+      - \mathbb{E}[w^A_{0it_0} \mid D_i = 0, p(X_i)]\big)
+\;\Big|\; D_i = 1
+\Big].
+\]
+
+Your task is to revisit CP’s findings using a different dataset.
+
+\subsection*{Data}
+
+The dataset \texttt{ps1\_q2.dta} is built from the Veneto Workers Histories (VWH), an administrative
+panel including all individuals working in the Italian region of Veneto from 1975–2001. The file
+\texttt{ps1\_q2.dta} contains a subsample of workers who, in 1999, either:
+\begin{itemize}
+  \item experienced a mass employment reduction,
+  \item separated from the firm without being part of a mass layoff, or
+  \item stayed with the same employer.
+\end{itemize}
+The panel covers the years 1995–2001. Mass layoffs are defined using the endogenous separation
+rate, following JLS and von Wachter, Song, and Manchester (2009). Displaced workers satisfy the
+standard requirements in this literature.
+
+\subsection*{2.1 Propensity Score Index}
+
+\begin{enumerate}[label=(\alph*)]
+  \item For a year of your choice, estimate the propensity score \(p(X_i)\) using gender, decile of
+  1995 earnings, and decade of birth as covariates \(X_i\). Use the \texttt{pscore} command (or an
+  equivalent implementation) to compute the propensity scores.
+
+  \item Check the balancing property of the propensity score: verify that, within propensity-score
+  strata, the distribution of covariates is similar between displaced and non-displaced workers.
+  Summarize and comment on the output.
+\end{enumerate}
+
+\subsection*{2.2 Nearest Neighbor and Kernel Matching}
+
+\begin{enumerate}[label=(\alph*), resume]
+  \item Using the estimated propensity scores, compute \(\alpha_{ATT}\) with nearest neighbor (NN)
+  matching for each year before and after displacement. Clearly indicate the reference year.
+
+  \item Repeat the estimation using kernel matching. In this case, obtain standard errors via
+  bootstrap (with at least 200 replications). Report the ATT estimates and their standard
+  errors for each year.
+
+  \item Compare the NN and kernel results. Comment on differences in the estimated effects
+  and in the associated uncertainty.
+\end{enumerate}
+
+\subsection*{2.3 Presenting Results}
+
+\begin{enumerate}[label=(\alph*), resume]
+  \item Plot the time path of your estimated effects (before and after displacement) for both NN and
+  kernel ATT estimates. Compare your figures to Figure 1 (included with the VWH data description)
+  and discuss similarities and differences in the pattern of earnings losses.
+\end{enumerate}
+
+\newpage
+
+\section*{Question 3: Instrumental Variables}
+
+Angrist and Evans (1998) use an IV strategy to analyze how the number of children affects
+parents’ labor supply. They find a sizable negative effect for mothers and essentially no effect
+for fathers. Here we focus on mothers and on employment (rather than hours worked).
+
+\subsection*{Data}
+
+The dataset \texttt{ps1\_q3.dta} is a subset of the data used by Angrist and Evans (1998) and
+contains only mothers. The key variables are:
+\begin{itemize}
+  \item \texttt{sexk}: sex of the first child,
+  \item \texttt{kidcount}: total number of children,
+  \item \texttt{agem}: age of the mother,
+  \item \texttt{twin\_latest}: indicator equal to 1 if the last birth was a twin birth,
+  \item \texttt{blackm}, \texttt{hispm}, \texttt{othracem}: race dummies,
+  \item \texttt{workedm}: indicator equal to 1 if the mother is employed.
+\end{itemize}
+
+\subsection*{3.1 Baseline Models}
+
+Consider the model:
+\[
+y_i = \beta_0 + \beta_1 \text{kidcount}_i + X_i' \beta + \varepsilon_i,
+\]
+where \(y_i\) is the mother’s employment status and \(X_i\) is a vector of controls.
+
+\begin{enumerate}[label=(\alph*)]
+  \item Estimate this equation using OLS.
+
+  \item Estimate the same specification using a probit model.
+
+  \item Discuss whether these approaches (OLS and probit) are appropriate for identifying the causal
+  effect of the number of children on mothers’ labor supply. Be specific about possible sources
+  of endogeneity and functional-form issues.
+\end{enumerate}
+
+\subsection*{3.2 IV Probit}
+
+\begin{enumerate}[label=(\alph*), resume]
+  \item Re-estimate the model using an IV probit specification, instrumenting \texttt{kidcount} with
+  \texttt{twin\_latest}. Clearly state the first-stage and structural equations.
+
+  \item Explain the economic intuition behind using twin births as an instrument. Discuss the
+  relevance and validity (exclusion restriction) of this instrument, and provide a critical assessment
+  of potential threats to its validity.
+\end{enumerate}
+
+\subsection*{3.3 Marginal Effects}
+
+\begin{enumerate}[label=(\alph*), resume]
+  \item Using your preferred IV probit specification, estimate the marginal effect of an additional
+  child on the probability that a mother is employed.
+
+  \item Plot how this marginal effect varies with relevant covariates (e.g.\ age or baseline number
+  of children), or report marginal effects evaluated at meaningful covariate profiles. Comment
+  on the pattern of these effects and what they imply about the impact of family size on
+  mothers’ employment.
+\end{enumerate}
+
+\newpage
+
+\section*{References}
+\begin{itemize}
+  \item Angrist, J.D. and Evans, W.N. (1998). “Children and Their Parents’ Labor Supply: Evidence from Exogenous Variation in Family Size.” \emph{American Economic Review}, 88(3): 450–477.
+  \item Couch, K.A. and Placzek, D.W. (2010). “Earnings Losses of Displaced Workers Revisited.” \emph{American Economic Review}, 100(1): 572–589.
+  \item Duflo, E., Hanna, R., and Ryan, S.P. (2012). “Incentives Work: Getting Teachers to Come to School.” \emph{American Economic Review}, 102(4): 1241–1278.
+  \item Jacobson, L.S., LaLonde, R.J., and Sullivan, D.G. (1993). “Earnings Losses of Displaced Workers.” \emph{American Economic Review}, 83(4): 685–709.
+\end{itemize}
+
+\end{document}
