@@ -1,0 +1,39 @@
+use "ps1_q3.dta", clear
+
+eststo clear
+
+* OLS
+reg workedm kidcount agem blackm hispm othracem, robust
+eststo ols
+
+* Probit
+probit workedm kidcount agem blackm hispm othracem
+eststo probit
+
+esttab ols probit using ps1_q3.tex, ///
+    replace se label ///
+    b(3) se(3) star(* 0.10 ** 0.05 *** 0.01) ///
+    fragment
+
+log using "ols.log", text replace
+reg workedm kidcount agem blackm hispm othracem, robust
+log close
+
+log using "probit.log", text replace
+probit workedm kidcount agem blackm hispm othracem
+log close
+
+*===============================
+* IV probit + logs
+*===============================
+
+* First stage: kidcount on twin_latest
+log using "firststage.log", text replace
+reg kidcount twin_latest agem blackm hispm othracem, robust
+log close
+
+* IV probit: workedm on kidcount, instrumented by twin_latest
+log using "ivprobit.log", text replace
+ivprobit workedm agem blackm hispm othracem ///
+    (kidcount = twin_latest), vce(robust)
+log close
