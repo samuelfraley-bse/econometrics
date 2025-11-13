@@ -1,4 +1,5 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[15pt,a4paper]{article}
+\usepackage{verbatim} 
 
 \input{Latex/packages.tex}
 
@@ -213,12 +214,29 @@ where \(y_i\) is the mother’s employment status and \(X_i\) is a vector of con
 \begin{enumerate}[label=(\alph*)]
   \item Estimate this equation using OLS.
 
+  \begin{scriptsize}
+    \verbatiminput{tables/ols.log}
+  \end{scriptsize}
+
+  \noindent\textbf{Figure 1:} OLS regression output from Stata
+
   \item Estimate the same specification using a probit model.
 
+  \begin{scriptsize}
+    \verbatiminput{tables/probit.log}
+  \end{scriptsize}
+
+  \noindent\textbf{Figure 2:} Probit regression output from Stata
+
   \item Discuss whether these approaches (OLS and probit) are appropriate for identifying the causal
-  effect of the number of children on mothers’ labor supply. Be specific about possible sources
+  effect of the number of children on mothers’ labor supply. 
+  
+  Just using OLS or probit alone is probably not the best approach to identifying the casual effect of number of children on labor supply due to endogeneity problems. For example, women with richer partners may not be required to work, and can decide to have more kids, thus showing that family income could influence both number of children and labor force participation. Various other endogeneity problems may arise as we have a relatively simple model (we already give household/family income, but what about access to childcare such as grandparents present, access to contraceptives, etc).
+  
+  Be specific about possible sources
   of endogeneity and functional-form issues.
 \end{enumerate}
+
 
 \subsection*{3.2 IV Probit}
 
@@ -229,6 +247,16 @@ where \(y_i\) is the mother’s employment status and \(X_i\) is a vector of con
   \item Explain the economic intuition behind using twin births as an instrument. Discuss the
   relevance and validity (exclusion restriction) of this instrument, and provide a critical assessment
   of potential threats to its validity.
+
+
+  \begin{scriptsize}
+\verbatiminput{tables/firststage.log}
+\end{scriptsize}
+
+\begin{scriptsize}
+\verbatiminput{tables/ivprobit.log}
+\end{scriptsize}
+
 \end{enumerate}
 
 \subsection*{3.3 Marginal Effects}
