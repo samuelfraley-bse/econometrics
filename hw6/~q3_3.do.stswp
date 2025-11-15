@@ -1,0 +1,44 @@
+cd "C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw6"
+
+use "data/ps1_q3.dta", clear
+
+eststo clear
+
+* Define controls (adjust to match your variable names)
+global X "sexk agem blackm hispm othracem"
+
+* ---------- FIRST STAGE ----------
+regress kidcount twin_latest $X
+
+* ---------- SECOND STAGE: IV PROBIT ----------
+ivprobit workedm $X (kidcount = twin_latest), vce(robust)
+
+* Average marginal effect of kidcount
+margins, dydx(kidcount) predict(pr)
+
+* Or predicted probabilities at different family sizes
+margins, at(kidcount = (1(1)4)) predict(pr)
+marginsplot
+
+* ==============================
+* 3.3 Marginal effects after IV Probit (optional, also savable)
+* ==============================
+* Average marginal effect of kidcount
+margins, dydx(kidcount) predict(pr) post
+eststo me_kidcount
+
+esttab me_kidcount using "figures/ivprobit_me_kidcount.tex", replace booktabs label ///
+    nomtitles nonumber ///
+    cells("b(fmt(%9.7f)) se(fmt(%9.7f)) z(fmt(%9.2f)) p(fmt(%9.3f))") ///
+    collabels("AME" "Std. err." "z-stat" "p-value") ///
+    stats(N, labels("Number of obs"))
+
+* Predicted probabilities at different family sizes
+margins, at(kidcount=(1(1)4)) predict(pr) post
+eststo pr_kids
+
+esttab pr_kids using "figures/ivprobit_probs_kids.tex", replace booktabs label ///
+    nomtitles nonumber ///
+    cells("b(fmt(%9.7f))") ///
+    collabels("Predicted Pr(working)") ///
+    stats(N, labels("Number of obs"))

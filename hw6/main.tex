@@ -1,5 +1,6 @@
 \documentclass[15pt,a4paper]{article}
 \usepackage{verbatim} 
+\usepackage{graphicx} 
 
 \input{Latex/packages.tex}
 
@@ -214,17 +215,24 @@ where \(y_i\) is the mother’s employment status and \(X_i\) is a vector of con
 \begin{enumerate}[label=(\alph*)]
   \item Estimate this equation using OLS.
 
-  \begin{scriptsize}
-    \verbatiminput{tables/ols.log}
-  \end{scriptsize}
-
+ \begin{table}[H]
+  \centering
+  \caption{OLS regression}
+  \label{tab:probit}
+  \small
+  \input{figures/ols.tex}
+\end{table}
   \noindent\textbf{Figure 1:} OLS regression output from Stata
 
   \item Estimate the same specification using a probit model.
 
-  \begin{scriptsize}
-    \verbatiminput{tables/probit.log}
-  \end{scriptsize}
+\begin{table}[H]
+  \centering
+  \caption{Probit regression}
+  \label{tab:probit}
+  \small
+  \input{figures/probit.tex}
+\end{table}
 
   \noindent\textbf{Figure 2:} Probit regression output from Stata
 
@@ -233,8 +241,6 @@ where \(y_i\) is the mother’s employment status and \(X_i\) is a vector of con
   
   Just using OLS or probit alone is probably not the best approach to identifying the casual effect of number of children on labor supply due to endogeneity problems. For example, women with richer partners may not be required to work, and can decide to have more kids, thus showing that family income could influence both number of children and labor force participation. Various other endogeneity problems may arise as we have a relatively simple model (we already give household/family income, but what about access to childcare such as grandparents present, access to contraceptives, etc).
   
-  Be specific about possible sources
-  of endogeneity and functional-form issues.
 \end{enumerate}
 
 
