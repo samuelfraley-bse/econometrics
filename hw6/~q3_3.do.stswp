@@ -1,44 +1,41 @@
-cd "C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw6"
+* ==================================
+*  SECOND STAGE: IV PROBIT (workedm)
+* ==================================
+ivprobit workedm $X (kidcount = twin_latest), vce(robust) nolog
+eststo ivprobit
 
-use "data/ps1_q3.dta", clear
+* IV probit (already in your file)
+ivprobit workedm $X (kidcount = twin_latest), vce(robust) nolog
 
+* Predicted probability of employment for each number of kids 0–5
+margins, at(kidcount = (0(1)5)) predict(pr)
+
+* Plot probabilities vs. number of children
+marginsplot, ///
+    ytitle("Predicted probability of employment") ///
+    xtitle("Number of children") ///
+    title("Effect of number of children on prob. of employment")
+
+graph export "figures/ivprobit_pr_kidcount.png", replace
+
+* -------------------------------------------------
+* Predicted probabilities by number of children
+* (table to go with the graph)
+* -------------------------------------------------
+
+* Predicted probabilities for kidcount = 0,1,2,3,4,5
 eststo clear
+estpost margins, at(kidcount = (0(1)5)) predict(pr)
 
-* Define controls (adjust to match your variable names)
-global X "sexk agem blackm hispm othracem"
-
-* ---------- FIRST STAGE ----------
-regress kidcount twin_latest $X
-
-* ---------- SECOND STAGE: IV PROBIT ----------
-ivprobit workedm $X (kidcount = twin_latest), vce(robust)
-
-* Average marginal effect of kidcount
-margins, dydx(kidcount) predict(pr)
-
-* Or predicted probabilities at different family sizes
-margins, at(kidcount = (1(1)4)) predict(pr)
-marginsplot
-
-* ==============================
-* 3.3 Marginal effects after IV Probit (optional, also savable)
-* ==============================
-* Average marginal effect of kidcount
-margins, dydx(kidcount) predict(pr) post
-eststo me_kidcount
-
-esttab me_kidcount using "figures/ivprobit_me_kidcount.tex", replace booktabs label ///
+esttab using "figures/pr_kidcount.tex", replace booktabs label ///
     nomtitles nonumber ///
-    cells("b(fmt(%9.7f)) se(fmt(%9.7f)) z(fmt(%9.2f)) p(fmt(%9.3f))") ///
-    collabels("AME" "Std. err." "z-stat" "p-value") ///
-    stats(N, labels("Number of obs"))
+    cells("b(fmt(%9.4f)) se(fmt(%9.4f)) ci_l(fmt(%9.4f)) ci_u(fmt(%9.4f))") ///
+    collabels("Pred. prob." "Std. err." "95% conf. low" "95% conf. high") ///
+    coeflabels(1._at "0 children" ///
+               2._at "1 child"   ///
+               3._at "2 children" ///
+               4._at "3 children" ///
+               5._at "4 children" ///
+               6._at "5 children") ///
+    stats(N, labels("Observations"))
 
-* Predicted probabilities at different family sizes
-margins, at(kidcount=(1(1)4)) predict(pr) post
-eststo pr_kids
-
-esttab pr_kids using "figures/ivprobit_probs_kids.tex", replace booktabs label ///
-    nomtitles nonumber ///
-    cells("b(fmt(%9.7f))") ///
-    collabels("Predicted Pr(working)") ///
-    stats(N, labels("Number of obs"))

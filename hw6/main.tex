@@ -248,20 +248,35 @@ where \(y_i\) is the mother’s employment status and \(X_i\) is a vector of con
 
 \begin{enumerate}[label=(\alph*), resume]
   \item Re-estimate the model using an IV probit specification, instrumenting \texttt{kidcount} with
-  \texttt{twin\_latest}. Clearly state the first-stage and structural equations.
+  \texttt{twin\_latest}. 
 
-  \item Explain the economic intuition behind using twin births as an instrument. Discuss the
-  relevance and validity (exclusion restriction) of this instrument, and provide a critical assessment
-  of potential threats to its validity.
+  Using {twin\_latest} as an instrument for kidcount is a valid choice as having twins is arguably exogenous to the mother's labor supply decision. 
+  The occurrence of twins is largely random and not influenced by the mother's employment status or other socio-economic factors. 
+  Therefore, it satisfies the relevance condition (it affects the number of children) 
+  and the exclusion restriction (it does not directly affect the mother's employment status except through its effect on the number of children).
+  
+  To test, we run two stage regression. The first stage regresses kidcount on twin\_latest and other controls, and the second stage regresses workedm on the predicted values of kidcount from the first stage and other controls.
+  \begin{table}[H]
+  \centering
+  \caption{First-stage regression}
+  \label{tab:probit}
+  \small
+  \input{figures/firststage.tex}
+  \end{table}
+   
+  Here we see that {twin\_latest} satisfies the relevance condition as it is statistically significant in predicting kidcount.
+  
+  \begin{table}[H]
+  \centering
+  \caption{IV Probit regression}
+  \label{tab:probit}
+  \small
+  \input{figures/ivprobit.tex}
+  \end{table}
 
-
-  \begin{scriptsize}
-\verbatiminput{tables/firststage.log}
-\end{scriptsize}
-
-\begin{scriptsize}
-\verbatiminput{tables/ivprobit.log}
-\end{scriptsize}
+  In the IV probit, we see that the coefficient on kidcount is -0.0715877, which is larger in magnitude compared to the OLS and probit estimates.
+  This suggests that the negative effect of having more children on mothers' employment is more pronounced when accounting for endogeneity using the IV approach.
+   
 
 \end{enumerate}
 
@@ -271,10 +286,21 @@ where \(y_i\) is the mother’s employment status and \(X_i\) is a vector of con
   \item Using your preferred IV probit specification, estimate the marginal effect of an additional
   child on the probability that a mother is employed.
 
-  \item Plot how this marginal effect varies with relevant covariates (e.g.\ age or baseline number
-  of children), or report marginal effects evaluated at meaningful covariate profiles. Comment
-  on the pattern of these effects and what they imply about the impact of family size on
-  mothers’ employment.
+  Table~X reports the predicted probability of employment for mothers with 0–5 children, based on the IV probit estimates. 
+  The probability falls from about 0.63 for one child to 0.43 for three children, implying that an additional child reduces employment
+  probability by roughly zz percentage points around this range (see also Figure~Y).
+
+  \input{figures/pr_kidcount.tex}
+
+
+  \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/ivprobit_pr_kidcount.png}
+  \caption{Predicted probability of maternal employment by number of children}
+  \label{fig:ivprobit-pr-kidcount}
+\end{figure}
+
+
 \end{enumerate}
 
 \newpage
