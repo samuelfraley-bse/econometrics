@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.9.28)  15 NOV 2025 14:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.9.28)  16 NOV 2025 13:42
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1308,17 +1308,23 @@ Overfull \hbox (77.2314pt too wide) detected at line 134
 \OML/cmm/m/it/10 [] \OT1/cmr/m/n/10 = \U/msb/m/n/10 E[][]E\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 w[] \OMS/cmsy/m/n/10 j \OML/cmm/m/it/10 D[] \OT1/cmr/m/n/10 = 1\OML/cmm/m/it/10 ; p\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 X[]\OT1/cmr/m/n/10 )] \OMS/cmsy/m/n/10 ^^@ \U/msb/m/n/10 E\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 w[] \OMS/cmsy/m/n/10 j \OML/cmm/m/it/10 D[] \OT1/cmr/m/n/10 = 1\OML/cmm/m/it/10 ; p\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 X[]\OT1/cmr/m/n/10 )][] \OMS/cmsy/m/n/10 ^^@ []\U/msb/m/n/10 E\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 w[] \OMS/cmsy/m/n/10 j \OML/cmm/m/it/10 D[] \OT1/cmr/m/n/10 = 0\OML/cmm/m/it/10 ; p\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 X[]\OT1/cmr/m/n/10 )] \OMS/cmsy/m/n/10 ^^@ \U/msb/m/n/10 E\OT1/cmr/m/n/10 [\OML/cmm/m/it/10 w[] \OMS/cmsy/m/n/10 j \OML/cmm/m/it/10 D[] \OT1/cmr/m/n/10 = 0\OML/cmm/m/it/10 ; p\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 X[]\OT1/cmr/m/n/10 )][] [] \OML/cmm/m/it/10 D[] \OT1/cmr/m/n/10 = 1[]\OML/cmm/m/it/10 :
  []
 
-[4] [5] (figures/ols.tex) (figures/probit.tex) [6] (figures/firststage.tex) [7] (figures/ivprobit.tex) [8] (figures/pr_kidcount.tex)
-<figures/ivprobit_pr_kidcount.png, id=91, 1063.975pt x 638.385pt>
+[4]
+<figures/att_estimates_plot.png, id=51, 2007.5pt x 1460.45625pt>
+File: figures/att_estimates_plot.png Graphic file (type png)
+<use figures/att_estimates_plot.png>
+Package pdftex.def Info: figures/att_estimates_plot.png  used on input line 189.
+(pdftex.def)             Requested size: 409.71692pt x 298.05838pt.
+ [5] [6 <./figures/att_estimates_plot.png (PNG copy)>] (figures/ols.tex) (figures/probit.tex) [7] (figures/firststage.tex) [8] (figures/ivprobit.tex) [9] (figures/pr_kidcount.tex)
+<figures/ivprobit_pr_kidcount.png, id=92, 1063.975pt x 638.385pt>
 File: figures/ivprobit_pr_kidcount.png Graphic file (type png)
 <use figures/ivprobit_pr_kidcount.png>
-Package pdftex.def Info: figures/ivprobit_pr_kidcount.png  used on input line 298.
+Package pdftex.def Info: figures/ivprobit_pr_kidcount.png  used on input line 306.
 (pdftex.def)             Requested size: 364.19667pt x 218.50916pt.
- [9 <./figures/ivprobit_pr_kidcount.png (PNG copy)>]
-c:/Users/sffra/Downloads/BSE 2025-2026/econometrics/hw6/main.tex:316: Undefined control sequence.
+ [10 <./figures/ivprobit_pr_kidcount.png (PNG copy)>]
+c:/Users/sffra/Downloads/BSE 2025-2026/econometrics/hw6/main.tex:324: Undefined control sequence.
 \__hook enddocument ->\ifTRP@rerun 
                                    \PackageWarningNoLine {transparent}{Rerun...
-l.316 \end{document}
+l.324 \end{document}
                     
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1329,14 +1335,14 @@ and I'll forget about whatever was undefined.
 
 Package transparent Warning: Rerun to get transparencies right.
 
-c:/Users/sffra/Downloads/BSE 2025-2026/econometrics/hw6/main.tex:316: Extra \fi.
+c:/Users/sffra/Downloads/BSE 2025-2026/econometrics/hw6/main.tex:324: Extra \fi.
 \__hook enddocument ...t transparencies right}\fi 
                                                   \ifpgf@external@grabshipou...
-l.316 \end{document}
+l.324 \end{document}
                     
 I'm ignoring this; it doesn't match any \if.
 
-[10] (main.aux)
+[11] (main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
@@ -1366,17 +1372,17 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 50327 strings out of 474486
- 1143699 string characters out of 5743755
+ 50333 strings out of 474486
+ 1143974 string characters out of 5743755
  2173644 words of memory out of 5000000
- 71796 multiletter control sequences out of 15000+600000
+ 71805 multiletter control sequences out of 15000+600000
  575757 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  100i,12n,104p,1207b,803s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0900.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx0900.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (10 pages, 267156 bytes).
+ <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0900.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx0900.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\sffra\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/sffra/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (11 pages, 447090 bytes).
 PDF statistics:
- 500 PDF objects out of 1000 (max. 8388607)
- 47 named destinations out of 1000 (max. 500000)
- 18 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 510 PDF objects out of 1000 (max. 8388607)
+ 44 named destinations out of 1000 (max. 500000)
+ 23 words of extra memory for PDF output out of 10000 (max. 10000000)
 
