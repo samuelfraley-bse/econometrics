@@ -1,0 +1,53 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+
+
+\begin{document}
+
+\section*{2.1}
+
+By computing the propensity score using gender, 1995 earnings decile, and decade of birth, the sample is divided into 9 blocks, ensuring that within each block the mean propensity score is not different between the control and treatment groups, that is, between non-displaced and displaced workers. However, and as the output indicates, the balancing property is not satisfied, which means that within the blocks created, the covariates are not balanced. Several variables differ significantly between the treatment and control groups, and consequently, the model is not properly accounting for systematic, idiosyncratic, differences between both groups.
+
+\section*{2.2}
+
+The Nearest-Neighbor (NN) method matches individuals in the treatment group with the closest individual in the control group, using the observed values of the latter as a counterfactual to compute the $\alpha TT$ of the former. The Kernel estimator, instead, takes into account all the individuals in the control group, downweighting those that are farther from any given individual in the treatment group. Since both methods operate differently, we expect them to yield different results, as it is confirmed by the results obtained, which are detailed in the following table:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{lcccc}
+\hline
+\textbf{Year} 
+& \textbf{NN Estimate} 
+& \textbf{NN SE} 
+& \textbf{Kernel Estimate} 
+& \textbf{Kernel SE} \\
+\hline
+1996 & -421.06  & 2098.80 & -554.54 & 150.52 \\
+1997 & 352.93   & 2226.50 & -648.94 & 232.19 \\
+1998 & -293.59  & 2423.26 & -949.65 & 295.29 \\
+1999 & -1700.42 & 2680.80 & -1884.44 & 312.05 \\
+2000 & -2440.29 & 2713.74 & -2596.17 & 330.81 \\
+2001 & 1088.11  & 2714.94 & -1046.38 & 395.99 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+Overall, the estimates obtained from both methods differ significantly, as demonstrated by the wide gap between the estimated $\alpha TT$ for the year 2001. The estimates from the Kernel method are significantly more precise than those from the NN method, as can be observed by their corresponding standard error measures. Consequently, we consider the estimated obtained through the Kernel method to be more reliable.
+
+\section*{2.3}
+
+Compared to Figure 1, the estimates obtained through NN and Kernel matching follow similar trends, with both figures showing declining earnings after displacement. This confirms that the results from the matching estimators replicate the patterns observed in Figure 1. Additionally, our graph also remarks the reliability of the Kernel method, and highlights the volatility of NN estimates.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{att_estimates_plot.png}
+    \caption{Matching estimates using NN and Kernel methods.}
+    \label{fig:ex3}
+\end{figure}
+\end{document}
+
