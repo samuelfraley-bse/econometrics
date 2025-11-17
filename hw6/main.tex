@@ -43,47 +43,71 @@ the number of students (\texttt{students}) and teacher attendance (\texttt{teach
 
 \subsection*{1.1 Baseline and Experiment Integrity}
 
-Under proper randomization, potential outcomes are independent of treatment status:
-\[
-Y_{1i}, Y_{0i} \perp\!\!\!\perp D_i,
-\]
-which implies that the average treatment effect on the treated (ATT) and the average treatment
-effect (ATE) coincide: \(\alpha_{ATT} = \alpha_{ATE} = \beta\).
 
-Before analyzing post-treatment outcomes, we should verify that treated and control schools are
-similar at baseline.
+\begin{table}[ht!]
+\centering
+\caption{Baseline Data}
+\label{tab:baseline}
+\begin{threeparttable}
+\begin{tabular}{lcccc}
+\toprule
+& Treatment (1) 
+& Control (2) 
+& Difference (3) \\
+\midrule
+\multicolumn{5}{l}{\textit{Panel A. Teacher attendance}} \\
+School open
+& 0.659
+& 0.641
+& 0.018 \\
+ &  &  & (0.108) \\
+ & 41 & 39 & 80 &  \\[6pt]
+\multicolumn{5}{l}{\textit{Panel B. Student participation (random check)}} \\
+Number of students present
+& 17.704
+& 15.920
+& 1.784 \\
+ &  &  & (2.303) \\
+ & 27 & 25 & 52 &  \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
 
-\begin{enumerate}[label=(\alph*)]
-  \item Using only the observations from the month before the program starts (\texttt{time} = 1),
-  compute the average teacher attendance and the average number of students per classroom
-  separately for the treatment and control groups.
+For the baseline data, $80$ schools were visited when $time = 1$, of which $41$ would benefit from the program ($treat = 1$) and $39$ would be part of the control group ($treat = 0$). As can be seen in Table $1$, the mean values for the binary variable describing whether the teacher was in attendance are $0.659$ and $0.641$, respectively.
 
-  Replicate the information in Panels A and B of Table 1 in Duflo et al. (2012): produce baseline
-  means by treatment status, report appropriate standard errors, and comment on whether the
-  randomization appears to have produced comparable groups.
+After conducting a $t$-test, with the null hypothesis being that the true difference in means between the treated and control group is equal to $0$, we obtain $t = -0.16205$ with a $p\text{-value} = 0.8717$, and therefore we cannot reject the null hypothesis at the $5\%$ significance level, which allows us to assume that the difference between the two means is not statistically significant. Thus, we can conclude that randomization in terms of teacher attendance was successful.
 
-  \item Briefly discuss whether any observed baseline differences are economically and/or statistically
-  significant. Explain why this check is important for interpreting the causal effect estimates later.
-\end{enumerate}
+Randomization was also good with regard to student participation. After filtering for $teacher\_participation = 1$, because if this variable is $0$ the school was closed, and this was a random check, we obtained a mean of $17.704$ for those schools that would receive the treatment ($n = 27$) and $15.920$ for those that would form the control group ($n = 25$). Again, a $t$-test is conducted with the same null hypothesis, and again it is concluded that the difference between the two means is not statistically significant at the $5\%$ significance level after obtaining $t = -0.77436$ with a $p\text{-value} = 0.4424$.
+
+Hence, after reviewing this, we can safely draw the conclusion that there is independence, that is, $Y_{1i}, Y_{0i} \perp D_i$, and that therefore $\alpha_{ATT} = \alpha_{ATE} = \beta$.
 
 \subsection*{1.2 Results}
 
-When randomization is valid, the treatment effect can be estimated via the simple regression:
-\[
-Y_i = \alpha + \beta D_i,
-\]
-where \(Y_i\) is the outcome of interest (e.g.\ teacher attendance) and \(D_i\) is the treatment
-indicator.
+\begin{table}[ht!]
+\centering
+\caption{Teacher Attendance}
+\label{tab:post_treatment}
+\begin{threeparttable}
+\begin{tabular}{lccc}
+\toprule
+\multicolumn{4}{c}{September 2003--February 2006} \\
+\midrule
+& Treatment (1) & Control (2) & Difference (3) \\
+\midrule
+\multicolumn{4}{l}{\textit{Panel A. All teachers}} \\
+& 0.787 & 0.580 & 0.207 \\
+&  &  & (0.016) \\
+& 1,575 & 1,496 & 3,071 \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
 
-\begin{enumerate}[label=(\alph*), resume]
-  \item Using post-program data (\texttt{time} > 1), compute and compare average teacher attendance
-  in treated and control schools. Replicate the first three columns of Panel A of Table 2 in Duflo
-  et al. (2012), reporting the relevant means and differences.
+From Table $2$, we can interpret the difference between the average attendance of teachers in treated schools and untreated schools after the program began, $0.787$ and $0.580$, respectively, as the effect of the treatment, that is, $\beta$. Thus, $\alpha_{ATT} = \alpha_{ATE} = \beta = 0.207$. We can corroborate this by running the model $Y_i = \alpha + \beta D_i$, which gives us the same value for $\beta$, with t = 12.67, thereby making it highly statistically significant even at the $1\%$ level.
 
-  \item Based on your estimates, discuss whether the incentive program achieved its main goal of
-  reducing teacher absenteeism. Comment on the magnitude and statistical significance of the
-  estimated treatment effect.
-\end{enumerate}
+Thus, the program achieved its goal of reducing teacher absenteeism, with teacher attendance $20.7$ percentage points higher in schools that benefited from the incentive program ($0.787$) as compared to those that did not ($0.580$), which represents a $35.7\%$ improvement over the control group.
+
 
 \newpage
 
@@ -151,47 +175,90 @@ standard requirements in this literature.
 
 \section*{2.1}
 
-By computing the propensity score using gender, 1995 earnings decile, and decade of birth, the sample is divided into 9 blocks, ensuring that within each block the mean propensity score is not different between the control and treatment groups, that is, between non-displaced and displaced workers. However, and as the output indicates, the balancing property is not satisfied, which means that within the blocks created, the covariates are not balanced. Several variables differ significantly between the treatment and control groups, and consequently, the model is not properly accounting for systematic, idiosyncratic, differences between both groups.
+By computing the propensity score using gender, 1995 earnings decile, 
+and decade of birth, the sample is divided into 6 blocks, ensuring that 
+within each block the mean propensity score is not different between the 
+control and treatment groups, that is, between non-displaced and displaced 
+workers. Once the blocks are generated, we test for the balancing property, which
+states that the covariates within each block must be balanced between the control
+and treatment groups. In other words, that there exists no significant difference
+in the covariates of both groups within each block.
 
 \section*{2.2}
 
-The Nearest-Neighbor (NN) method matches individuals in the treatment group with the closest individual in the control group, using the observed values of the latter as a counterfactual to compute the $\alpha TT$ of the former. The Kernel estimator, instead, takes into account all the individuals in the control group, downweighting those that are farther from any given individual in the treatment group. Since both methods operate differently, we expect them to yield different results, as it is confirmed by the results obtained, which are detailed in the following table:
+The Nearest-Neighbor (NN) method matches individuals in the treatment group with 
+the closest individual in the control group, using the observed values of the 
+latter as a counterfactual to compute the $\alpha TT$ of the former. The Kernel 
+estimator, instead, takes into account all the individuals in the control group, 
+downweighting those that are farther from any given individual in the treatment 
+group. Since both methods operate differently, we expect them to yield different 
+results, as it is confirmed by the results obtained, which are detailed in the 
+following table:
 
 \begin{table}[h!]
 \centering
-\begin{tabular}{lcccc}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccc}
 \hline
 \textbf{Year} 
-& \textbf{NN Estimate} 
-& \textbf{NN SE} 
-& \textbf{Kernel Estimate} 
-& \textbf{Kernel SE} \\
+& \textbf{NN (All)} & \textbf{Kernel (All)}
+& \textbf{NN (Mass)} & \textbf{Kernel (Mass)}
+& \textbf{NN (Sep)} & \textbf{Kernel (Sep)} \\
 \hline
-1996 & -421.06  & 2098.80 & -554.54 & 150.52 \\
-1997 & 352.93   & 2226.50 & -648.94 & 232.19 \\
-1998 & -293.59  & 2423.26 & -949.65 & 295.29 \\
-1999 & -1700.42 & 2680.80 & -1884.44 & 312.05 \\
-2000 & -2440.29 & 2713.74 & -2596.17 & 330.81 \\
-2001 & 1088.11  & 2714.94 & -1046.38 & 395.99 \\
+1996 & -421.06 (2098.80) & -554.54 (292.85)
+     & -245.21 (2221.21) & -1632.95 (934.12)
+     & -245.37 (2168.89) & -574.42 (268.00) \\
+1997 & 352.93 (2226.50) & -648.94 (388.77)
+     & 225.75 (2348.71) & -1983.37 (903.99)
+     & 583.19 (2301.61) & -648.91 (385.29) \\
+1998 & -293.59 (2423.26) & -949.65 (361.46)
+     & 581.06 (2619.49) & -1925.03 (756.06)
+     & -225.63 (2492.26) & -1006.45 (407.14) \\
+1999 & -1700.42 (2680.80) & -1884.44 (172.71)
+     & -2233.66 (2884.61) & -3576.48 (728.91)
+     & -1519.85 (2732.66) & -1823.26 (229.30) \\
+2000 & -2440.29 (2713.74) & -2596.17 (312.15)
+     & -3403.80 (2935.02) & -4219.87 (910.33)
+     & -2330.79 (2764.23) & -2533.08 (325.36) \\
+2001 & 1088.11 (2714.94) & -1046.38 (381.16)
+     & 32.36 (2899.49) & -2941.92 (617.49)
+     & 1012.66 (2786.02) & -1014.83 (390.56) \\
 \hline
 \end{tabular}
+}
+\caption{ATT Estimates and Standard Errors by Method and Treatment Group}
 \end{table}
 
 
-Overall, the estimates obtained from both methods differ significantly, as demonstrated by the wide gap between the estimated $\alpha TT$ for the year 2001. The estimates from the Kernel method are significantly more precise than those from the NN method, as can be observed by their corresponding standard error measures. Consequently, we consider the estimated obtained through the Kernel method to be more reliable.
+
+
+Overall, the estimates obtained from both methods differ significantly, as 
+demonstrated, for example, by the wide gap between the estimated $\alpha TT$ for the 
+year 2001. In our Figure 1, we can appreciate this significant difference
+between the estimates, with the NN method generally yielding a less negative
+treatment effect on the treated ($\alpha TT$), and the Kernel estimator
+yielding more negative results. The estimates from the Kernel method are significantly more precise than those from 
+the NN method, as can be observed by their corresponding standard error measures in the previous table. 
+Consequently, we consider the estimated obtained through the Kernel method to be more 
+reliable.
 
 \section*{2.3}
 
-Compared to Figure 1, the estimates obtained through NN and Kernel matching follow similar trends, with both figures showing declining earnings after displacement. This confirms that the results from the matching estimators replicate the patterns observed in Figure 1. Additionally, our graph also remarks the reliability of the Kernel method, and highlights the volatility of NN estimates.
+Taking into account only the results from the Kernel estimator, in the light of the 
+reasoning above, we see how the effect of both mass layoffs and separation only is negative
+for the treated individuals' annual salary. Additionally, we can observe how those treated
+with mass layoffs are worse off, whem compared with the individuals treated with separation only.
+The patterns displayed in the provided Figure 1 are, thus, reproduced in our case,
+not only because we have obtained negative effects for both treatments on the treated individuals'
+annual salary, but also because mass layoffs lead to a more negative treatment effect, as 
+displayed in the provided Figure 1.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/att_estimates_plot.png}
+    \includegraphics[width=0.9\textwidth]{figures/att_estimates_by_treatment_plot.png}
     \caption{Matching estimates using NN and Kernel methods.}
     \label{fig:ex3}
 \end{figure}
-
-\newpage
 
 \section*{Question 3: Instrumental Variables}
 
@@ -294,9 +361,9 @@ where \(y_i\) is the mother’s employment status and \(X_i\) is a vector of con
   \item Using your preferred IV probit specification, estimate the marginal effect of an additional
   child on the probability that a mother is employed.
 
-  Table~X reports the predicted probability of employment for mothers with 0–5 children, based on the IV probit estimates. 
+  The table below reports the predicted probability of employment for mothers with 0–5 children, based on the IV probit estimates. 
   The probability falls from about 0.63 for one child to 0.43 for three children, implying that an additional child reduces employment
-  probability by roughly zz percentage points around this range (see also Figure~Y).
+  probability by roughly 0.2 percentage points around this range (see also Figure~2).
 
   \input{figures/pr_kidcount.tex}
 

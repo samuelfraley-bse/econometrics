@@ -1,0 +1,38 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{OLS and Probit Estimates\label{tab:ols\_probit}}
+\begin{tabular}{l*{3}{c}}
+\toprule
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}\\
+                    &\multicolumn{1}{c}{OLS}&\multicolumn{1}{c}{Probit}&\multicolumn{1}{c}{Probit AME}\\
+\midrule
+main                &                     &                     &                     \\
+KIDCOUNT            &     -0.0911\sym{***}&     -0.2371\sym{***}&     -0.0907\sym{***}\\
+                    &    (0.0010)         &    (0.0026)         &    (0.0010)         \\
+\addlinespace
+SEXK                &      0.0009         &      0.0025         &                     \\
+                    &    (0.0015)         &    (0.0040)         &                     \\
+\addlinespace
+AGEM                &      0.0147\sym{***}&      0.0383\sym{***}&                     \\
+                    &    (0.0002)         &    (0.0006)         &                     \\
+\addlinespace
+blackm              &      0.1507\sym{***}&      0.4039\sym{***}&                     \\
+                    &    (0.0023)         &    (0.0064)         &                     \\
+\addlinespace
+hispm               &     -0.0083\sym{*}  &     -0.0203\sym{*}  &                     \\
+                    &    (0.0046)         &    (0.0118)         &                     \\
+\addlinespace
+othracem            &      0.0275\sym{***}&      0.0718\sym{***}&                     \\
+                    &    (0.0047)         &    (0.0122)         &                     \\
+\addlinespace
+Constant            &      0.3372\sym{***}&     -0.4276\sym{***}&                     \\
+                    &    (0.0070)         &    (0.0180)         &                     \\
+\midrule
+Observations        &      400169         &      400169         &      400169         \\
+R-squared           &      0.0344         &                     &                     \\
+Pseudo R-squared    &                     &      0.0256         &                     \\
+\bottomrule
+\multicolumn{4}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{4}{l}{\footnotesize \sym{*} \(p<0.10\), \sym{**} \(p<0.05\), \sym{***} \(p<0.01\)}\\
+\end{tabular}
+\end{table}

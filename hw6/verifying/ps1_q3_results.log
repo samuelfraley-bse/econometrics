@@ -1,0 +1,641 @@
+-----------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw6\verifying\ps1_q3_results.l
+> og
+  log type:  text
+ opened on:  17 Nov 2025, 20:23:40
+
+. 
+. /*==============================================================================
+>   DATA EXPLORATION
+> ==============================================================================*/
+. 
+. describe
+
+Contains data from ps1_q3.dta
+ Observations:       400,169                  
+    Variables:             8                  1 Mar 2023 12:15
+-----------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+-----------------------------------------------------------------------------------------------
+sexk            byte    %8.0g                 SEXK
+kidcount        byte    %8.0g                 KIDCOUNT
+agem            byte    %8.0g                 AGEM
+twin_latest     byte    %9.0g                 
+blackm          byte    %9.0g                 
+hispm           byte    %9.0g                 
+othracem        byte    %9.0g                 
+workedm         byte    %9.0g                 
+-----------------------------------------------------------------------------------------------
+Sorted by: 
+
+. summarize
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+        sexk |    400,169    .4889209    .4998779          0          1
+    kidcount |    400,169    2.558856    .8155371          2         12
+        agem |    400,169    30.06988    3.538828         21         35
+ twin_latest |    400,169    .0163931    .1269818          0          1
+      blackm |    400,169    .1234728    .3289796          0          1
+-------------+---------------------------------------------------------
+       hispm |    400,169    .0304446    .1718076          0          1
+    othracem |    400,169    .0286329    .1667727          0          1
+     workedm |    400,169    .5654936    .4956927          0          1
+
+. 
+. * Summary statistics for key variables
+. tabstat workedm kidcount agem sexk blackm hispm othracem twin_latest, ///
+>     statistics(mean sd min max n) columns(statistics)
+
+    Variable |      Mean        SD       Min       Max         N
+-------------+--------------------------------------------------
+     workedm |  .5654936  .4956927         0         1    400169
+    kidcount |  2.558856  .8155371         2        12    400169
+        agem |  30.06988  3.538828        21        35    400169
+        sexk |  .4889209  .4998779         0         1    400169
+      blackm |  .1234728  .3289796         0         1    400169
+       hispm |  .0304446  .1718076         0         1    400169
+    othracem |  .0286329  .1667727         0         1    400169
+ twin_latest |  .0163931  .1269818         0         1    400169
+----------------------------------------------------------------
+
+. 
+. * Distribution of number of children
+. tab kidcount, missing
+
+   KIDCOUNT |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          2 |    238,121       59.51       59.51
+          3 |    116,650       29.15       88.66
+          4 |     33,426        8.35       97.01
+          5 |      8,981        2.24       99.25
+          6 |      2,130        0.53       99.78
+          7 |        597        0.15       99.93
+          8 |        199        0.05       99.98
+          9 |         38        0.01       99.99
+         10 |         18        0.00      100.00
+         11 |          7        0.00      100.00
+         12 |          2        0.00      100.00
+------------+-----------------------------------
+      Total |    400,169      100.00
+
+. 
+. * Check the twin instrument
+. tab twin_latest
+
+twin_latest |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |    393,609       98.36       98.36
+          1 |      6,560        1.64      100.00
+------------+-----------------------------------
+      Total |    400,169      100.00
+
+. tab kidcount twin_latest, row col
+
++-------------------+
+| Key               |
+|-------------------|
+|     frequency     |
+|  row percentage   |
+| column percentage |
++-------------------+
+
+           |      twin_latest
+  KIDCOUNT |         0          1 |     Total
+-----------+----------------------+----------
+         2 |   235,692      2,429 |   238,121 
+           |     98.98       1.02 |    100.00 
+           |     59.88      37.03 |     59.51 
+-----------+----------------------+----------
+         3 |   114,161      2,489 |   116,650 
+           |     97.87       2.13 |    100.00 
+           |     29.00      37.94 |     29.15 
+-----------+----------------------+----------
+         4 |    32,147      1,279 |    33,426 
+           |     96.17       3.83 |    100.00 
+           |      8.17      19.50 |      8.35 
+-----------+----------------------+----------
+         5 |     8,618        363 |     8,981 
+           |     95.96       4.04 |    100.00 
+           |      2.19       5.53 |      2.24 
+-----------+----------------------+----------
+         6 |     2,130          0 |     2,130 
+           |    100.00       0.00 |    100.00 
+           |      0.54       0.00 |      0.53 
+-----------+----------------------+----------
+         7 |       597          0 |       597 
+           |    100.00       0.00 |    100.00 
+           |      0.15       0.00 |      0.15 
+-----------+----------------------+----------
+         8 |       199          0 |       199 
+           |    100.00       0.00 |    100.00 
+           |      0.05       0.00 |      0.05 
+-----------+----------------------+----------
+         9 |        38          0 |        38 
+           |    100.00       0.00 |    100.00 
+           |      0.01       0.00 |      0.01 
+-----------+----------------------+----------
+        10 |        18          0 |        18 
+           |    100.00       0.00 |    100.00 
+           |      0.00       0.00 |      0.00 
+-----------+----------------------+----------
+        11 |         7          0 |         7 
+           |    100.00       0.00 |    100.00 
+           |      0.00       0.00 |      0.00 
+-----------+----------------------+----------
+        12 |         2          0 |         2 
+           |    100.00       0.00 |    100.00 
+           |      0.00       0.00 |      0.00 
+-----------+----------------------+----------
+     Total |   393,609      6,560 |   400,169 
+           |     98.36       1.64 |    100.00 
+           |    100.00     100.00 |    100.00 
+
+. 
+. /*==============================================================================
+>   3.1: OLS AND PROBIT ESTIMATION
+> ==============================================================================*/
+. 
+. display ""
+
+
+. display "================================================================================"
+================================================================================
+
+. display "QUESTION 3.1: OLS and Probit Estimation"
+QUESTION 3.1: OLS and Probit Estimation
+
+. display "================================================================================"
+================================================================================
+
+. display ""
+
+
+. 
+. * Define control variables
+. global X "sexk agem blackm hispm othracem"
+
+. 
+. * -------------------------------
+. * OLS Estimation
+. * -------------------------------
+. display ""
+
+
+. display "*** OLS ESTIMATION ***"
+*** OLS ESTIMATION ***
+
+. display ""
+
+
+. 
+. regress workedm kidcount $X, vce(robust)
+
+Linear regression                               Number of obs     =    400,169
+                                                F(6, 400162)      =    2572.46
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0344
+                                                Root MSE          =      .4871
+
+------------------------------------------------------------------------------
+             |               Robust
+     workedm | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+    kidcount |  -.0910794    .000951   -95.77   0.000    -.0929432   -.0892155
+        sexk |   .0009097   .0015405     0.59   0.555    -.0021095     .003929
+        agem |   .0146908   .0002209    66.50   0.000     .0142578    .0151238
+      blackm |   .1506663   .0022648    66.52   0.000     .1462272    .1551053
+       hispm |  -.0083029   .0045639    -1.82   0.069    -.0172479    .0006421
+    othracem |   .0275119   .0046564     5.91   0.000     .0183854    .0366384
+       _cons |   .3372181   .0069574    48.47   0.000     .3235818    .3508544
+------------------------------------------------------------------------------
+
+. eststo ols
+
+. 
+. * Store key results
+. matrix ols_coef = e(b)
+
+. scalar ols_beta_kidcount = _b[kidcount]
+
+. scalar ols_se_kidcount = _se[kidcount]
+
+. 
+. display ""
+
+
+. display "OLS Coefficient on kidcount: " ols_beta_kidcount
+OLS Coefficient on kidcount: -.09107935
+
+. display "Standard error: " ols_se_kidcount
+Standard error: .00095098
+
+. 
+. * -------------------------------
+. * Probit Estimation
+. * -------------------------------
+. display ""
+
+
+. display ""
+
+
+. display "*** PROBIT ESTIMATION ***"
+*** PROBIT ESTIMATION ***
+
+. display ""
+
+
+. 
+. probit workedm kidcount $X, vce(robust)
+
+Iteration 0:  Log pseudolikelihood = -273933.15  
+Iteration 1:  Log pseudolikelihood = -266940.63  
+Iteration 2:  Log pseudolikelihood = -266932.27  
+Iteration 3:  Log pseudolikelihood = -266932.27  
+
+Probit regression                                     Number of obs =  400,169
+                                                      Wald chi2(6)  = 13492.36
+                                                      Prob > chi2   =   0.0000
+Log pseudolikelihood = -266932.27                     Pseudo R2     =   0.0256
+
+------------------------------------------------------------------------------
+             |               Robust
+     workedm | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+    kidcount |  -.2370876    .002583   -91.79   0.000    -.2421502   -.2320249
+        sexk |   .0025206   .0040251     0.63   0.531    -.0053684    .0104097
+        agem |    .038261   .0005796    66.01   0.000      .037125     .039397
+      blackm |    .403935   .0063854    63.26   0.000     .3914199    .4164501
+       hispm |  -.0203397   .0117971    -1.72   0.085    -.0434616    .0027822
+    othracem |   .0717952   .0121639     5.90   0.000     .0479544    .0956359
+       _cons |  -.4275721   .0180118   -23.74   0.000    -.4628746   -.3922697
+------------------------------------------------------------------------------
+
+. eststo probit
+
+. 
+. * Store key results
+. scalar probit_beta_kidcount = _b[kidcount]
+
+. scalar probit_se_kidcount = _se[kidcount]
+
+. 
+. display ""
+
+
+. display "Probit Coefficient on kidcount: " probit_beta_kidcount
+Probit Coefficient on kidcount: -.23708757
+
+. display "Standard error: " probit_se_kidcount
+Standard error: .00258304
+
+. 
+. * Average marginal effects for probit
+. display ""
+
+
+. display "*** AVERAGE MARGINAL EFFECTS (PROBIT) ***"
+*** AVERAGE MARGINAL EFFECTS (PROBIT) ***
+
+. display ""
+
+
+. 
+. margins, dydx(kidcount) post
+
+Average marginal effects                               Number of obs = 400,169
+Model VCE: Robust
+
+Expression: Pr(workedm), predict()
+dy/dx wrt:  kidcount
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |      dy/dx   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+    kidcount |  -.0907264   .0009557   -94.93   0.000    -.0925995   -.0888533
+------------------------------------------------------------------------------
+
+. eststo probit_ame
+
+. 
+. * -------------------------------
+. * Comparison Table
+. * -------------------------------
+. display ""
+
+
+. display ""
+
+
+. display "*** COMPARISON OF OLS AND PROBIT ***"
+*** COMPARISON OF OLS AND PROBIT ***
+
+. display ""
+
+
+. 
+. esttab ols probit probit_ame, ///
+>     b(%9.4f) se(%9.4f) star(* 0.10 ** 0.05 *** 0.01) ///
+>     stats(N r2 r2_p, fmt(%9.0f %9.4f %9.4f) ///
+>     labels("Observations" "R-squared" "Pseudo R-squared")) ///
+>     mtitles("OLS" "Probit" "Probit AME") ///
+>     title("Table 1: OLS and Probit Estimates")
+
+Table 1: OLS and Probit Estimates
+------------------------------------------------------------
+                      (1)             (2)             (3)   
+                      OLS          Probit      Probit AME   
+------------------------------------------------------------
+main                                                        
+kidcount          -0.0911***      -0.2371***      -0.0907***
+                 (0.0010)        (0.0026)        (0.0010)   
+
+sexk               0.0009          0.0025                   
+                 (0.0015)        (0.0040)                   
+
+agem               0.0147***       0.0383***                
+                 (0.0002)        (0.0006)                   
+
+blackm             0.1507***       0.4039***                
+                 (0.0023)        (0.0064)                   
+
+hispm             -0.0083*        -0.0203*                  
+                 (0.0046)        (0.0118)                   
+
+othracem           0.0275***       0.0718***                
+                 (0.0047)        (0.0122)                   
+
+_cons              0.3372***      -0.4276***                
+                 (0.0070)        (0.0180)                   
+------------------------------------------------------------
+Observations       400169          400169          400169   
+R-squared          0.0344                                   
+Pseudo R-s~d                       0.0256                   
+------------------------------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+
+. 
+. * Export to LaTeX
+. capture mkdir tables
+
+. esttab ols probit probit_ame using "tables/q3_1_ols_probit.tex", replace ///
+>     b(%9.4f) se(%9.4f) star(* 0.10 ** 0.05 *** 0.01) ///
+>     booktabs label ///
+>     stats(N r2 r2_p, fmt(%9.0f %9.4f %9.4f) ///
+>     labels("Observations" "R-squared" "Pseudo R-squared")) ///
+>     mtitles("OLS" "Probit" "Probit AME") ///
+>     title("OLS and Probit Estimates\label{tab:ols_probit}")
+(file tables/q3_1_ols_probit.tex not found)
+(output written to tables/q3_1_ols_probit.tex)
+
+. 
+. * -------------------------------
+. * Discussion Points
+. * -------------------------------
+. display ""
+
+
+. display ""
+
+
+. display ""
+
+
+. display "================================================================================"
+================================================================================
+
+. display "DISCUSSION: Is OLS/Probit the Correct Approach?"
+DISCUSSION: Is OLS/Probit the Correct Approach?
+
+. display "================================================================================"
+================================================================================
+
+. display ""
+
+
+. 
+. display "POTENTIAL ISSUES WITH OLS/PROBIT:"
+POTENTIAL ISSUES WITH OLS/PROBIT:
+
+. display "1. ENDOGENEITY/REVERSE CAUSALITY:"
+1. ENDOGENEITY/REVERSE CAUSALITY:
+
+. display "   - Women who prefer to work may choose to have fewer children"
+   - Women who prefer to work may choose to have fewer children
+
+. display "   - Fertility decisions may be influenced by labor market opportunities"
+   - Fertility decisions may be influenced by labor market opportunities
+
+. display "   - Coefficient may capture preferences rather than causal effect"
+   - Coefficient may capture preferences rather than causal effect
+
+. display ""
+
+
+. display "2. OMITTED VARIABLE BIAS:"
+2. OMITTED VARIABLE BIAS:
+
+. display "   - Unobserved preferences for work vs. family"
+   - Unobserved preferences for work vs. family
+
+. display "   - Career orientation, education quality, spousal characteristics"
+   - Career orientation, education quality, spousal characteristics
+
+. display "   - These factors may affect both fertility and labor supply"
+   - These factors may affect both fertility and labor supply
+
+. display ""
+
+
+. display "3. MEASUREMENT ERROR:"
+3. MEASUREMENT ERROR:
+
+. display "   - Timing issues: current children vs. lifetime fertility plans"
+   - Timing issues: current children vs. lifetime fertility plans
+
+. display ""
+
+
+. display "CONCLUSION: OLS/Probit likely provides BIASED estimates due to"
+CONCLUSION: OLS/Probit likely provides BIASED estimates due to
+
+. display "endogeneity of fertility decisions. Need IV approach."
+endogeneity of fertility decisions. Need IV approach.
+
+. display "================================================================================"
+================================================================================
+
+. display ""
+
+
+. 
+. /*==============================================================================
+>   3.2: IV PROBIT ESTIMATION
+> ==============================================================================*/
+. 
+. display ""
+
+
+. display ""
+
+
+. display ""
+
+
+. display "================================================================================"
+================================================================================
+
+. display "QUESTION 3.2: IV Probit Estimation"
+QUESTION 3.2: IV Probit Estimation
+
+. display "================================================================================"
+================================================================================
+
+. display ""
+
+
+. 
+. * -------------------------------
+. * First Stage: Effect of twins on number of children
+. * -------------------------------
+. display ""
+
+
+. display "*** FIRST STAGE: twin_latest → kidcount ***"
+*** FIRST STAGE: twin_latest → kidcount ***
+
+. display ""
+
+
+. 
+. regress kidcount twin_latest $X, vce(robust)
+
+Linear regression                               Number of obs     =    400,169
+                                                F(6, 400162)      =    2298.34
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0405
+                                                Root MSE          =     .79886
+
+------------------------------------------------------------------------------
+             |               Robust
+    kidcount | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+ twin_latest |   .3850044   .0108026    35.64   0.000     .3638316    .4061771
+        sexk |   .0138442    .002527     5.48   0.000     .0088914    .0187971
+        agem |    .030971   .0003467    89.33   0.000     .0302914    .0316505
+      blackm |   .3235942   .0046597    69.44   0.000     .3144613    .3327272
+       hispm |   .4370486   .0097856    44.66   0.000     .4178692     .456228
+    othracem |   .1210053   .0084548    14.31   0.000     .1044342    .1375764
+       _cons |   1.557758   .0103841   150.01   0.000     1.537405     1.57811
+------------------------------------------------------------------------------
+
+. eststo first_stage
+
+. 
+. * Test instrument strength
+. display ""
+
+
+. display "First stage F-statistic: " e(F)
+First stage F-statistic: 2298.3431
+
+. scalar first_stage_f = e(F)
+
+. 
+. * Coefficient on instrument
+. display "Coefficient on twin_latest: " _b[twin_latest]
+Coefficient on twin_latest: .38500437
+
+. display "t-statistic: " _b[twin_latest]/_se[twin_latest]
+t-statistic: 35.639957
+
+. 
+. * -------------------------------
+. * IV Probit Estimation
+. * -------------------------------
+. display ""
+
+
+. display ""
+
+
+. display "*** IV PROBIT: Second Stage ***"
+*** IV PROBIT: Second Stage ***
+
+. display ""
+
+
+. 
+. ivprobit workedm $X (kidcount = twin_latest), vce(robust) nolog
+
+Probit model with endogenous regressors                Number of obs = 400,169
+                                                       Wald chi2(6)  = 5172.25
+Log pseudolikelihood = -744871.86                      Prob > chi2   =  0.0000
+
+--------------------------------------------------------------------------------------------
+                           |               Robust
+                           | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+---------------------------+----------------------------------------------------------------
+                  kidcount |  -.0715877   .0413285    -1.73   0.083    -.1525901    .0094146
+                      sexk |   .0002138   .0040526     0.05   0.958    -.0077291    .0081568
+                      agem |   .0328903   .0015186    21.66   0.000     .0299138    .0358667
+                    blackm |   .3473656   .0161035    21.57   0.000     .3158033    .3789279
+                     hispm |  -.0915425   .0210846    -4.34   0.000    -.1328676   -.0502174
+                  othracem |   .0515402   .0131292     3.93   0.000     .0258073     .077273
+                     _cons |  -.6801591   .0638258   -10.66   0.000    -.8052555   -.5550628
+---------------------------+----------------------------------------------------------------
+ corr(e.kidcount,e.workedm)|  -.1310838    .032274                     -.1937247   -.0673784
+             sd(e.kidcount)|   .7988564   .0016005                      .7957257    .8019995
+--------------------------------------------------------------------------------------------
+Wald test of exogeneity (corr = 0): chi2(1) = 16.12       Prob > chi2 = 0.0001
+Endogenous: kidcount
+Exogenous:  sexk agem blackm hispm othracem twin_latest
+
+. eststo ivprobit
+
+. 
+. * Store results
+. scalar ivprobit_beta_kidcount = _b[kidcount]
+
+. scalar ivprobit_se_kidcount = _se[kidcount]
+
+. 
+. display ""
+
+
+. display "IV Probit Coefficient on kidcount: " ivprobit_beta_kidcount
+IV Probit Coefficient on kidcount: -.07158773
+
+. display "Standard error: " ivprobit_se_kidcount
+Standard error: .04132848
+
+. 
+. * -------------------------------
+. * Test for endogeneity
+. * -------------------------------
+. display ""
+
+
+. display ""
+
+
+. display "*** ENDOGENEITY TEST ***"
+*** ENDOGENEITY TEST ***
+
+. display ""
+
+
+. 
+. estat endogenous
+estat endogenous not valid
+r(321);
+
+end of do-file
+
+r(321);
+

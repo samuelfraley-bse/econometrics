@@ -1,0 +1,83 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{siunitx}   % optional
+
+\title{Assignment 6. Randomized Control Trials (Q1)}
+\author{Daniel Campos}
+\date{November 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Baseline and Experiment Integrity}
+
+\begin{table}[ht!]
+\centering
+\caption{Baseline Data}
+\label{tab:baseline}
+\begin{threeparttable}
+\begin{tabular}{lcccc}
+\toprule
+& Treatment (1) 
+& Control (2) 
+& Difference (3) \\
+\midrule
+\multicolumn{5}{l}{\textit{Panel A. Teacher attendance}} \\
+School open
+& 0.659
+& 0.641
+& 0.018 \\
+ &  &  & (0.108) \\
+ & 41 & 39 & 80 &  \\[6pt]
+\multicolumn{5}{l}{\textit{Panel B. Student participation (random check)}} \\
+Number of students present
+& 17.704
+& 15.920
+& 1.784 \\
+ &  &  & (2.303) \\
+ & 27 & 25 & 52 &  \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+For the baseline data, $80$ schools were visited when $time = 1$, of which $41$ would benefit from the program ($treat = 1$) and $39$ would be part of the control group ($treat = 0$). As can be seen in Table $1$, the mean values for the binary variable describing whether the teacher was in attendance are $0.659$ and $0.641$, respectively.
+
+After conducting a $t$-test, with the null hypothesis being that the true difference in means between the treated and control group is equal to $0$, we obtain $t = -0.16205$ with a $p\text{-value} = 0.8717$, and therefore we cannot reject the null hypothesis at the $5\%$ significance level, which allows us to assume that the difference between the two means is not statistically significant. Thus, we can conclude that randomization in terms of teacher attendance was successful.
+
+Randomization was also good with regard to student participation. After filtering for $teacher\_participation = 1$, because if this variable is $0$ the school was closed, and this was a random check, we obtained a mean of $17.704$ for those schools that would receive the treatment ($n = 27$) and $15.920$ for those that would form the control group ($n = 25$). Again, a $t$-test is conducted with the same null hypothesis, and again it is concluded that the difference between the two means is not statistically significant at the $5\%$ significance level after obtaining $t = -0.77436$ with a $p\text{-value} = 0.4424$.
+
+Hence, after reviewing this, we can safely draw the conclusion that there is independence, that is, $Y_{1i}, Y_{0i} \perp D_i$, and that therefore $\alpha_{ATT} = \alpha_{ATE} = \beta$.
+
+\section{Results}
+
+\begin{table}[ht!]
+\centering
+\caption{Teacher Attendance}
+\label{tab:post_treatment}
+\begin{threeparttable}
+\begin{tabular}{lccc}
+\toprule
+\multicolumn{4}{c}{September 2003--February 2006} \\
+\midrule
+& Treatment (1) & Control (2) & Difference (3) \\
+\midrule
+\multicolumn{4}{l}{\textit{Panel A. All teachers}} \\
+& 0.787 & 0.580 & 0.207 \\
+&  &  & (0.016) \\
+& 1,575 & 1,496 & 3,071 \\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{table}
+
+From Table $2$, we can interpret the difference between the average attendance of teachers in treated schools and untreated schools after the program began, $0.787$ and $0.580$, respectively, as the effect of the treatment, that is, $\beta$. Thus, $\alpha_{ATT} = \alpha_{ATE} = \beta = 0.207$. We can corroborate this by running the model $Y_i = \alpha + \beta D_i$, which gives us the same value for $\beta$, with t = 12.67, thereby making it highly statistically significant even at the $1\%$ level.
+
+Thus, the program achieved its goal of reducing teacher absenteeism, with teacher attendance $20.7$ percentage points higher in schools that benefited from the incentive program ($0.787$) as compared to those that did not ($0.580$), which represents a $35.7\%$ improvement over the control group.
+
+\end{document}

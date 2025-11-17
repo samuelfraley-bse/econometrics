@@ -1,0 +1,151 @@
+/*==============================================================================
+  Question 3.3: Marginal Effects from IV Probit
+  Simplified version - just replicate the margins analysis
+==============================================================================*/
+
+clear all
+set more off
+
+* Load the data
+use "ps1_q3.dta", clear
+
+* Define control variables
+global X "sexk agem blackm hispm othracem"
+
+/*==============================================================================
+  IV PROBIT ESTIMATION
+==============================================================================*/
+
+display ""
+display "================================================================================"
+display "IV Probit Estimation"
+display "================================================================================"
+display ""
+
+ivprobit workedm $X (kidcount = twin_latest), vce(robust) nolog
+
+display ""
+display "IV Probit Coefficient on kidcount: " _b[kidcount]
+display "Standard error: " _se[kidcount]
+display ""
+
+/*==============================================================================
+  3.3: MARGINAL EFFECTS AND PREDICTED PROBABILITIES
+==============================================================================*/
+
+display ""
+display "================================================================================"
+display "QUESTION 3.3: Predicted Probabilities by Number of Children"
+display "================================================================================"
+display ""
+
+* Predicted probabilities for kidcount = 0 to 5
+margins, at(kidcount = (0(1)5)) predict(pr)
+
+* Store for table
+eststo margins_levels
+quietly margins, at(kidcount = (0(1)5)) predict(pr) post
+
+* Display results in a nice table
+esttab margins_levels, ///
+    cells("b(fmt(%9.4f) label(Pred. Prob.)) ///
+          se(fmt(%9.4f) label(Std. Err.)) ///
+          ci(fmt(%9.4f) label(95% CI))") ///
+    noobs nonumber nomtitles ///
+    coeflabels(1._at "0 children" ///
+               2._at "1 child" ///
+               3._at "2 children" ///
+               4._at "3 children" ///
+               5._at "4 children" ///
+               6._at "5 children")
+
+* Export to LaTeX
+capture mkdir tables
+esttab margins_levels using "tables/q3_3_predicted_probs.tex", replace ///
+    cells("b(fmt(%9.4f) label(Pred. Prob.)) ///
+          se(fmt(%9.4f) label(Std. Err.)) ///
+          ci(fmt(%9.4f) label(95% CI))") ///
+    noobs nonumber nomtitles booktabs ///
+    coeflabels(1._at "0 children" ///
+               2._at "1 child" ///
+               3._at "2 children" ///
+               4._at "3 children" ///
+               5._at "4 children" ///
+               6._at "5 children") ///
+    title("Predicted Probability of Employment by Number of Children\label{tab:pred_probs}")
+
+/*==============================================================================
+  PLOT
+==============================================================================*/
+
+display ""
+display "================================================================================"
+display "Creating Margins Plot"
+display "================================================================================"
+display ""
+
+* Re-estimate for plotting
+quietly ivprobit workedm $X (kidcount = twin_latest), vce(robust) nolog
+margins, at(kidcount = (0(1)5)) predict(pr)
+
+* Create plot
+capture mkdir figures
+marginsplot, ///
+    ytitle("Predicted Probability of Employment") ///
+    xtitle("Number of Children") ///
+    title("Effect of Children on Mother's Employment Probability") ///
+    subtitle("IV Probit Estimates") ///
+    xlabel(0(1)5) ///
+    ylabel(0(.1)1, angle(0)) ///
+    scheme(s2color) ///
+    plot1opts(lcolor(navy) lwidth(medthick)) ///
+    ci1opts(color(navy%20))
+
+graph export "figures/q3_3_margins_plot.png", replace width(2000)
+graph export "figures/q3_3_margins_plot.pdf", replace
+
+display ""
+display "Graph saved to: figures/q3_3_margins_plot.png"
+
+/*==============================================================================
+  DISCRETE MARGINAL EFFECTS
+==============================================================================*/
+
+display ""
+display "================================================================================"
+display "Discrete Marginal Effects (Change from k to k+1 children)"
+display "================================================================================"
+display ""
+
+quietly ivprobit workedm $X (kidcount = twin_latest), vce(robust) nolog
+
+* Calculate discrete changes for each transition
+forvalues k = 0/4 {
+    local k_next = `k' + 1
+    
+    * Predicted probability at k children
+    quietly margins, at(kidcount = `k') predict(pr)
+    matrix prob_k = r(table)
+    scalar p_k = prob_k[1,1]
+    
+    * Predicted probability at k+1 children
+    quietly margins, at(kidcount = `k_next') predict(pr)
+    matrix prob_k_next = r(table)
+    scalar p_k_next = prob_k_next[1,1]
+    
+    * Discrete change
+    scalar delta_p = p_k_next - p_k
+    
+    display "From `k' to `k_next' children: " %6.4f delta_p ///
+       " (" %5.2f delta_p*100 " percentage points)"
+}
+
+display ""
+display "================================================================================"
+display "COMPLETE!"
+display "================================================================================"
+display ""
+display "Files created:"
+display "  - Table: tables/q3_3_predicted_probs.tex"
+display "  - Graph: figures/q3_3_margins_plot.png"
+display "================================================================================"
