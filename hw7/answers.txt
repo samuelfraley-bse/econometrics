@@ -1,0 +1,11 @@
+Question 2
+TABLE 1-ESTIMATED EFFECT OF MINIMUM SCHOOL-LEAVING AGE ON AGE FINISHED FULL-TIME EDUCATION AND LOG
+ANNUAL EARNINGS 
+
+This table looks at how the change in minimum leaving school age impacted two outcomes: 
+age finished full-time education and log annual earnings. The first column shows the results for age finished full-time education, 
+while the second column shows the results for log annual earnings. The regression uses cell means to create age and region cohorts to test the effect.
+For the first stage regressions (age finished full-time as a dependent variable), we see that the cofficient is around 0.44 for the 3 regressions with different age controls and dummies.
+For reduced form regressions (log annual earnigns as a dependent variable), the coefficient is around 0.064 for the first two regressions, and lower (0.042) for the third regression with age dummies.
+These results suggest raising the minimum school-leaving age from 14 to 15 increased average years of schooling by about 0.4–0.45 years for affected cohorts, 
+and the cohorts born just after the change show roughly 6–8% higher annual earnings in the reduced-form estimates. The results are statistically significant and fairly robust across specifications.
