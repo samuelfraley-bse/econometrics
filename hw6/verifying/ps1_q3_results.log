@@ -639,3 +639,408 @@ end of do-file
 
 r(321);
 
+. do "C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw6\verifying\test.do"
+
+. /*==============================================================================
+>   Question 3.3: Marginal Effects from IV Probit
+>   Simplified version - just replicate the margins analysis
+> ==============================================================================*/
+. 
+. clear all
+
+. set more off
+
+. 
+. * Load the data
+. use "ps1_q3.dta", clear
+
+. 
+. * Define control variables
+. global X "sexk agem blackm hispm othracem"
+
+. 
+. /*==============================================================================
+>   IV PROBIT ESTIMATION
+> ==============================================================================*/
+. 
+. display ""
+
+
+. display "================================================================================"
+================================================================================
+
+. display "IV Probit Estimation"
+IV Probit Estimation
+
+. display "================================================================================"
+================================================================================
+
+. display ""
+
+
+. 
+. ivprobit workedm $X (kidcount = twin_latest), vce(robust) nolog
+
+Probit model with endogenous regressors                Number of obs = 400,169
+                                                       Wald chi2(6)  = 5172.25
+Log pseudolikelihood = -744871.86                      Prob > chi2   =  0.0000
+
+--------------------------------------------------------------------------------------------
+                           |               Robust
+                           | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+---------------------------+----------------------------------------------------------------
+                  kidcount |  -.0715877   .0413285    -1.73   0.083    -.1525901    .0094146
+                      sexk |   .0002138   .0040526     0.05   0.958    -.0077291    .0081568
+                      agem |   .0328903   .0015186    21.66   0.000     .0299138    .0358667
+                    blackm |   .3473656   .0161035    21.57   0.000     .3158033    .3789279
+                     hispm |  -.0915425   .0210846    -4.34   0.000    -.1328676   -.0502174
+                  othracem |   .0515402   .0131292     3.93   0.000     .0258073     .077273
+                     _cons |  -.6801591   .0638258   -10.66   0.000    -.8052555   -.5550628
+---------------------------+----------------------------------------------------------------
+ corr(e.kidcount,e.workedm)|  -.1310838    .032274                     -.1937247   -.0673784
+             sd(e.kidcount)|   .7988564   .0016005                      .7957257    .8019995
+--------------------------------------------------------------------------------------------
+Wald test of exogeneity (corr = 0): chi2(1) = 16.12       Prob > chi2 = 0.0001
+Endogenous: kidcount
+Exogenous:  sexk agem blackm hispm othracem twin_latest
+
+. 
+. display ""
+
+
+. display "IV Probit Coefficient on kidcount: " _b[kidcount]
+IV Probit Coefficient on kidcount: -.07158773
+
+. display "Standard error: " _se[kidcount]
+Standard error: .04132848
+
+. display ""
+
+
+. 
+. /*==============================================================================
+>   3.3: MARGINAL EFFECTS AND PREDICTED PROBABILITIES
+> ==============================================================================*/
+. 
+. display ""
+
+
+. display "================================================================================"
+================================================================================
+
+. display "QUESTION 3.3: Predicted Probabilities by Number of Children"
+QUESTION 3.3: Predicted Probabilities by Number of Children
+
+. display "================================================================================"
+================================================================================
+
+. display ""
+
+
+. 
+. * Predicted probabilities for kidcount = 0 to 5
+. margins, at(kidcount = (0(1)5)) predict(pr)
+
+Predictive margins                                     Number of obs = 400,169
+Model VCE: Robust
+
+Expression: Average structural function probabilities, predict(pr)
+1._at: kidcount = 0
+2._at: kidcount = 1
+3._at: kidcount = 2
+4._at: kidcount = 3
+5._at: kidcount = 4
+6._at: kidcount = 5
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |   .6354738   .0392995    16.17   0.000     .5584483    .7124994
+          2  |   .6085898   .0245147    24.83   0.000     .5605419    .6566377
+          3  |   .5811764    .009025    64.40   0.000     .5634878    .5988651
+          4  |   .5533629   .0070646    78.33   0.000     .5395167    .5672092
+          5  |   .5252842   .0233177    22.53   0.000     .4795824     .570986
+          6  |   .4970793   .0396233    12.55   0.000      .419419    .5747396
+------------------------------------------------------------------------------
+
+. 
+. * Store for table
+. eststo margins_levels
+
+. quietly margins, at(kidcount = (0(1)5)) predict(pr) post
+--Break--
+r(1);
+
+end of do-file
+
+--Break--
+r(1);
+
+. do "C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw6\verifying\test.do"
+
+. /*==============================================================================
+>   Question 3.3: Marginal Effects from IV Probit
+>   Simplified version - just replicate the margins analysis
+> ==============================================================================*/
+. 
+. clear all
+
+. set more off
+
+. 
+. * Load the data
+. use "ps1_q3.dta", clear
+
+. 
+. * Define control variables
+. global X "sexk agem blackm hispm othracem"
+
+. 
+. /*==============================================================================
+>   IV PROBIT ESTIMATION
+> ==============================================================================*/
+. 
+. display ""
+
+
+. display "================================================================================"
+================================================================================
+
+. display "IV Probit Estimation"
+IV Probit Estimation
+
+. display "================================================================================"
+================================================================================
+
+. display ""
+
+
+. 
+. ivprobit workedm $X (kidcount = twin_latest), vce(robust) nolog
+--Break--
+r(1);
+
+end of do-file
+
+--Break--
+r(1);
+
+. do "C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw6\verifying\test.do"
+
+. /*==============================================================================
+>   Question 3.3: Marginal Effects from IV Probit
+>   Simplified version - just replicate the margins analysis
+> ==============================================================================*/
+. 
+. clear all
+
+. set more off
+
+. 
+. * Load the data
+. use "ps1_q3.dta", clear
+
+. 
+. * Define control variables
+. global X "sexk agem blackm hispm othracem"
+
+. 
+. /*==============================================================================
+>   IV PROBIT ESTIMATION
+> ==============================================================================*/
+. 
+. display ""
+
+
+. display "================================================================================"
+================================================================================
+
+. display "IV Probit Estimation"
+IV Probit Estimation
+
+. display "================================================================================"
+================================================================================
+
+. display ""
+
+
+. 
+. ivprobit workedm $X (kidcount = twin_latest), vce(robust) nolog
+--Break--
+r(1);
+
+end of do-file
+
+--Break--
+r(1);
+
+. do "C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw6\verifying\test.do"
+
+. /*==============================================================================
+>   Question 3.3: Marginal Effects from IV Probit
+>   Simplified version - just replicate the margins analysis
+> ==============================================================================*/
+. 
+. clear all
+
+. set more off
+
+. 
+. * Load the data
+. use "ps1_q3.dta", clear
+
+. 
+. * Define control variables
+. global X "sexk agem blackm hispm othracem"
+
+. 
+. /*==============================================================================
+>   IV PROBIT ESTIMATION
+> ==============================================================================*/
+. 
+. display ""
+
+
+. display "================================================================================"
+================================================================================
+
+. display "IV Probit Estimation"
+IV Probit Estimation
+
+. display "================================================================================"
+================================================================================
+
+. display ""
+
+
+. 
+. ivprobit workedm $X (kidcount = twin_latest), vce(robust) nolog
+
+Probit model with endogenous regressors                Number of obs = 400,169
+                                                       Wald chi2(6)  = 5172.25
+Log pseudolikelihood = -744871.86                      Prob > chi2   =  0.0000
+
+--------------------------------------------------------------------------------------------
+                           |               Robust
+                           | Coefficient  std. err.      z    P>|z|     [95% conf. interval]
+---------------------------+----------------------------------------------------------------
+                  kidcount |  -.0715877   .0413285    -1.73   0.083    -.1525901    .0094146
+                      sexk |   .0002138   .0040526     0.05   0.958    -.0077291    .0081568
+                      agem |   .0328903   .0015186    21.66   0.000     .0299138    .0358667
+                    blackm |   .3473656   .0161035    21.57   0.000     .3158033    .3789279
+                     hispm |  -.0915425   .0210846    -4.34   0.000    -.1328676   -.0502174
+                  othracem |   .0515402   .0131292     3.93   0.000     .0258073     .077273
+                     _cons |  -.6801591   .0638258   -10.66   0.000    -.8052555   -.5550628
+---------------------------+----------------------------------------------------------------
+ corr(e.kidcount,e.workedm)|  -.1310838    .032274                     -.1937247   -.0673784
+             sd(e.kidcount)|   .7988564   .0016005                      .7957257    .8019995
+--------------------------------------------------------------------------------------------
+Wald test of exogeneity (corr = 0): chi2(1) = 16.12       Prob > chi2 = 0.0001
+Endogenous: kidcount
+Exogenous:  sexk agem blackm hispm othracem twin_latest
+
+. 
+. display ""
+
+
+. display "IV Probit Coefficient on kidcount: " _b[kidcount]
+IV Probit Coefficient on kidcount: -.07158773
+
+. display "Standard error: " _se[kidcount]
+Standard error: .04132848
+
+. display ""
+
+
+. 
+. /*==============================================================================
+>   3.3: MARGINAL EFFECTS AND PREDICTED PROBABILITIES
+> ==============================================================================*/
+. 
+. display ""
+
+
+. display "================================================================================"
+================================================================================
+
+. display "QUESTION 3.3: Predicted Probabilities by Number of Children"
+QUESTION 3.3: Predicted Probabilities by Number of Children
+
+. display "================================================================================"
+================================================================================
+
+. display ""
+
+
+. 
+. * Predicted probabilities for kidcount = 0 to 5
+. margins, at(kidcount = (0(1)5)) predict(pr)
+
+Predictive margins                                     Number of obs = 400,169
+Model VCE: Robust
+
+Expression: Average structural function probabilities, predict(pr)
+1._at: kidcount = 0
+2._at: kidcount = 1
+3._at: kidcount = 2
+4._at: kidcount = 3
+5._at: kidcount = 4
+6._at: kidcount = 5
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |   .6354738   .0392995    16.17   0.000     .5584483    .7124994
+          2  |   .6085898   .0245147    24.83   0.000     .5605419    .6566377
+          3  |   .5811764    .009025    64.40   0.000     .5634878    .5988651
+          4  |   .5533629   .0070646    78.33   0.000     .5395167    .5672092
+          5  |   .5252842   .0233177    22.53   0.000     .4795824     .570986
+          6  |   .4970793   .0396233    12.55   0.000      .419419    .5747396
+------------------------------------------------------------------------------
+
+. 
+. * Store for table
+. eststo margins_levels
+
+. margins, at(kidcount = (0(1)5)) predict(pr) post
+
+Predictive margins                                     Number of obs = 400,169
+Model VCE: Robust
+
+Expression: Average structural function probabilities, predict(pr)
+1._at: kidcount = 0
+2._at: kidcount = 1
+3._at: kidcount = 2
+4._at: kidcount = 3
+5._at: kidcount = 4
+6._at: kidcount = 5
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |   .6354738   .0392995    16.17   0.000     .5584483    .7124994
+          2  |   .6085898   .0245147    24.83   0.000     .5605419    .6566377
+          3  |   .5811764    .009025    64.40   0.000     .5634878    .5988651
+          4  |   .5533629   .0070646    78.33   0.000     .5395167    .5672092
+          5  |   .5252842   .0233177    22.53   0.000     .4795824     .570986
+          6  |   .4970793   .0396233    12.55   0.000      .419419    .5747396
+------------------------------------------------------------------------------
+
+. 
+. * Display results in a nice table
+. esttab margins_levels, ///
+>     cells("b(fmt(%9.4f) label(Pred. Prob.)) ///
+unmatched quote
+r(198);
+
+end of do-file
+
+r(198);
+
+. exit, clear
