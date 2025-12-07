@@ -1,0 +1,13 @@
+Table: Effect of Minimum Wage on Full Meal Prices
+	Level Change ($)	Log Change (%)
+New Jersey (Treatment)	0.1009**	0.0289**
+	(0.0436)	(0.0129)
+Chain (1-4)	0.0528**	0.0159**
+	(0.0247)	(0.0071)
+Company Owned	-0.0374	-0.0142
+	(0.0441)	(0.0124)
+Constant	-0.1330***	-0.0376***
+	(0.0513)	(0.0145)
+Observations	356	356
+R-squared	0.036	0.041
+* p<0.10, ** p<0.05, *** p<0.01

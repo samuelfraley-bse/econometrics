@@ -1,0 +1,634 @@
+-----------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw8\inspect_assignment8.log
+  log type:  text
+ opened on:   2 Dec 2025, 11:49:22
+
+. 
+. // Load dataset (adjust path if needed)
+. use "C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw8\assignment8.dta", clear
+
+. 
+. // Quick overview
+. display "\n*** OVERVIEW ***"
+\n*** OVERVIEW ***
+
+. describe
+
+Contains data from C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw8\assignment8.dta
+ Observations:           820                  
+    Variables:            26                  6 Mar 2022 22:01
+-----------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+-----------------------------------------------------------------------------------------------
+store           float   %9.0g                 
+chain           float   %9.0g                 
+co_owned        float   %9.0g                 
+state           float   %9.0g                 
+southj          float   %9.0g                 
+centralj        float   %9.0g                 
+northj          float   %9.0g                 
+pa1             float   %9.0g                 
+pa2             float   %9.0g                 
+shore           float   %9.0g                 
+ncalls          float   %9.0g                 
+empft           float   %9.0g                 
+emppt           float   %9.0g                 
+nmgrs           float   %9.0g                 
+wage_st         float   %9.0g                 
+inctime         float   %9.0g                 
+firstinc        float   %9.0g                 
+meals           float   %9.0g                 
+open            float   %9.0g                 
+hoursopen       float   %9.0g                 
+pricesoda       float   %9.0g                 
+pricefry        float   %9.0g                 
+priceentree     float   %9.0g                 
+nregisters      float   %9.0g                 
+nregisters11    float   %9.0g                 
+time            float   %9.0g                 
+-----------------------------------------------------------------------------------------------
+Sorted by: 
+
+. 
+. ds
+store         centralj      ncalls        inctime       pricesoda     time
+chain         northj        empft         firstinc      pricefry
+co_owned      pa1           emppt         meals         priceentree
+state         pa2           nmgrs         open          nregisters
+southj        shore         wage_st       hoursopen     nregisters11
+
+. 
+. display "\n*** SUMMARY STATISTICS (numeric) ***"
+\n*** SUMMARY STATISTICS (numeric) ***
+
+. summarize
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+       store |        820    246.5098    148.1439          1        522
+       chain |        820    2.117073    1.109819          1          4
+    co_owned |        820    .3439024    .4752989          0          1
+       state |        820    .8073171    .3946469          0          1
+      southj |        820    .2268293    .4190369          0          1
+-------------+---------------------------------------------------------
+    centralj |        820    .1536585    .3608412          0          1
+      northj |        820    .4268293    .4949189          0          1
+         pa1 |        820    .0878049    .2831836          0          1
+         pa2 |        820     .104878    .3065832          0          1
+       shore |        820    .0853659    .2795959          0          1
+-------------+---------------------------------------------------------
+      ncalls |        571    1.446585    1.577874          0          9
+       empft |        802    8.238778    8.298807          0         60
+       emppt |        806    18.75496     10.3868          0         60
+       nmgrs |        808    3.452104     1.08066          0         10
+     wage_st |        779    4.805713    .3583946       4.25       6.25
+-------------+---------------------------------------------------------
+     inctime |        723    20.08091       12.14          2         52
+    firstinc |        697     .221406    .1069538          0          1
+       meals |        809    1.843016    .5439394          0          3
+        open |        809    8.075711    2.158387          0       11.5
+   hoursopen |        809     14.4521    2.780091          7         24
+-------------+---------------------------------------------------------
+   pricesoda |        790    1.044911    .0910587        .41       1.49
+    pricefry |        775     .931471    .1079425        .67       1.37
+ priceentree |        784    1.337883    .6461349        .41       3.95
+  nregisters |        792     3.60101    1.249991          1          8
+nregisters11 |        781     2.68886    .8867928          0          7
+-------------+---------------------------------------------------------
+        time |        820          .5    .5003052          0          1
+
+. 
+. // Compact codebook for quick look at variable labels, types, and value labels
+. display "\n*** CODEBOOK (compact) ***"
+\n*** CODEBOOK (compact) ***
+
+. codebook, compact
+
+Variable      Obs Unique      Mean   Min   Max  Label
+-----------------------------------------------------------------------------------------------
+store         820    410  246.5098     1   522  
+chain         820      4  2.117073     1     4  
+co_owned      820      2  .3439024     0     1  
+state         820      2  .8073171     0     1  
+southj        820      2  .2268293     0     1  
+centralj      820      2  .1536585     0     1  
+northj        820      2  .4268293     0     1  
+pa1           820      2  .0878049     0     1  
+pa2           820      2   .104878     0     1  
+shore         820      2  .0853659     0     1  
+ncalls        571     10  1.446585     0     9  
+empft         802     53  8.238778     0    60  
+emppt         806     69  18.75496     0    60  
+nmgrs         808     14  3.452104     0    10  
+wage_st       779     42  4.805713  4.25  6.25  
+inctime       723     29  20.08091     2    52  
+firstinc      697     42   .221406     0     1  
+meals         809      4  1.843016     0     3  
+open          809     14  8.075711     0  11.5  
+hoursopen     809     25   14.4521     7    24  
+pricesoda     790     49  1.044911   .41  1.49  
+pricefry      775     54   .931471   .67  1.37  
+priceentree   784    105  1.337883   .41  3.95  
+nregisters    792      8   3.60101     1     8  
+nregisters11  781      8   2.68886     0     7  
+time          820      2        .5     0     1  
+-----------------------------------------------------------------------------------------------
+
+. 
+. // Show first 20 observations to eyeball the data
+. display "\n*** FIRST 20 OBSERVATIONS ***"
+\n*** FIRST 20 OBSERVATIONS ***
+
+. list in 1/20
+
+     +-----------------------------------------------------------------------------------+
+  1. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |    46 |     1 |        0 |     0 |      0 |        0 |      0 |   1 |   0 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |    30 |    15 |     3 |       .  |      19  |        .  |     2  |  6.5  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |     16.5  |     1.03  |     1.03  |       .52  |         3  |         3  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+  2. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |    49 |     2 |        0 |     0 |      0 |        0 |      0 |   1 |   0 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |   6.5 |   6.5 |     4 |       .  |      26  |        .  |     2  |   10  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       13  |     1.01  |       .9  |      2.35  |         4  |         3  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+  3. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   506 |     2 |        1 |     0 |      0 |        0 |      0 |   1 |   0 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |     3 |     7 |     2 |       .  |      13  |      .37  |     2  |   11  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       10  |      .95  |      .74  |      2.33  |         3  |         3  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+  4. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |    56 |     4 |        1 |     0 |      0 |        0 |      0 |   1 |   0 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |    20 |    20 |     4 |       5  |      26  |       .1  |     2  |   10  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       12  |      .87  |      .82  |      1.79  |         2  |         2  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+  5. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |    61 |     4 |        1 |     0 |      0 |        0 |      0 |   1 |   0 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |     6 |    26 |     5 |     5.5  |      52  |      .15  |     3  |   10  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       12  |      .87  |      .77  |      1.65  |         2  |         2  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+  6. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |    62 |     4 |        1 |     0 |      0 |        0 |      0 |   1 |   0 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      2 |     0 |    31 |     5 |       5  |      26  |      .07  |     2  |   10  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       12  |      .87  |      .77  |       .95  |         2  |         2  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+  7. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   445 |     1 |        0 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |    50 |    35 |     3 |       5  |      26  |       .1  |     2  |    6  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       18  |     1.04  |      .88  |       .94  |         3  |         3  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+  8. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   451 |     1 |        0 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |    10 |    17 |     5 |       5  |      52  |      .25  |     2  |    0  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       24  |     1.05  |      .84  |       .96  |         6  |         4  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+  9. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   455 |     2 |        1 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |     2 |     8 |     5 |    5.25  |      13  |      .25  |     1  |   11  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       10  |      .73  |      .73  |      2.32  |         2  |         2  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+ 10. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   458 |     2 |        1 |     0 |      0 |        0 |      0 |   1 |   0 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      2 |     2 |    10 |     2 |       5  |      19  |      .15  |     1  |   11  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       10  |      .94  |      .73  |      2.32  |         4  |         4  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+ 11. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   462 |     3 |        1 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |   2.5 |    20 |     3 |       5  |      13  |      .37  |     2  |    9  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |     12.5  |     1.05  |     1.01  |      1.11  |         4  |         4  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+ 12. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   468 |     1 |        0 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |    40 |    30 |     3 |       5  |      13  |      .17  |     2  |    6  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       18  |      .95  |      .94  |       .95  |         4  |         3  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+ 13. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   469 |     1 |        0 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |     8 |    27 |     5 |       5  |      39  |      .25  |     2  |    6  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       18  |      .92  |      .72  |       .96  |         3  |         2  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+ 14. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   470 |     1 |        0 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |  10.5 |    30 |     3 |     5.5  |       .  |       .3  |     2  |    6  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       18  |      .97  |      .84  |       .94  |         3  |         3  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+ 15. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   474 |     1 |        0 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      2 |     6 |     9 |     3 |       5  |      26  |      .37  |     2  |    9  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |     12.5  |     1.13  |      .98  |      1.01  |         3  |         1  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+ 16. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   481 |     2 |        1 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      2 |     5 |  17.5 |     3 |    5.25  |      26  |      .25  |     3  |   11  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       10  |      .95  |      .74  |      2.53  |         5  |         4  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+ 17. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   483 |     2 |        1 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |     1 |    15 |     1 |       5  |      13  |      .07  |     2  |   11  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       10  |      .94  |      .73  |      2.32  |         4  |         3  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+ 18. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   487 |     3 |        1 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      0 |    10 |     6 |     2 |       5  |      13  |      .17  |     2  |   10  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |     11.5  |     1.11  |      .91  |       .95  |         6  |         3  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+ 19. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   488 |     3 |        0 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      1 |    20 |    13 |     3 |       5  |      13  |      .25  |     2  |    6  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       16  |     1.05  |      .79  |      1.01  |         5  |         5  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+     +-----------------------------------------------------------------------------------+
+ 20. | store | chain | co_owned | state | southj | centralj | northj | pa1 | pa2 | shore |
+     |   489 |     3 |        0 |     0 |      0 |        0 |      0 |   0 |   1 |     0 |
+     |-------------------------------------------+----------+--------------------+-------|
+     | ncalls | empft | emppt | nmgrs | wage_st  | inctime  | firstinc  | meals  | open  |
+     |      2 |     5 |    23 |     2 |       5  |      13  |      .37  |     2  |    7  |
+     |-----------------------------------------------------------------------------------|
+     | hourso~n  | prices~a  | pricefry  |  pricee~e  |  nregis~s  |  nregi~11  |  time  |
+     |       14  |     1.05  |     1.01  |       .94  |         4  |         4  |     0  |
+     +-----------------------------------------------------------------------------------+
+
+. 
+. // Show missing-data summary
+. display "\n*** MISSING DATA SUMMARY ***"
+\n*** MISSING DATA SUMMARY ***
+
+. misstable summarize
+                                                               Obs<.
+                                                +------------------------------
+               |                                | Unique
+      Variable |     Obs=.     Obs>.     Obs<.  | values        Min         Max
+  -------------+--------------------------------+------------------------------
+        ncalls |       249                 571  |     10          0           9
+         empft |        18                 802  |     53          0          60
+         emppt |        14                 806  |     69          0          60
+         nmgrs |        12                 808  |     14          0          10
+       wage_st |        41                 779  |     42       4.25        6.25
+       inctime |        97                 723  |     29          2          52
+      firstinc |       123                 697  |     42          0           1
+         meals |        11                 809  |      4          0           3
+          open |        11                 809  |     14          0        11.5
+     hoursopen |        11                 809  |     25          7          24
+     pricesoda |        30                 790  |     49        .41        1.49
+      pricefry |        45                 775  |     54        .67        1.37
+   priceentree |        36                 784  |    105        .41        3.95
+    nregisters |        28                 792  |      8          1           8
+  nregisters11 |        39                 781  |      8          0           7
+  -----------------------------------------------------------------------------
+
+. 
+. // Produce a variable-by-variable breakdown: storage type, variable label, value label
+. display "\n*** VARIABLE DETAILS ***"
+\n*** VARIABLE DETAILS ***
+
+. describe, fullnames
+
+Contains data from C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw8\assignment8.dta
+ Observations:           820                  
+    Variables:            26                  6 Mar 2022 22:01
+-----------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+-----------------------------------------------------------------------------------------------
+store           float   %9.0g                 
+chain           float   %9.0g                 
+co_owned        float   %9.0g                 
+state           float   %9.0g                 
+southj          float   %9.0g                 
+centralj        float   %9.0g                 
+northj          float   %9.0g                 
+pa1             float   %9.0g                 
+pa2             float   %9.0g                 
+shore           float   %9.0g                 
+ncalls          float   %9.0g                 
+empft           float   %9.0g                 
+emppt           float   %9.0g                 
+nmgrs           float   %9.0g                 
+wage_st         float   %9.0g                 
+inctime         float   %9.0g                 
+firstinc        float   %9.0g                 
+meals           float   %9.0g                 
+open            float   %9.0g                 
+hoursopen       float   %9.0g                 
+pricesoda       float   %9.0g                 
+pricefry        float   %9.0g                 
+priceentree     float   %9.0g                 
+nregisters      float   %9.0g                 
+nregisters11    float   %9.0g                 
+time            float   %9.0g                 
+-----------------------------------------------------------------------------------------------
+Sorted by: 
+
+. 
+. foreach v of varlist _all {
+  2.     di "--------------------------------------------------"
+  3.     di "Variable: `v'"
+  4.     di "  Storage type: `: type `v''"
+  5.     di "  Variable label: `: variable label `v''"
+  6.     di "  Value label name (if any): `: value label `v''"
+  7. }
+--------------------------------------------------
+Variable: store
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: chain
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: co_owned
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: state
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: southj
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: centralj
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: northj
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: pa1
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: pa2
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: shore
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: ncalls
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: empft
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: emppt
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: nmgrs
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: wage_st
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: inctime
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: firstinc
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: meals
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: open
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: hoursopen
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: pricesoda
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: pricefry
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: priceentree
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: nregisters
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: nregisters11
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+--------------------------------------------------
+Variable: time
+  Storage type: float
+  Variable label: 
+  Value label name (if any): 
+
+. 
+. // For each variable, either give a detailed numeric summary or frequency table for categoric
+> al
+. display "\n*** DETAILED PER-VARIABLE OUTPUT ***"
+\n*** DETAILED PER-VARIABLE OUTPUT ***
+
+. foreach v of varlist _all {
+  2.     capture confirm numeric variable `v'
+  3.     if _rc==0 {
+  4.         di "\n-- Numeric summary for `v' --"
+  5.         quietly summarize `v', detail
+  6.         quietly return list
+  7.     }
+  8.     else {
+  9.         di "\n-- Frequency table for `v' --"
+ 10.         capture noisily tabulate `v', missing
+ 11.     }
+ 12. }
+\n-- Numeric summary for store --
+\n-- Numeric summary for chain --
+\n-- Numeric summary for co_owned --
+\n-- Numeric summary for state --
+\n-- Numeric summary for southj --
+\n-- Numeric summary for centralj --
+\n-- Numeric summary for northj --
+\n-- Numeric summary for pa1 --
+\n-- Numeric summary for pa2 --
+\n-- Numeric summary for shore --
+\n-- Numeric summary for ncalls --
+\n-- Numeric summary for empft --
+\n-- Numeric summary for emppt --
+\n-- Numeric summary for nmgrs --
+\n-- Numeric summary for wage_st --
+\n-- Numeric summary for inctime --
+\n-- Numeric summary for firstinc --
+\n-- Numeric summary for meals --
+\n-- Numeric summary for open --
+\n-- Numeric summary for hoursopen --
+\n-- Numeric summary for pricesoda --
+\n-- Numeric summary for pricefry --
+\n-- Numeric summary for priceentree --
+\n-- Numeric summary for nregisters --
+\n-- Numeric summary for nregisters11 --
+\n-- Numeric summary for time --
+
+. 
+. // List defined value labels (useful when variables reference labels)
+. display "\n*** VALUE LABEL DEFINITIONS ***"
+\n*** VALUE LABEL DEFINITIONS ***
+
+. label list
+
+. 
+. log close
+      name:  <unnamed>
+       log:  C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw8\inspect_assignment8.log
+  log type:  text
+ closed on:   2 Dec 2025, 11:49:22
+-----------------------------------------------------------------------------------------------

@@ -1,0 +1,73 @@
+-----------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw8\assignment8.log
+  log type:  text
+ opened on:  29 Nov 2025, 13:01:05
+
+. 
+. // Load dataset (adjust path if needed)
+. use "C:\Users\sffra\Downloads\BSE 2025-2026\econometrics\hw8\assignment8.dta", clear
+
+. 
+. 
+. * Create full meal price variable
+. gen pricemeal = priceentree + pricesoda + pricefry
+(57 missing values generated)
+
+. 
+. * Label it
+. label variable pricemeal "Price of full meal (entree + soda + fries)"
+
+. 
+. * First, sort and create change in meal price
+. sort store time
+
+. by store: gen delta_pricemeal = pricemeal[_n] - pricemeal[_n-1] if time == 1
+(464 missing values generated)
+
+. 
+. * Generate NJ indicator (assuming state==1 is NJ)
+. gen NJ = (state == 1)
+
+. 
+. * Run the regression
+. * Basic specification without controls:
+. reg delta_pricemeal NJ if time == 1
+
+      Source |       SS           df       MS      Number of obs   =       356
+-------------+----------------------------------   F(1, 354)       =      4.13
+       Model |  .551011492         1  .551011492   Prob > F        =    0.0428
+    Residual |  47.1984726       354  .133329019   R-squared       =    0.0115
+-------------+----------------------------------   Adj R-squared   =    0.0087
+       Total |  47.7494841       355  .134505589   Root MSE        =    .36514
+
+------------------------------------------------------------------------------
+delta_pric~l | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          NJ |   .1000817   .0492308     2.03   0.043     .0032601    .1969033
+       _cons |  -.0339706     .04428    -0.77   0.443    -.1210556    .0531144
+------------------------------------------------------------------------------
+
+. 
+. * With controls (you can add relevant X variables):
+. reg delta_pricemeal NJ chain co_owned if time == 1
+
+      Source |       SS           df       MS      Number of obs   =       356
+-------------+----------------------------------   F(3, 352)       =      4.35
+       Model |  1.70520878         3  .568402925   Prob > F        =    0.0050
+    Residual |  46.0442753       352    .1308076   R-squared       =    0.0357
+-------------+----------------------------------   Adj R-squared   =    0.0275
+       Total |  47.7494841       355  .134505589   Root MSE        =    .36167
+
+------------------------------------------------------------------------------
+delta_pric~l | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          NJ |   .1008547   .0488252     2.07   0.040     .0048289    .1968804
+       chain |   .0527956    .017837     2.96   0.003      .017715    .0878761
+    co_owned |  -.0374317   .0417125    -0.90   0.370    -.1194689    .0446055
+       _cons |  -.1330137   .0580958    -2.29   0.023    -.2472722   -.0187552
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
